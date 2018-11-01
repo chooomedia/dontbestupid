@@ -1,0 +1,9 @@
+{
+    "name": "DONT BE STUPID!",
+    "description": "Everyone who works on computers knows it: small work steps which are always repeated or things that just don't want to 'get in your skull'. That's why this small and funny chrome plugin has been developed for you to prevent stupidity.",
+    "version": "1",
+    "permissions": ["tabs", "http://*/*", "background"],
+    "background-page": "background.html",
+    "content_scripts": [{"matches": ["http://*/*"], "js": ["inject.js"]}],
+    "browser_action": {"default_icon": "16x16.png", "dontbestupid": "dontbestupid.html"}
+}
