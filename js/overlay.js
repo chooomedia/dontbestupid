@@ -27,6 +27,7 @@ let dbsAlertMessages = [
 let style =
     "#overlay {" +
     "width:97.5%;height:83.1%;" +
+    "margin: 0 auto;" +
     "background:rgba(0,0,0,0.93);" +
     "display:block;" +
     "top:1.4%;right:1%;" +
@@ -64,7 +65,6 @@ let overlayElement = document.getElementById("overlay");
 setTimeout(function () {
     document.getElementById("acceptButton").disabled = false;
 }, 5000);
-setTimeout();
 
 // Close the overlay box over the open tab
 acceptButtonElement.onclick = (e) => {
