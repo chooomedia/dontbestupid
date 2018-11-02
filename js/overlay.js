@@ -9,17 +9,17 @@ function getOverlayHtml(content) {
 }
 // Fires randomly one of these text areas
 let dbsAlertMessages = [
-    "<h1 style='font-size:2em;color:white';font-weight:800;'>Dont waste your time!</h1>" +
+    "<h1><span>Read focused!</span></h1>" +
     "Don`t waste your time looking up with stuff in the internet." +
     "<br>" +
     "Instead use your brain and spend your with more meanfull things :-)",
 
-    "<h1 style='font-size:2em;color:white';font-weight:800;'>RTFM!</h1>" +
+    "<h1><span>RTFM!</span></h1>" +
     "Don`t be stupid fellow." +
     "<br>" +
     "Sometimes its helpfull to <b>R</b>ead <b>T</b>he <b>F</b>*king <b>M</b>anual :-)",
 
-    "<h1 style='font-size:2em;color:white';font-weight:800;'>HAHAHAHA!</h1>" +
+    "<h1><span>HAHAHAHA!</span></h1>" +
     "Ouw! Its better spend my time on Social Media" +
     "<br>"
 ]
@@ -45,19 +45,39 @@ let style =
         "top: 13%;position: relative;" +
     "}" +
     "button {" +
-        "opacity: 1;" +
+        "opacity: 1 !important;" +
         "color:black;margin-top: 1em;" +
         "font-size:26px;padding: 10px;" +
         "transition: all .6s;" +
     "}" +
     "button:disabled {" +
-        "opacity: .05;" +
-        "cursor: not-allowed;" +
+        "opacity: .1 !important;" +
     "}" +
     "@-webkit-keyframes blur {" +
         "0% { -webkit-filter: blur(5em); }" +
         "100% { -webkit-filter: blur(0px); }" +
-    "}";
+    "}" +
+    "h1 {" +
+        "width: 100%" +
+        "text-align: center;" +
+        "font-size:2em;color:white;font-weight:800;" +
+    "}" +
+    "h1 span:before," +
+    "h1 span:after {" +
+        "content: '';" +
+        "position: absolute;" +
+        "height: 10px;" +
+        "border-bottom: 1px solid white;" +
+        "border-top: 1px solid white;" +
+        "top: 28px;" +
+        "width:25%;" +
+    "}" +
+    "h1 span:before {" +
+        "right: 12em;" +
+    "}" +
+    "h1 span:after {" +
+        "left: 12em;" +
+    "}"
 
 // Add a head style onto the overlayed body
 let styleElement = document.createElement("style");
