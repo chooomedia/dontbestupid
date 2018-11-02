@@ -1,9 +1,10 @@
+// Writes the chrome storage settings options from the plugin popup box
 chrome.storage.sync.get("_settings", function (settingsObj) {
   if (settingsObj["_settings"]) {
     return;
   }
 
-  // The plugin was started for the first time, set the default values
+// The plugin was started for the first time, set the default values
   chrome.storage.sync.set({
     "_settings": {
       isEnabled: true,
@@ -12,20 +13,21 @@ chrome.storage.sync.get("_settings", function (settingsObj) {
   });
 });
 
+// Scanns if active tab content executed
 chrome.webNavigation['onCommitted'].addListener(function (data) {
 
+// Writes the chrome storage settings options from the plugin popup box
   chrome.storage.sync.get("_settings", async function (settingsObj) {
     let storedIsEnabledValue = settingsObj["_settings"].isEnabled;
-    // let storedMode = settingsObj["_settings"].mode;
+// let storedMode = settingsObj["_settings"].mode;
     if (!storedIsEnabledValue) {
       return;
     } 
-
+// Proofs if there was executed the same Tag loads a lot Timess
     let visitCount = await addVisit(data.url);
     if (visitCount > 5) {
       displayYoureStupidMesssage();
     }
-
   });
 });
 
@@ -39,32 +41,32 @@ function addVisit(url) {
 
   let promise = new Promise((finished) => {
 
-    // Get the existing entry
+// Get the existing entry
     chrome.storage.sync.get(url, function (visitHistory) {
 
       if (!visitHistory[url]) {
-        // No entry yet -> add the initial timetamp array with a single entry
+// No entry yet -> add the initial timetamp array with a single entry
         visitHistory = {};
         visitHistory[url] = [new Date()];
       } else {
-        // Add the new timestamp to the existing array
+// Add the new timestamp to the existing array
         visitHistory[url].push(new Date());
       }
 
-      // And store it back
+// And store it back
       chrome.storage.sync.set(visitHistory);
 
-      // Store the current length of the array in the return variable
+// Store the current length of the array in the return variable
       let newVisitCount = visitHistory[url].length;
 
-      // Finish the Promise (this will execute the .then() of the caller )
+// Finish the promise (this will execute the .then() of the caller )
       finished(newVisitCount);
     });
   });
 
   return promise;
 }
-
+// Executes the external overlay box inside the acitve tab
 function displayYoureStupidMesssage() {
   chrome.tabs.query({
     active: true,
@@ -75,7 +77,7 @@ function displayYoureStupidMesssage() {
     });
   });
 };
-
+// Check if is the Plugin actived or not
 chrome.webNavigation['onCommitted'].addListener(function (data) {
   if (typeof data && data.frameId == 0) {
     chrome.storage.sync.get("_settings", function (settingsObj) {
