@@ -26,24 +26,37 @@ let dbsAlertMessages = [
 
 let style =
     "#overlay {" +
-    "width:97.5%;height:83.1%;" +
-    "margin: 0 auto;" +
-    "background:rgba(0,0,0,0.93);" +
-    "display:block;" +
-    "top:1.4%;right:1%;" +
-    "bottom:2.9%;left:1%;" +
-    "z-index:99999;position:fixed;" +
-    "padding:7vh 1em;" +
-    "text-align:center;font-size:2.2em;" +
-    "color:white;" +
-    "box-shadow: 0 0 10vh rgba(0,0,0,0.99);" +
+        "width:92.3%;height:83.1%;" +
+        "overflow:hidden;" +
+        "animation: blur .3s;" +
+        "animation-iteration-count: 1;" +
+        "margin: 0 auto;" +
+        "background:rgba(0,0,0,0.93);" +
+        "display:block;" +
+        "top:1.4%;right:1%;" +
+        "bottom:2.9%;left:1%;" +
+        "z-index:99999;position:fixed;" +
+        "padding:7vh 1em;" +
+        "text-align:center;font-size:2.2em;" +
+        "color:white;" +
+        "box-shadow: 0 0 10vh rgba(0,0,0,0.99);" +
     "}" +
     ".content {" +
-    "top: 13%;position: relative;" +
+        "top: 13%;position: relative;" +
     "}" +
-    "#acceptButton {" +
-    "color:black;margin-top: 1em;" +
-    "font-size:26px;padding: 10px;" +
+    "button {" +
+        "opacity: 1;" +
+        "color:black;margin-top: 1em;" +
+        "font-size:26px;padding: 10px;" +
+        "transition: all .6s;" +
+    "}" +
+    "button:disabled {" +
+        "opacity: .05;" +
+        "cursor: not-allowed;" +
+    "}" +
+    "@-webkit-keyframes blur {" +
+        "0% { -webkit-filter: blur(5em); }" +
+        "100% { -webkit-filter: blur(0px); }" +
     "}";
 
 // Add a head style onto the overlayed body
