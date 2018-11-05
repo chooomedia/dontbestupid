@@ -12,7 +12,7 @@ let dbsAlertMessages = [
         "<h1><span>Read focused!</span></h1>" +
         "Don`t waste your time looking up with stuff in the internet." +
         "<br>" +
-        "Instead use your brain and spend your with more meanfull things :-)",
+        "Instead use your brain and spend your time with more meanfull things :-)",
 
         "<h1><span>R T F M !</span></h1>" +
         "Don`t be stupid fellow." +
@@ -43,6 +43,7 @@ let style =
     "}" +
     ".content {" +
         "top: 13%;position: relative;" +
+        "line-height: 66px;" +
     "}" +
     "button {" +
         "opacity: 1 !important;" +

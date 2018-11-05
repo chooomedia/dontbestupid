@@ -26,7 +26,10 @@ chrome.webNavigation['onCommitted'].addListener(function (data) {
 // Proofs if there was executed the same Tag loads a lot Timess
     let visitCount = await addVisit(data.url);
     if (visitCount > 5) {
-      displayYoureStupidMesssage();
+      if (data.url.startsWith("https://stackoverflow.com/")) {
+        console.log('stackoverflow.com');
+        displayYoureStupidMesssage();
+      }
     }
   });
 });
