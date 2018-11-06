@@ -4,6 +4,8 @@ $(function () {
     let dbsActivity = $("#dbsCheckbox");
     let dbsMode = $("#dbsMode");
     let dbsStatus = $(".dbsStatus");
+    let dbsCounter = $("#dbsAlertCounter");
+
 // Shows the functions if plugin enabled
     function setEnabled() {
         dbsActivity.prop("checked", true);
@@ -14,7 +16,10 @@ $(function () {
             "<span style='letter-spacing:2.4px;'>STUPID</span>" +
             "!</h1>");
         dbsMode.attr("disabled", false);
+        dbsCounter.val(5);
+        dbsCounter.attr("disabled", false);
     }
+
 // Disable the plugin
     function setDisabled() {
         dbsActivity.prop("checked", false);
@@ -25,6 +30,7 @@ $(function () {
             "<span style='color:red;'>STUPID</span>" +
             "!</h1>");
         dbsMode.attr("disabled", true);
+        dbsCounter.attr("disabled", true);
     }
 // Fires the checked atribute from the checkbox input
     function isCheckboxChecked() {
@@ -38,12 +44,21 @@ $(function () {
     function setMode(mode) {
         return dbsMode.val(mode);
     }
+
+    function getAlertCounterValue() {
+        return dbsCounter.val();
+    }
+
+    function setAlertCounterValue(intervall) {
+        return dbsCounter.val(intervall);
+    }
 // Writes the inputted input settings into the chrome storage
     function writeSettings() {
         chrome.storage.sync.set({
             "_settings": {
                 isEnabled: isCheckboxChecked(),
-                mode: getMode()
+                mode: getMode(),
+                intervall: getAlertCounterValue()
             }
         });
     };
@@ -52,12 +67,14 @@ $(function () {
         chrome.storage.sync.get("_settings", function (settingsObj) {
             let storedIsEnabledValue = settingsObj["_settings"].isEnabled;
             let storedMode = settingsObj["_settings"].mode;
+            let alertCounterValue = settingsObj["_settings"].intervall;
             if (storedIsEnabledValue) {
                 setEnabled();
             } else {
                 setDisabled();
             }
             setMode(storedMode);
+            setAlertCounterValue(alertCounterValue);
         });
     }
 
@@ -79,4 +96,8 @@ $(function () {
     dbsMode.change(function () {
         writeSettings();
     });
+
+    dbsCounter.change(function () {
+        writeSettings();
+    })
 });
