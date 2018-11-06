@@ -16,7 +16,7 @@ $(function () {
             "<span style='letter-spacing:2.4px;'>STUPID</span>" +
             "!</h1>");
         dbsMode.attr("disabled", false);
-        dbsCounter.val(5);
+        dbsCounter.val(3);
         dbsCounter.attr("disabled", false);
     }
 

@@ -9,7 +9,7 @@ chrome.storage.sync.get("_settings", function (settingsObj) {
     "_settings": {
       isEnabled: true,
       mode: 'count',
-      intervall: 5
+      intervall: 3
     }
   });
 });
@@ -60,6 +60,7 @@ function addVisit(url) {
         // No entry yet -> add the initial timetamp array with a single entry
         pageMetadata = {};
         pageMetadata[url] = {
+          question: null,
           highestPointAnswer: null,
           acceptedAnswer: null,
           timestamps: [new Date()]
