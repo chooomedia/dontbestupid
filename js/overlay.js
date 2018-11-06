@@ -3,8 +3,8 @@ function getOverlayHtml(content) {
                 "<div class='content'>" +
                     content +
                     "<hr>" +
-                    "<h1 id='answerType' style='font-size:1.2em;padding:0 12px 11px 12px;'></h1>" + 
-                    "<h1 id='questionElement'></h1>" + 
+                    "<div id='answerType'></div>" + 
+                    "<div id='questionElement'></div>" + 
                     "<div id='acceptedAnswer' style='overflow-y:auto;text-align:left;'>" +
                         "<div id='acceptedAnswerInner'></div>" +
                     "</div>" +
@@ -15,37 +15,38 @@ function getOverlayHtml(content) {
 // Fires randomly one of these text areas
 let dbsAlertMessages = [
             "<h1><span>Read focused!</span></h1>" +
-            "<hr>" +
-                "Don`t waste your time looking up with stuff in the internet." +
+                "<p class='slogan'>Don`t waste your time looking up with stuff in the internet." +
                 "<br>" +
-                "Instead use your brain and spend your time with more meanfull things :-)",
+                "Instead use your brain and spend your time with more meanfull things :-)</p>",
 
             "<h1><span>R T F M !</span></h1>" +
-            "<hr>" +
-                "Don`t be stupid fellow." +
+                "<p class='slogan'>Don`t be stupid fellow." +
                 "<br>" +
-                "Sometimes its helpfull to <b>R</b>ead <b>T</b>he <b>F</b>*king <b>M</b>anual :-)",
+                "Sometimes its helpfull to <b>R</b>ead <b>T</b>he <b>F</b>*king <b>M</b>anual :-)</p>",
 
             "<h1><span>Muhahahaha!</span></h1>" +
-            "<hr>" +
-                "Ouw! Its better waste my time on Social Media" +
-                "<br>",
+                "<p class='slogan'>Ouw! Its better waste my time on Social Media" +
+                "<br></p>",
 ]
 
 let style = // Adds all stlyes from the Overlaye
     "#questionElement {" +
-        "font-size: 1.2em;" +
-        "margin: -17px 0 18px 0 !important;" +
-        "line-height: 26px;" +
-        "color: red !important;" +
-        "letter-spacing: -2px;" +
+        "width: 83%;" +
+        "margin: 0 1%;" +
+        "display: inline-flex;" +
+        "font-size: 1.5em;" +
+        "line-height: 66px;" +
+        "letter-spacing: -1px;" +
+        "white-space: nowrap;" +
+        "overflow: hidden;" +
+        "text-overflow: ellipsis;" +
     "}" +
     ".blurBody {" +
         "position: fixed;" +
         "width: 100%;" +
         "height: 100%;" +
         "background: rgba(255,255,255,0.98);" + 
-        "animation: pulseBackground 6s infinite alternate;" +
+        "animation: pulseBackground 4s infinite alternate;" +
         "height: 100%;" +
         "top: 0;" +
         "left: 0;" +
@@ -53,52 +54,108 @@ let style = // Adds all stlyes from the Overlaye
         "z-index: 9999;" +
     "}" +
     "hr {" + 
-    "margin-bottom: 14px !important;" + 
+        "margin: unset !important;" + 
     "}" +
     "#overlay {" +
         "width:66%;" +
         "overflow-y: auto;" +
+        "overflow-x: hidden;" +
         "animation: animateOverlay .5s 1 alternate;" +
         "margin: 0 auto;" +
-        "background: rgba(44,44,44,0.97);" +
-        "border: 1px solid #222222;" +
-        "top:1.4%;right:1%;" +
-        "bottom:2.9%;left:1%;" +
+        "background: linear-gradient(rgba(44,44,44,0.97), rgba(11,11,11,0.8));" +
+        "top:1%;right:1%;" +
+        "bottom:1%;left:1%;" +
         "z-index:99999;position:fixed;" +
         "padding:1em;" +
         "text-align:center;font-size:1.8em;" +
         "color:white;" +
-        "box-shadow: 0 0 10vh rgba(34,34,34,0.995);" +
+        "box-shadow: 0 0 10vh rgba(255,255,255,0.995);" +
     "}" +
     "#acceptedAnswer {" +
         "max-height: auto;" +
     "}" +
+    "#answerType {" +
+        "width:15%;" +
+        "display:inline-flex;" +
+    "}" +
+    "#answerType span.vote-accepted-on {" +
+        "transform: scale(1.5);" +
+        "position: relative;" +
+        "top: 19px;" +
+        "left: 14px;" +
+        "margin: 0;" +
+    "}" +
+    "#answerType span {" +
+        "float: left;" +
+        "font-size: 2em;" +
+        "line-height: 66px;" +
+        "color: #0177cc;" +
+    "}" +
+    "#answerType span.vote-up-off {" +
+        "left: 13px;" +
+        "margin-top: 20px;" +
+        "transform: scale(1);" +
+    "}" +
     "#acceptedAnswerInner {" +
-        "padding:12px;" +
-        "border: 1px solid grey;" +
-        "background: rgba(22,22,22,1);" +
+        "padding:0 12px 12px 12px;" +
+        "border: 1px solid #187ccd;" +
+        "background: rgba(255,255,255,0.8);" +
         "line-height: 20px;" +
         "overflow-x: auto;" +
     "}" +
+    "#acceptedAnswerInner > pre {" +
+        "font-size: 14px !important;" +
+        "line-height: 18px !important;" +
+        "margin: 0 auto;" +
+        "text-align: left;" +
+    "}" +
     "#acceptedAnswerInner > p {" +
         "font-size: 18px !important;" +
-        "margin-bottom: 8px !important;" +
+        "text-align: left;" +
+        "color: #222;" +
     "}" +
     "#acceptedAnswerInner > ul > li {" +
         "font-size: 18px !important;" +
+        "color: #111 !important;" +
     "}" +
     "#acceptedAnswerInner > p > code, #acceptedAnswerInner > ul > li > code {" +
         "color: #000 !important;" +
     "}" +
     ".content {" +
+        "font-size: 18px;" +
         "filter: blur(0px) !important;" +
         "position: relative;" +
         "z-index: 1;" +
         "line-height: 33px;" +
     "}" +
+    ".content h1 {" +
+        "font-size: 3em;" +
+        "line-height: 62px;" +
+        "letter-spacing: -2px;" +
+        "margin: 0 auto;" +
+        "color: white;" +
+        "font-weight: 600 !important;" +
+    "}" +
+    ".content h1 span {" +
+        "font-family: Courier New;" +
+    "}" +
+    ".content p {" +
+        "letter-spacing: -.4px;" +
+        "line-height: 1.2em;" +
+        "margin: 12px auto 0 auto;" +
+    "}" +
+    ".slogan {" +
+        "font-family: Courier New;" +
+        "text-align: center;" +
+        "color: #FFF;" +
+        "line-height: 33px !important;" +
+        "font-size: 24px !important;" +
+        "letter-spacing: -1.5px !important;" +
+        "margin: 0 12px 12px 12px !important;" +
+    "}" +
     "button {" +
         "opacity: 1 !important;" +
-        "color:black;margin-top: 1em;" +
+        "color:black;margin-top:20px;" +
         "font-size:26px;padding: 10px;" +
         "position: relative;" +
         "z-index: 9999;" +
@@ -114,15 +171,7 @@ let style = // Adds all stlyes from the Overlaye
     "}" +
     "@-webkit-keyframes pulseBackground {" +
         "0% { background: rgba(255,0,122,0.9); }" +
-        "100% { background: rgba(255,255,255,0.95); }" +
-    "}" +
-    ".content h1 {" +
-        "width: 100%;" +
-        "font-size: 2.8em;" +
-        "font-family: Courier New !important;" +
-        "margin: 0 auto !important;" +
-        "text-align: center;" +
-        "color:white;font-weight:800;" +
+        "100% { background: rgba(255,255,255,0.7); }" +
     "}" +
     "#acceptedAnswer h2 {" +
         "width: 50%;" +
@@ -225,7 +274,7 @@ chrome.storage.sync.get(document.location, function (pageMetadata) {
     if (highestVotedAnswer) {
         pageMetadata.highestPointAnswer = highestVotedAnswer.innerHTML; // highest voted answer HTML
         acceptedAnswerOverlayElement.innerHTML = pageMetadata.highestPointAnswer;
-        answerSelector.innerHTML = "Highest voted answer";
+        answerSelector.innerHTML = "<span>" + highestVotedAnswer.voteCount + "</span><span class='vote-up-off'>up vote</span>"
     }
 
     // Fires the accepted answer if avaiable
@@ -234,7 +283,7 @@ chrome.storage.sync.get(document.location, function (pageMetadata) {
         reStyleAcceptedAnswer(accepetedDomElement);
         pageMetadata.acceptedAnswer = accepetedDomElement.innerHTML; // accepted answer HTML
         acceptedAnswerOverlayElement.innerHTML = pageMetadata.acceptedAnswer;
-        answerSelector.innerHTML = "Accepted answer!";
+        answerSelector.innerHTML = "<span class='vote-accepted-on load-accepted-answer-date'>accepted</span>";
     }
 
     chrome.storage.sync.set(pageMetadata); // Store to the database with the url as key
