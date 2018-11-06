@@ -30,7 +30,6 @@ chrome.webNavigation['onCommitted'].addListener(function (data) {
       if (!data.url.startsWith("https://stackoverflow.com/")) {
         return;
       }
-
       // Proofs if there was executed the same Tag loads a lot Timess
       let visitCount = await addVisit(data.url);
 
