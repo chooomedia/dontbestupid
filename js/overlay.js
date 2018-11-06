@@ -4,7 +4,7 @@ function getOverlayHtml(content) {
                     content +
                     "<hr>" + 
                     "<div id='acceptedAnswer' style='overflow-y:auto;text-align:left;'>" +
-                        "<h1>Accepted Answer</h1>" +
+                        "<h1 style='font-size:1.2em;'>Accepted Answer</h1>" +
                         "<div id='acceptedAnswerInner'></div>" +
                     "</div>" +
                     "<button id='acceptButton' disabled>okay, got it</button>" +
@@ -25,22 +25,32 @@ let dbsAlertMessages = [
                 "<br>" +
                 "Sometimes its helpfull to <b>R</b>ead <b>T</b>he <b>F</b>*king <b>M</b>anual :-)",
 
-            "<h1><span>HAHAHAHA!</span></h1>" +
+            "<h1><span>Muhahahaha!</span></h1>" +
             "<hr>" +
-                "Ouw! Its better spend my time on Social Media" +
+                "Ouw! Its better waste my time on Social Media" +
                 "<br>",
 ]
 
-let style =
+let style = // Adds all stlyes from the Overlaye
+    
+    ".blurBody {" +
+        "position: fixed;" +
+        "width: 100%;" +
+        "height: 100%;" +
+        "background: rgba(255,255,255,0.98);" + 
+        "animation: pulseBackground 3s infinite alternate;" +
+        "height: 100%;" +
+        "top: 0;" +
+        "left: 0;" +
+        "bottom: 0;" +
+        "z-index: 9999;" +
+    "}" +
     "#overlay {" +
         "width:50%;" +
         "overflow: hidden;" +
-        "animation: animateOverlay .4s;" +
-        "animation-timing-function: ease-out;" +
-        "animation-iteration-count: 1;" +
+        "animation: animateOverlay 1s 1 ease-in;" +
         "margin: 0 auto;" +
         "background: rgba(44,44,44,0.97);" +
-        "display:block;" +
         "border: 1px solid #222222;" +
         "top:1.4%;right:1%;" +
         "bottom:2.9%;left:1%;" +
@@ -49,16 +59,6 @@ let style =
         "text-align:center;font-size:1.8em;" +
         "color:white;" +
         "box-shadow: 0 0 10vh rgba(34,34,34,0.995);" +
-    "}" +
-    "#overlay:after {" +
-        "content: ' ';" +
-        "width: 100%;" +
-        "height: 100%;" +
-        "position: absolute;" +
-        "z-indec: 99;" +
-        "filter blur(10px);" +
-        "top: 0;" +
-        "left:0;" +
     "}" +
     "#acceptedAnswer {" +
         "margin-top: 1em;" +
@@ -71,21 +71,27 @@ let style =
     ".content {" +
         "filter: blur(0px) !important;" +
         "position: relative;" +
+        "z-index: 1;" +
         "line-height: 33px;" +
     "}" +
     "button {" +
         "opacity: 1 !important;" +
         "color:black;margin-top: 1em;" +
         "font-size:26px;padding: 10px;" +
+        "position: relative;" +
+        "z-index: 9999;" +
         "transition: all .6s !important;" +
     "}" +
     "button:disabled {" +
         "opacity: .1 !important;" +
     "}" +
     "@-webkit-keyframes animateOverlay {" +
-        "0% { -webkit-filter: blur(5em); transform: translateY(-100%); }" +
-        "50% { -webkit-filter: blur(2.5em); transform: translateY(-50%); }" +
+        "0% { -webkit-filter: blur(20px); transform: translateY(-100%); }" +
         "100% { -webkit-filter: blur(0px); transform: translateY(0); }" +
+    "}" +
+    "@-webkit-keyframes pulseBackground {" +
+        "0% { background: rgba(255,0,85,0.75); }" +
+        "100% { background: rgba(255,255,255,0.95); }" +
     "}" +
     ".content h1 {" +
         "width: 100%;" +
@@ -105,27 +111,26 @@ let style =
         "font-weight:600;" +
     "}"
 
-// Add a head style onto the overlayed body
-let styleElement = document.createElement("style");
+let mainBody = document.body; // Add overlayed template before body
+
+let span = document.createElement("span");
+    span.innerHTML = "";
+    span.className = "blurBody";
+
+mainBody.parentNode.insertBefore(span, mainBody);
+
+let styleElement = document.createElement("style"); // Add a head style onto the overlayed body
 styleElement.type = "text/css";
 styleElement.appendChild(document.createTextNode(style));
 document.getElementsByTagName("head")[0].appendChild(styleElement);
 
-// Generates a random number
-let randomIndex = Math.floor(Math.random() * Math.floor(dbsAlertMessages.length));
-// Choose randomly one of the thre text areas
-let randomMessage = dbsAlertMessages[randomIndex];
+let randomIndex = Math.floor(Math.random() * Math.floor(dbsAlertMessages.length)); // Generates a random number
+let randomMessage = dbsAlertMessages[randomIndex]; // Choose randomly one of the thre text areas
 
-// Add Overlayed Template before Body
-document.body.innerHTML += getOverlayHtml(randomMessage);
+document.body.innerHTML += getOverlayHtml(randomMessage); // Add overlayed template before body
 
 chrome.storage.sync.get(document.location, function (pageMetadata) {
     let accepetedDomElement = document.querySelectorAll(".accepted-answer .post-text");
-
-    /*
-    let mostDomElementNumber = document.getElementsByClassName("vote-count-post").innerHTML();
-    let mostDomElement = document.querySelectorAll(".answer .post-text");
-    */
 
     if (accepetedDomElement.length == 0) {
         return;
@@ -144,15 +149,15 @@ chrome.storage.sync.get(document.location, function (pageMetadata) {
     }
 
     pageMetadata.acceptedAnswer = accepetedDomElement[0].outerHTML; // accepted answer HTML
-    chrome.storage.sync.set(pageMetadata); // store to the database with the url as key
+    chrome.storage.sync.set(pageMetadata); // Store to the database with the url as key
 
-    // Display the accepted answer from so in the overlay
-    let acceptedAnswerOverlayElement = document.getElementById("acceptedAnswerInner");
+    // Display the accepted answer from so in the overlayer
+    let acceptedAnswerOverlayElement = document.getElementById("acceptedAnswerInner"); 
         acceptedAnswerOverlayElement.innerHTML = pageMetadata.acceptedAnswer;
 });
 
-let acceptButtonElement = document.getElementById("acceptButton");
 let overlayElement = document.getElementById("overlay");
+let acceptButtonElement = document.getElementById("acceptButton");
 
 // Deactivates the button for 5 Seconds
 setTimeout(function () {
@@ -162,4 +167,5 @@ setTimeout(function () {
 // Close the overlay box over the open tab
 acceptButtonElement.onclick = (e) => {
     overlayElement.remove();
+    span.remove();
 };
