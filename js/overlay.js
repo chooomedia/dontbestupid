@@ -45,10 +45,13 @@ let style = // Adds all stlyes from the Overlaye
         "bottom: 0;" +
         "z-index: 9999;" +
     "}" +
+    "hr {" + 
+    "margin-bottom: 14px !important;" + 
+    "}" +
     "#overlay {" +
         "width:50%;" +
         "overflow: hidden;" +
-        "animation: animateOverlay 1s 1 ease-in;" +
+        "animation: animateOverlay .5s 1 alternate;" +
         "margin: 0 auto;" +
         "background: rgba(44,44,44,0.97);" +
         "border: 1px solid #222222;" +
@@ -83,7 +86,8 @@ let style = // Adds all stlyes from the Overlaye
         "transition: all .6s !important;" +
     "}" +
     "button:disabled {" +
-        "opacity: .1 !important;" +
+        "opacity: .7 !important;" +
+        "color: rgba(44,44,44,0.5) !important;" +
     "}" +
     "@-webkit-keyframes animateOverlay {" +
         "0% { -webkit-filter: blur(20px); transform: translateY(-100%); }" +
@@ -162,7 +166,25 @@ let acceptButtonElement = document.getElementById("acceptButton");
 // Deactivates the button for 5 Seconds
 setTimeout(function () {
     document.getElementById("acceptButton").disabled = false;
-}, 5000);
+}, 7000);
+
+function countUpValue(id, start, end, duration) {
+    var range = end - start;
+    var current = start;
+    var increment = end > start? 1 : -1;
+    var stepTime = Math.abs(Math.floor(duration / range));
+    var obj = document.getElementById(id);
+    var timer = setInterval(function() {
+        current += increment;
+        obj.innerHTML = current;
+        if (current == end) {
+            clearInterval(timer);
+            acceptButtonElement.innerHTML = "okay, got it!";
+        }
+    }, stepTime);
+}
+
+countUpValue("acceptButton", 7, 0, 7000);
 
 // Close the overlay box over the open tab
 acceptButtonElement.onclick = (e) => {
