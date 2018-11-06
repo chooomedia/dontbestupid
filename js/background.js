@@ -80,22 +80,3 @@ function displayYoureStupidMesssage() {
     });
   });
 };
-// Check if is the Plugin actived or not
-chrome.webNavigation['onCommitted'].addListener(function (data) {
-  if (typeof data && data.frameId == 0) {
-    chrome.storage.sync.get("_settings", function (settingsObj) {
-      let storedIsEnabledValue = settingsObj["_settings"].isEnabled;
-      let storedMode = settingsObj["_settings"].mode;
-
-      if (!storedIsEnabledValue && storedMode) {
-        return;
-      }
-
-      if (!data.url.startsWith("https://stackoverflow.com/")) {
-        return;
-      }
-
-      console.log(chrome.i18n.getMessage('inHandler'), 'onCommitted', data);
-    });
-  }
-});
