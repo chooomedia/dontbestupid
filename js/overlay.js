@@ -1,204 +1,59 @@
-function getOverlayHtml(content) {
-    return  "<div id='overlay'>" +
-                "<div class='content'>" +
-                    content +
-                    "<hr>" +
-                    "<div id='answerType'></div>" + 
-                    "<div id='questionElement'></div>" + 
-                    "<div id='acceptedAnswer' style='overflow-y:auto;text-align:left;'>" +
-                        "<div id='acceptedAnswerInner'></div>" +
+function getOverlayHtml(message, answer) {
+    let html =
+    "<header id='dbsNavbar' class='top-bar js-top-bar _fixed top-bar__network'>" +
+        "<div class='-container'>" +
+        "<div class='dbsHead'>" + 
+            "<h1 title='stay tuned - don`t waste your time'>" +
+                "DON`T <span style='color:red;'>BE</span><br>" +
+                "<span style='letter-spacing:2.4px;'>STUPID</span>!" +
+            "</h1>" +
+        "</div>" +
+        "</div>" +
+    "</header>" +
+       
+    "<div class='container dbsContainer'>" +
+        "<div id='left-sidebar' data-is-here-when='md lg' class='left-sidebar js-pinned-left-sidebar'>" +
+            "<div class='left-sidebar--sticky-container js-sticky-leftnav'>left</div>" +
+        "</div>" +
+            "<div id='content' style='background: transparent;' class='snippet-hidden'>" +
+                "<div id='dbsOverlay'>" +
+                    "<div class='inner-content clearfix'>" +
+                        "<div id='question-header' class='grid'>" + 
+                            message +
+                        "</div>" +
+                        "<div id='mainbar' role='main'>" +
+                            "<div class='question' id='question'>" +
+                                "<div class='post-layout'>" + 
+                                    /* "<div class='votecell post-layout--left'>" +
+                                        "<div class='vote'>" +
+                                            "<a class='vote-up-off'>up vote</a>" +
+                                            "<span class='vote-count-post'></span>" +
+                                        "</div>" +
+                                    "</div>" + */
+                                    "<div class='postcell post-layout--right'>" +
+                                        "<div class='post-text'>" +
+                                            answer +
+                                        "</div>" +
+                                        "<div class='post-taglist grid gs4 gsy fd-column'>" +
+                                            "<div class='grid ps-relative d-block'>" +
+                                                "<a href='/questions/tagged/html' class='post-tag js-gps-track' rel='tag'></a>" +
+                                            "</div>" +
+                                        "</div>" +
+                                    "</div>" +
+                                    "<div class='post-layout--right'>" +
+                                    "</div>" +
+                                "</div>" +
+                            "</div>" +
+                        "</div>" +
+                        "<div id='sidebar' class='show-votes' role='complementary'>" +
+                            "Right" +
+                        "</div>" +
                     "</div>" +
-                    "<button id='acceptButton' disabled>okay, got it</button>" +
                 "</div>" +
-            "</div>";
+            "</div>" + 
+        "</div>"  
+    return html;
 }
-// Fires randomly one of these text areas
-let dbsAlertMessages = [
-            "<h1><span>Read focused!</span></h1>" +
-                "<p class='slogan'>Don`t waste your time looking up with stuff in the internet." +
-                "<br>" +
-                "Instead use your brain and spend your time with more meanfull things :-)</p>",
-
-            "<h1><span>R T F M !</span></h1>" +
-                "<p class='slogan'>Don`t be stupid fellow." +
-                "<br>" +
-                "Sometimes its helpfull to <b>R</b>ead <b>T</b>he <b>F</b>*king <b>M</b>anual :-)</p>",
-
-            "<h1><span>Muhahahaha!</span></h1>" +
-                "<p class='slogan'>Ouw! Its better waste my time on Social Media" +
-                "<br></p>",
-]
-
-let style = // Adds all stlyes from the Overlaye
-    "#questionElement {" +
-        "width: 83%;" +
-        "margin: 0 1%;" +
-        "display: inline-flex;" +
-        "font-size: 1.5em;" +
-        "line-height: 66px;" +
-        "letter-spacing: -1px;" +
-        "white-space: nowrap;" +
-        "overflow: hidden;" +
-        "text-overflow: ellipsis;" +
-    "}" +
-    ".blurBody {" +
-        "position: fixed;" +
-        "width: 100%;" +
-        "height: 100%;" +
-        "background: rgba(255,255,255,0.98);" + 
-        "animation: pulseBackground 4s infinite alternate;" +
-        "height: 100%;" +
-        "top: 0;" +
-        "left: 0;" +
-        "bottom: 0;" +
-        "z-index: 9999;" +
-    "}" +
-    "hr {" + 
-        "margin: unset !important;" + 
-    "}" +
-    "#overlay {" +
-        "width:66%;" +
-        "overflow-y: auto;" +
-        "overflow-x: hidden;" +
-        "animation: animateOverlay .5s 1 alternate;" +
-        "margin: 0 auto;" +
-        "background: linear-gradient(rgba(44,44,44,0.97), rgba(11,11,11,0.8));" +
-        "top:1%;right:1%;" +
-        "bottom:1%;left:1%;" +
-        "z-index:99999;position:fixed;" +
-        "padding:1em;" +
-        "text-align:center;font-size:1.8em;" +
-        "color:white;" +
-        "box-shadow: 0 0 10vh rgba(255,255,255,0.995);" +
-    "}" +
-    "#acceptedAnswer {" +
-        "max-height: auto;" +
-    "}" +
-    "#answerType {" +
-        "width:15%;" +
-        "display:inline-flex;" +
-    "}" +
-    "#answerType span.vote-accepted-on {" +
-        "transform: scale(1.5);" +
-        "position: relative;" +
-        "top: 19px;" +
-        "left: 14px;" +
-        "margin: 0;" +
-    "}" +
-    "#answerType span {" +
-        "float: left;" +
-        "font-size: 2em;" +
-        "line-height: 66px;" +
-        "color: #0177cc;" +
-    "}" +
-    "#answerType span.vote-up-off {" +
-        "left: 13px;" +
-        "margin-top: 20px;" +
-        "transform: scale(1);" +
-    "}" +
-    "#acceptedAnswerInner {" +
-        "padding:0 12px 12px 12px;" +
-        "border: 1px solid #187ccd;" +
-        "background: rgba(255,255,255,0.8);" +
-        "line-height: 20px;" +
-        "overflow-x: auto;" +
-    "}" +
-    "#acceptedAnswerInner > pre {" +
-        "font-size: 14px !important;" +
-        "line-height: 18px !important;" +
-        "margin: 0 auto;" +
-        "text-align: left;" +
-    "}" +
-    "#acceptedAnswerInner > p {" +
-        "font-size: 18px !important;" +
-        "text-align: left;" +
-        "color: #222;" +
-    "}" +
-    "#acceptedAnswerInner > ul > li {" +
-        "font-size: 18px !important;" +
-        "color: #111 !important;" +
-    "}" +
-    "#acceptedAnswerInner > p > code, #acceptedAnswerInner > ul > li > code {" +
-        "color: #000 !important;" +
-    "}" +
-    ".content {" +
-        "font-size: 18px;" +
-        "filter: blur(0px) !important;" +
-        "position: relative;" +
-        "z-index: 1;" +
-        "line-height: 33px;" +
-    "}" +
-    ".content h1 {" +
-        "font-size: 3em;" +
-        "line-height: 62px;" +
-        "letter-spacing: -2px;" +
-        "margin: 0 auto;" +
-        "color: white;" +
-        "font-weight: 600 !important;" +
-    "}" +
-    ".content h1 span {" +
-        "font-family: Courier New;" +
-    "}" +
-    ".content p {" +
-        "letter-spacing: -.4px;" +
-        "line-height: 1.2em;" +
-        "margin: 12px auto 0 auto;" +
-    "}" +
-    ".slogan {" +
-        "font-family: Courier New;" +
-        "text-align: center;" +
-        "color: #FFF;" +
-        "line-height: 33px !important;" +
-        "font-size: 24px !important;" +
-        "letter-spacing: -1.5px !important;" +
-        "margin: 0 12px 12px 12px !important;" +
-    "}" +
-    "button {" +
-        "opacity: 1 !important;" +
-        "color:black;margin-top:20px;" +
-        "font-size:26px;padding: 10px;" +
-        "position: relative;" +
-        "z-index: 9999;" +
-        "transition: all .6s !important;" +
-    "}" +
-    "button:disabled {" +
-        "opacity: .7 !important;" +
-        "color: rgba(44,44,44,0.5) !important;" +
-    "}" +
-    "@-webkit-keyframes animateOverlay {" +
-        "0% { -webkit-filter: blur(20px); transform: translateY(-100%); }" +
-        "100% { -webkit-filter: blur(0px); transform: translateY(0); }" +
-    "}" +
-    "@-webkit-keyframes pulseBackground {" +
-        "0% { background: rgba(255,0,122,0.9); }" +
-        "100% { background: rgba(255,255,255,0.7); }" +
-    "}" +
-    "#acceptedAnswer h2 {" +
-        "width: 50%;" +
-        "font-family: Courier New !important;" +
-        "font-size: 36px !important;" +
-        "padding: 0 12px 6px 0;" +
-        "margin: 0 auto !important;" +
-        "text-align: center;" +
-        "font-weight:600;" +
-    "}"
-
-let mainBody = document.body; // Add overlayed template before body
-let span = document.createElement("span");
-    span.innerHTML = "";
-    span.className = "blurBody";
-    mainBody.parentNode.insertBefore(span, mainBody); // Pushs the focusing Element before Overlay
-
-
-let styleElement = document.createElement("style"); // Add a head style onto the overlayed body
-    styleElement.type = "text/css";
-    styleElement.appendChild(document.createTextNode(style));
-    document.getElementsByTagName("head")[0].appendChild(styleElement);
-
-let randomIndex = Math.floor(Math.random() * Math.floor(dbsAlertMessages.length)); // Generates a random number
-let randomMessage = dbsAlertMessages[randomIndex]; // Choose randomly one of the thre text areas
-
-    document.body.innerHTML += getOverlayHtml(randomMessage); // Add overlayed template before body
 
 // Loops trough all anwers on the page and extracts the one with the highest votes.
 function getHighestVotedAnswer() {
@@ -231,7 +86,7 @@ function getHighestVotedAnswer() {
 }
 
 function getAcceptedAnswer() {
-    let accepetedDomElement = document.querySelectorAll(".accepted-answer .post-text");
+    let accepetedDomElement = document.querySelectorAll(".accepted-answer");
     if (accepetedDomElement.length == 0) {
         return null;
     } else {
@@ -241,82 +96,188 @@ function getAcceptedAnswer() {
 
 function getQuestion() {
     let getQuestionValue = document.getElementsByClassName("question-hyperlink");
-    let questionElement = document.getElementById("questionElement");
     if (getQuestionValue) {
-        questionElement.innerHTML = getQuestionValue[0].innerHTML;
+        return getQuestionValue[0].innerHTML;
     }
 }
 
-function reStyleAcceptedAnswer(accepetedDomElement) {
-    let eStyle = accepetedDomElement.style;
-        eStyle.margin = "0 auto";
-        eStyle.width = "100%";
-        eStyle.padding = "18px";
-        eStyle.border = "1px solid grey";
-        eStyle.overflowY = "auto";
+// Fires randomly one of these text areas
+let dbsAlertMessages = [
+    "<h1 class='dbsPushMessageTitle grid--cell fs-headline1 fl1'>" +
+        "<a href='#' class='question-hyperlink'>Read focused!</a>" +
+    "</h1>" +
+        "<p class='dbsPushMessage'>Don`t waste your time looking up with stuff in the internet." +
+        "<br>" +
+        "Instead use your brain and spend your time with more meanfull things :-)</p>",
 
-    let accepetedDomCodeElement = document.getElementsByTagName("code");
-        for (i = 0; i < accepetedDomCodeElement.length; i++) {
-            accepetedDomCodeElement[i].style.color = "black";
-    }
+    "<h1 class='dbsPushMessageTitle grid--cell fs-headline1 fl1'>" +
+        "<a href='#' class='question-hyperlink'>R T F M !</a>" +
+    "</h1>" +
+    "<p class='dbsPushMessage'>Don`t be stupid fellow." +
+    "<br>" +
+    "Sometimes its helpfull to <b>R</b>ead <b>T</b>he <b>F</b>*king <b>M</b>anual :-)</p>",
+
+    "<h1 class='dbsPushMessageTitle grid--cell fs-headline1 fl1'>" +
+        "<a href='#' class='question-hyperlink'>Muhahahaha!</a>" +
+    "</h1>" +
+    "<p class='dbsPushMessage'>Ouw! Its better waste my time on Social Media" +
+    "<br></p>"
+]
+
+let style =
+    "body {" + 
+        "position: absolute;" + 
+        "flex-direction: column;" + 
+        "background-color: #FFF;" + 
+        "background-image: none;" + 
+        "background-position: top left;" + 
+        "background-repeat: repeat;" + 
+        "background-size: auto;" + 
+        "background-attachment: auto;" + 
+        "min-width: 1279px;" + 
+        "padding-top:50px;" + 
+    "}" +
+    "body > .container {" + 
+        "max-width: 1264px;" +
+        "width: 100%;" +
+        "background: none;" +
+        "display: flex;" +
+        "justify-content: space-between;" +
+        "margin: 0 auto;" +
+    "}" +
+    "h1.dbsPushMessageTitle {" +
+        "margin-bottom: 0 !important;" +
+    "}" +
+    "h1.dbsPushMessageTitle a {" +
+        "margin-bottom: 0 !important;" +
+        "font-size: 46px !important;" +
+        "line-height: 1;" +
+        "display: inline-table;" +
+        "margin-top: -9px;" +
+    "}" +
+    "p.dbsPushMessage {" +
+        "font-size: 1.4em;" +
+        "line-height: 22px;" +
+        "margin: 0 auto;" +
+        "width: 56%;" +
+        "text-align: right;" +
+        "background: white !important;" +
+        "color: #666;" +
+    "}" +
+    "body .top-bar~.container {" + 
+        "margin: 0 43.5px; !important;" + 
+    "}" +
+    ".blurBody {" +
+        "position: absolute;" +
+        "width: 55.8%;" +
+        "height: 100vh;" +
+        "background: rgba(255,255,255,0.98);" +
+        "animation: pulseBackground 12s 0 alternate;" +
+        "top: 0;" +
+        "left: 208px;" +
+        "right: 15%;" +
+        "bottom: 0;" +
+        "z-index: 1051;" +
+    "}" +
+    "#dbsNavbar {" +
+        "position: fixed;" +
+        "top: 0;" +
+        "left: 0;" +
+        "width: 100%;" +
+        "z-index: 1053;" +
+        "background-color: #333333;" +
+        "transition: box-shadow cubic-bezier(.165, .84, .44, 1) .25s;" +
+        "height: 51px;" +
+        "box-sizing: border-box;" +
+        "animation: animateNavbar .1s 1 ease-out;" +
+    "}" +
+    ".dbsHead {" +
+        "text-align:center;font-family: Courier New;" +
+    "}" +
+    ".dbsContainer {" +
+        "display: flex;" +
+        "margin: 0 43.5px !important;" +
+        "position: absolute;" +
+        "top: 50px;" +
+        "left: 0;" +
+        "right: 0;" +
+        "bottom: 0;" +
+        "z-index: 1052;" +
+    "}" +
+    "#dbsOverlay {" +
+        "animation: animateOverlay .5s 1 alternate;" +
+    "}" +
+    "#left-sidebar, #sidebar {" + 
+        "filter: blur(5px);" +
+        "height: 84vh;" +
+        "animation: blurSidebars .5s 1 alternate;" +
+    "}" +
+    "@-webkit-keyframes blurSidebars {" +
+        "0% { filter: blur(0); }" +
+        "100% { filter: blur(5px); }" +
+    "}" +
+    "@-webkit-keyframes animateOverlay {" +
+        "0% { -webkit-filter: blur(5px); transform: translateY(-100%); }" +
+        "100% { -webkit-filter: blur(0); transform: translateY(0); }" +
+    "}" +
+    "@-webkit-keyframes animateNavbar {" +
+        "0% { transform: translateY(-51px); }" +
+        "100% { transform: translateY(0); }" +
+    "}" +
+    "@-webkit-keyframes pulseBackground {" +
+        "0% { background: rgba(122,122,122,0.9); }" +
+        "100% { background: rgba(255,255,255,0.9); }" +
+    "}"
+
+let mainBody = document.body; // Add overlayed template before body
+let span = document.createElement("span");
+    span.innerHTML = "";
+    span.className = "blurBody";
+    mainBody.parentNode.insertBefore(span, mainBody); // Pushs the focusing Element before Overlay
+
+let styleElement = document.createElement("style"); // Add a head style onto the overlayed body
+    styleElement.type = "text/css";
+    styleElement.appendChild(document.createTextNode(style));
+    document.getElementsByTagName("head")[0].appendChild(styleElement);
+
+let randomIndex = Math.floor(Math.random() * Math.floor(dbsAlertMessages.length)); // Generates a random number
+let randomMessage = dbsAlertMessages[randomIndex]; // Choose randomly one of the thre text areas
+
+// Fires the highest voted answer if no accepted answer avaiable
+let highestVotedAnswer = getHighestVotedAnswer();
+
+// Fires the accepted answer if avaiable
+let accepetedDomElement = getAcceptedAnswer();
+
+let displayAnswer = accepetedDomElement;
+if (!accepetedDomElement) {
+    displayAnswer = highestVotedAnswer;
 }
 
-chrome.storage.sync.get(document.location, function (pageMetadata) {
-    // Display the accepted answer from so in the overlayer
-    let acceptedAnswerOverlayElement = document.getElementById("acceptedAnswerInner");
+let overlayHtml = getOverlayHtml(randomMessage, displayAnswer.innerHTML);
+    document.body.innerHTML += overlayHtml;
 
-    // On this Selector: checks while loading the Answertype and display it in id=answerTitle
-    let answerSelector = document.getElementById("answerType");
+// Delete original question-header 
+    //*[@id="question-header"]
 
-    // Fires the highest voted answer if no accepted answer avaiable
-    let highestVotedAnswer = getHighestVotedAnswer();
-    let question = getQuestion();
-    if (highestVotedAnswer) {
-        pageMetadata.highestPointAnswer = highestVotedAnswer.innerHTML; // highest voted answer HTML
-        acceptedAnswerOverlayElement.innerHTML = pageMetadata.highestPointAnswer;
-        answerSelector.innerHTML = "<span>" + highestVotedAnswer.voteCount + "</span><span class='vote-up-off'>up vote</span>"
-    }
-
-    // Fires the accepted answer if avaiable
-    let accepetedDomElement = getAcceptedAnswer();
-    if (accepetedDomElement) {
-        reStyleAcceptedAnswer(accepetedDomElement);
-        pageMetadata.acceptedAnswer = accepetedDomElement.innerHTML; // accepted answer HTML
-        acceptedAnswerOverlayElement.innerHTML = pageMetadata.acceptedAnswer;
-        answerSelector.innerHTML = "<span class='vote-accepted-on load-accepted-answer-date'>accepted</span>";
-    }
-
-    chrome.storage.sync.set(pageMetadata); // Store to the database with the url as key
-});
-
-let overlayElement = document.getElementById("overlay");
-let acceptButtonElement = document.getElementById("acceptButton");
-
-// Deactivates the button for 5 seconds
-setTimeout(function () {
-    document.getElementById("acceptButton").disabled = false;
-}, 7000);
-
-// Counts the numeric value inside the button to 0
-function countUpValue(id, start, end, duration) {
-    var range = end - start;
-    var current = start;
-    var increment = end > start? 1 : -1;
-    var stepTime = Math.abs(Math.floor(duration / range));
-    var obj = document.getElementById(id);
-    var timer = setInterval(function() {
-        current += increment;
-        obj.innerHTML = current;
-        if (current == end) {
+    /* // Deactivates the button and counts to 0
+    let counter = 5;
+    let interval = setInterval(o => {
+        dbsButton.innerHTML = counter;
+        counter--;
+        if (counter == 0) {
             clearInterval(timer);
-            acceptButtonElement.innerHTML = "okay, got it!";
+            dbsButton.innerHTML = "okay, got it!";
         }
-    }, stepTime);
-}
-countUpValue("acceptButton", 7, 0, 7000);
+    }, 1000);
 
-// Close the overlay box over the open tab
-acceptButtonElement.onclick = (e) => {
-    overlayElement.remove();
-    span.remove();
-};
+    // Deactivates the button for 5 seconds
+    setTimeout(function () {
+        document.getElementById("acceptButton").disabled = false;
+    }, 5000);
+
+    // Close the overlay box over the open tab
+    dbsButton.onclick = (e) => {
+        overlayElement.remove();
+        span.remove();
+    }; */
