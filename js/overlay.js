@@ -2,12 +2,14 @@ function getOverlayHtml(message, answer) {
     let html =
     "<header id='dbsNavbar' class='top-bar js-top-bar _fixed top-bar__network'>" +
         "<div class='-container'>" +
-        "<div class='dbsHead'>" + 
-            "<h1 title='stay tuned - don`t waste your time'>" +
-                "DON`T <span style='color:red;'>BE</span><br>" +
-                "<span style='letter-spacing:2.4px;'>STUPID</span>!" +
-            "</h1>" +
-        "</div>" +
+            "<div class='-main dbsHead'>" +
+                "<a href='#' class='left-sidebar-toggle p0 ai-center jc-center js-left-sidebar-toggle'>" +
+                "<span class='ps-relative></span></a>" +
+                        "<a href='https://dont-be-stup.id' class='-logo js-gps-track'" +
+                        "data-gps-track='top_nav.click({is_current:false, location:3, destination:8})'>" +
+                    "<span class='-img _glyph'>dont be stupid</span>" +
+                "</a>" +
+            "</div>" +
         "</div>" +
     "</header>" +
        
@@ -190,6 +192,12 @@ let style =
         "height: 51px;" +
         "box-sizing: border-box;" +
         "animation: animateNavbar .1s 1 ease-out;" +
+    "}" +
+    "#dbsNavbar .top-bar .-logo .-img {" +
+        "width: 30px;" +
+        "height: 30px;" +
+        "display: flex;" +
+        "background-image: url('./logo-dontbestupid.png');" +
     "}" +
     ".dbsHead {" +
         "text-align:center;font-family: Courier New;" +
