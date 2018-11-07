@@ -1,4 +1,4 @@
-function getOverlayHtml(message, answer) {
+function getOverlayHtml(randomIndex, message, answer) {
     // Appends the following element into the body of stackoverflow
     let html =
     "<header id='dbsNavbar' class='top-bar'>" +
@@ -6,7 +6,7 @@ function getOverlayHtml(message, answer) {
             "<div class='dbsHead'>" +
                 "<a href='#' class='left-sidebar-toggle p0 js-left-sidebar-toggle'>" +
                     "<a href='https://dont-be-stup.id'>" +
-                        "<img class='dbsLogo' src='https://s4.aconvert.com/convert/p3r68-cdx67/cbmrn-wpmsx.svg' />" +
+                        "<img class='dbsLogo' src='"+ randomLogoType(randomIndex) +"' />" +
                     "</a>" +
                 "</a>" +
             "</div>" +
@@ -48,7 +48,6 @@ function getOverlayHtml(message, answer) {
                             "</div>" +
                         "</div>" +
                         "<div id='sidebar' class='show-votes' role='complementary'>" +
-                            "Right" +
                         "</div>" +
                     "</div>" +
                 "</div>" +
@@ -195,8 +194,8 @@ let style =
     "}" +
     ".dbsLogo {" +
         "text-align: left;" +
-        "width: 78px;" +
-        "margin: 34px 0 0 19px;" +
+        "width: 90px;" +
+        "margin: 49px 0 0 19px;" +
         "border: 4px solid #333333;" +
         "animation: showLogo .5s 1 ease-in;" +
     "}" +
@@ -221,13 +220,10 @@ let style =
         "height: 84vh;" +
         "animation: blurSidebars .5s 1 alternate;" +
     "}" +
-    "@-webkit-keyframes showLogo {" +
-        "0% { transform: scale(0); }" +
-        "100% { transform: scale(1); }" +
-    "}";
+    
     "@-webkit-keyframes blurSidebars {" +
-        "0% { filter: blur(0); }" +
-        "100% { filter: blur(5px); }" +
+        "0% { filter: translateZ(-100px); }" +
+        "100% { filter: translateZ(0); }" +
     "}" +
     "@-webkit-keyframes animateOverlay {" +
         "0% { -webkit-filter: blur(5px); transform: translateY(-100%); }" +
@@ -240,6 +236,10 @@ let style =
     "@-webkit-keyframes pulseBackground {" +
         "0% { background: rgba(122,122,122,0.9); }" +
         "100% { background: rgba(255,255,255,0.9); }" +
+    "}" +
+    "@-webkit-keyframes showLogo {" +
+        "0% { transform: scale(0); }" +
+        "100% { transform: scale(1); }" +
     "}";
 
 let mainBody = document.body; // Add overlayed template before body
@@ -253,8 +253,22 @@ let styleElement = document.createElement("style"); // Add a head style onto the
     styleElement.appendChild(document.createTextNode(style));
     document.getElementsByTagName("head")[0].appendChild(styleElement);
 
+// Multiplies a random number with the array-length of the alert messages
 let randomIndex = Math.floor(Math.random() * Math.floor(dbsAlertMessages.length)); // Generates a random number
 let randomMessage = dbsAlertMessages[randomIndex]; // Choose randomly one of the thre text areas
+
+function randomLogoType(randomIndex) {
+// Changes the Logo Element inFrame after random setted seconds
+let logoClass = document.getElementsByClassName("dbsLogo");
+    logoClass.src = [
+        "https://s4.aconvert.com/convert/p3r68-cdx67/cbzm2-g0vil.svg", // without eye-filling
+        "https://s4.aconvert.com/convert/p3r68-cdx67/cbc8g-dp47r.svg", // eyes open mouth closed
+        "https://s4.aconvert.com/convert/p3r68-cdx67/cbmou-xze4i.svg", // smirking both open
+        "https://s4.aconvert.com/convert/p3r68-cdx67/cbn7d-04nm3.svg", // both closed
+        "https://s4.aconvert.com/convert/p3r68-cdx67/cb3iy-yigmm.svg", // original Logo
+    ];
+    return logoClass.src[randomIndex];
+}
 
 // Fires the highest voted answer if no accepted answer avaiable
 let highestVotedAnswer = getHighestVotedAnswer();
@@ -262,12 +276,14 @@ let highestVotedAnswer = getHighestVotedAnswer();
 // Fires the accepted answer if avaiable
 let accepetedDomElement = getAcceptedAnswer();
 
+// Proofes whether the Objects are correctly setted
 let displayAnswer = accepetedDomElement;
 if (!accepetedDomElement) {
     displayAnswer = highestVotedAnswer;
 }
 
-let overlayHtml = getOverlayHtml(randomMessage, displayAnswer.innerHTML);
+// Pushes the fired objects frome the functions into the mixed frontend body
+let overlayHtml = getOverlayHtml(randomIndex, randomMessage, displayAnswer.innerHTML);
     document.body.innerHTML += overlayHtml;
 
 // Delete original question-header 
