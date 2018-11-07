@@ -1,12 +1,12 @@
 function getOverlayHtml(randomIndex, message, answer) {
     // Appends the following element into the body of stackoverflow
     let html =
-    "<header id='dbsNavbar' class='top-bar'>" +
+    "<header id='dbsNavbar' class='top-bar' style='border-top:unset;'>" +
         "<div class='-container'>" +
             "<div class='dbsHead'>" +
                 "<a href='#' class='left-sidebar-toggle p0 js-left-sidebar-toggle'>" +
                     "<a href='https://dont-be-stup.id'>" +
-                        "<img class='dbsLogo' src='"+ randomLogoType(randomIndex) +"' />" +
+                        "<img class='dbsLogo' src='"+ changeLogoType(randomIndex) +"' />" +
                     "</a>" +
                 "</a>" +
             "</div>" +
@@ -23,7 +23,7 @@ function getOverlayHtml(randomIndex, message, answer) {
                         "<div id='question-header' class='grid'>" + 
                             message +
                         "</div>" +
-                        "<div id='mainbar' role='main'>" +
+                        "<div id='mainbar' role='main' style='box-shadow: 9px 12px 28px rgba(55,55,55,0.1);'>" +
                             "<div class='question' id='question'>" +
                                 "<div class='post-layout'>" + 
                                     /* "<div class='votecell post-layout--left'>" +
@@ -167,6 +167,7 @@ let style =
     "}" +
     "body .top-bar~.container {" + 
         "margin: 0 43.5px; !important;" + 
+        "margin: 0 43.5px; !important;" + 
     "}" +
     ".blurBody {" +
         "position: absolute;" +
@@ -187,6 +188,7 @@ let style =
         "width: 100%;" +
         "z-index: 1053;" +
         "background-color: #333333;" +
+        "box-shadow: 0px 3px 6px #888888;" +
         "transition: box-shadow cubic-bezier(.165, .84, .44, 1) .25s;" +
         "height: 51px;" +
         "box-sizing: border-box;" +
@@ -220,6 +222,23 @@ let style =
         "height: 84vh;" +
         "animation: blurSidebars .5s 1 alternate;" +
     "}" +
+    ".ball {" + 
+        "position: absolute;" +
+        "color: #000 !important;" +
+        "font-size: 40px !important;" +
+        "top: 18px;" +
+        "width: 24px;" +
+        "height: 24px;" +
+        "line-height: 45px;" +
+    "}" +
+    ".rotateEyeLeft {" + 
+        "position: absolute;" +
+        "animation: rotateEyeLeft 2s 3 alternate;" +
+    "}" +
+    ".rotateEyeRight {" + 
+        "position: absolute;" +
+        "animation: rotateEyeRight 2s 3 ease-in;" +
+    "}" +
     
     "@-webkit-keyframes blurSidebars {" +
         "0% { filter: translateZ(-100px); }" +
@@ -240,6 +259,14 @@ let style =
     "@-webkit-keyframes showLogo {" +
         "0% { transform: scale(0); }" +
         "100% { transform: scale(1); }" +
+    "}" +
+    "@-webkit-keyframes rotateLeft {" +
+        "0% { transform: scale(360deg); }" +
+        "100% { transform: scale(0deg); }" +
+    "}" +
+    "@-webkit-keyframes rotateRight {" +
+        "0% { transform: rotate(-360deg); }" +
+        "100% { transform: scale(0deg); }" +
     "}";
 
 let mainBody = document.body; // Add overlayed template before body
@@ -257,17 +284,44 @@ let styleElement = document.createElement("style"); // Add a head style onto the
 let randomIndex = Math.floor(Math.random() * Math.floor(dbsAlertMessages.length)); // Generates a random number
 let randomMessage = dbsAlertMessages[randomIndex]; // Choose randomly one of the thre text areas
 
-function randomLogoType(randomIndex) {
+function changeLogoType(randomIndex) {
 // Changes the Logo Element inFrame after random setted seconds
 let logoClass = document.getElementsByClassName("dbsLogo");
+    selector = "https://diekommune.de.cool/";
     logoClass.src = [
-        "https://s4.aconvert.com/convert/p3r68-cdx67/cbzm2-g0vil.svg", // without eye-filling
-        "https://s4.aconvert.com/convert/p3r68-cdx67/cbc8g-dp47r.svg", // eyes open mouth closed
-        "https://s4.aconvert.com/convert/p3r68-cdx67/cbmou-xze4i.svg", // smirking both open
-        "https://s4.aconvert.com/convert/p3r68-cdx67/cbn7d-04nm3.svg", // both closed
-        "https://s4.aconvert.com/convert/p3r68-cdx67/cb3iy-yigmm.svg", // original Logo
+        selector + "0.svg", // original
+        selector + "1.svg", // empty eyes 
+        selector + "2.svg", // eyes closed mouth open
+        selector + "3.svg", // smirking eyes open
+        selector + "4.svg" // both closed
     ];
-    return logoClass.src[randomIndex];
+
+    if (randomIndex == 0) {
+        randomIndex++;
+    } else {
+        randomIndex--;
+    }
+
+    function buildRollEyes() {
+        let eyeWrapper = document.createElement("span");
+            eyeWrapper.id = "rollingEyes";
+        let wrapperNode = document.createTextNode("lets roll!");
+            eyeWrapper.appendChild(wrapperNode);
+        return eyeWrapper;
+    }
+
+    if (randomIndex == 1) {
+        let eyeWrapper = buildRollEyes();
+        eyeWrapper.innerHTML = 
+        "<span class='ball rotateEyeLeft'>.</span>" +
+        "<span class='ball rotateEyeRight'>.</span>";
+        console.log(eyeWrapper);
+        let logoElement = document.getElementsByClassName("dbsLogo"); 
+        logoElement.appendChild(eyeWrapper); 
+    }
+
+    let logoRandomSrc = logoClass.src;
+    return logoRandomSrc[randomIndex];
 }
 
 // Fires the highest voted answer if no accepted answer avaiable

@@ -80,9 +80,9 @@ function addVisit(url) {
       finished(newVisitCount);
     });
   });
-
   return promise;
 }
+
 // Executes the external overlay box inside the acitve tab
 function displayYoureStupidMesssage() {
   chrome.tabs.query({
