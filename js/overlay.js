@@ -1,13 +1,13 @@
 function getOverlayHtml(message, answer) {
+    // Appends the following element into the body of stackoverflow
     let html =
-    "<header id='dbsNavbar' class='top-bar js-top-bar _fixed top-bar__network'>" +
+    "<header id='dbsNavbar' class='top-bar'>" +
         "<div class='-container'>" +
-            "<div class='-main dbsHead'>" +
-                "<a href='#' class='left-sidebar-toggle p0 ai-center jc-center js-left-sidebar-toggle'>" +
-                "<span class='ps-relative></span></a>" +
-                        "<a href='https://dont-be-stup.id' class='-logo js-gps-track'" +
-                        "data-gps-track='top_nav.click({is_current:false, location:3, destination:8})'>" +
-                    "<span class='-img _glyph'>dont be stupid</span>" +
+            "<div class='dbsHead'>" +
+                "<a href='#' class='left-sidebar-toggle p0 js-left-sidebar-toggle'>" +
+                    "<a href='https://dont-be-stup.id'>" +
+                        "<img class='dbsLogo' src='https://s4.aconvert.com/convert/p3r68-cdx67/cbmrn-wpmsx.svg' />" +
+                    "</a>" +
                 "</a>" +
             "</div>" +
         "</div>" +
@@ -53,7 +53,7 @@ function getOverlayHtml(message, answer) {
                     "</div>" +
                 "</div>" +
             "</div>" + 
-        "</div>"  
+        "</div>";
     return html;
 }
 
@@ -191,13 +191,14 @@ let style =
         "transition: box-shadow cubic-bezier(.165, .84, .44, 1) .25s;" +
         "height: 51px;" +
         "box-sizing: border-box;" +
-        "animation: animateNavbar .1s 1 ease-out;" +
+        "animation: animateNavbar .2s 1 ease-in;" +
     "}" +
-    "#dbsNavbar .top-bar .-logo .-img {" +
-        "width: 30px;" +
-        "height: 30px;" +
-        "display: flex;" +
-        "background-image: url('./logo-dontbestupid.png');" +
+    ".dbsLogo {" +
+        "text-align: left;" +
+        "width: 78px;" +
+        "margin: 34px 0 0 19px;" +
+        "border: 4px solid #333333;" +
+        "animation: showLogo .5s 1 ease-in;" +
     "}" +
     ".dbsHead {" +
         "text-align:center;font-family: Courier New;" +
@@ -220,6 +221,10 @@ let style =
         "height: 84vh;" +
         "animation: blurSidebars .5s 1 alternate;" +
     "}" +
+    "@-webkit-keyframes showLogo {" +
+        "0% { transform: scale(0); }" +
+        "100% { transform: scale(1); }" +
+    "}";
     "@-webkit-keyframes blurSidebars {" +
         "0% { filter: blur(0); }" +
         "100% { filter: blur(5px); }" +
@@ -235,7 +240,7 @@ let style =
     "@-webkit-keyframes pulseBackground {" +
         "0% { background: rgba(122,122,122,0.9); }" +
         "100% { background: rgba(255,255,255,0.9); }" +
-    "}"
+    "}";
 
 let mainBody = document.body; // Add overlayed template before body
 let span = document.createElement("span");

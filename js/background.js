@@ -90,7 +90,7 @@ function displayYoureStupidMesssage() {
     currentWindow: true
   }, function (tabs) {
     chrome.tabs.executeScript(tabs[0].id, {
-      file: "js/overlay.min.js"
+      file: "js/overlay.js"
     });
   });
 };
