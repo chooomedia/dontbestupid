@@ -1,12 +1,12 @@
-function getOverlayHtml(randomIndex, message, answer) {
+function getOverlayHtml(logo, message, answer) {
     // Appends the following element into the body of stackoverflow
     let html =
     "<header id='dbsNavbar' class='top-bar' style='border-top:unset;'>" +
         "<div class='-container'>" +
             "<div class='dbsHead'>" +
                 "<a href='#' class='left-sidebar-toggle p0 js-left-sidebar-toggle'>" +
-                    "<a href='https://dont-be-stup.id'>" +
-                        "<img class='dbsLogo' src='"+ changeLogoType(randomIndex) +"' />" +
+                    "<a id='logoWrapper' href='https://dont-be-stup.id'>" +
+                        "<img id='dbsLogo' src='"+ logo +"' />" +
                     "</a>" +
                 "</a>" +
             "</div>" +
@@ -194,7 +194,11 @@ let style =
         "box-sizing: border-box;" +
         "animation: animateNavbar .2s 1 ease-in;" +
     "}" +
-    ".dbsLogo {" +
+    "#dbsLogo {" +
+        "background: url(https://cdn.dribbble.com/users/1065420/screenshots/3933364/gary-big-eyes.gif);" +
+        "animation: showLogo .5s 1 ease-in;" +
+        "background-size: 136% 89%;" +
+        "background-position: -6px -22px;" +
         "text-align: left;" +
         "width: 90px;" +
         "margin: 49px 0 0 19px;" +
@@ -268,61 +272,19 @@ let style =
         "0% { transform: rotate(-360deg); }" +
         "100% { transform: scale(0deg); }" +
     "}";
-
-let mainBody = document.body; // Add overlayed template before body
-let span = document.createElement("span");
-    span.innerHTML = "";
-    span.className = "blurBody";
-    mainBody.parentNode.insertBefore(span, mainBody); // Pushs the focusing Element before Overlay
-
-let styleElement = document.createElement("style"); // Add a head style onto the overlayed body
-    styleElement.type = "text/css";
-    styleElement.appendChild(document.createTextNode(style));
-    document.getElementsByTagName("head")[0].appendChild(styleElement);
+    
+let imagePaths = "https://diekommune.de.cool/";
+let logoImagePaths = [
+    imagePaths + "0.svg", // original
+    imagePaths + "1.svg", // empty eyes 
+    imagePaths + "2.svg", // eyes closed mouth open
+    imagePaths + "3.svg", // smirking eyes open
+    imagePaths + "4.svg" // both closed
+];
 
 // Multiplies a random number with the array-length of the alert messages
 let randomIndex = Math.floor(Math.random() * Math.floor(dbsAlertMessages.length)); // Generates a random number
 let randomMessage = dbsAlertMessages[randomIndex]; // Choose randomly one of the thre text areas
-
-function changeLogoType(randomIndex) {
-// Changes the Logo Element inFrame after random setted seconds
-let logoClass = document.getElementsByClassName("dbsLogo");
-    selector = "https://diekommune.de.cool/";
-    logoClass.src = [
-        selector + "0.svg", // original
-        selector + "1.svg", // empty eyes 
-        selector + "2.svg", // eyes closed mouth open
-        selector + "3.svg", // smirking eyes open
-        selector + "4.svg" // both closed
-    ];
-
-    if (randomIndex == 0) {
-        randomIndex++;
-    } else {
-        randomIndex--;
-    }
-
-    function buildRollEyes() {
-        let eyeWrapper = document.createElement("span");
-            eyeWrapper.id = "rollingEyes";
-        let wrapperNode = document.createTextNode("lets roll!");
-            eyeWrapper.appendChild(wrapperNode);
-        return eyeWrapper;
-    }
-
-    if (randomIndex == 1) {
-        let eyeWrapper = buildRollEyes();
-        eyeWrapper.innerHTML = 
-        "<span class='ball rotateEyeLeft'>.</span>" +
-        "<span class='ball rotateEyeRight'>.</span>";
-        console.log(eyeWrapper);
-        let logoElement = document.getElementsByClassName("dbsLogo"); 
-        logoElement.appendChild(eyeWrapper); 
-    }
-
-    let logoRandomSrc = logoClass.src;
-    return logoRandomSrc[randomIndex];
-}
 
 // Fires the highest voted answer if no accepted answer avaiable
 let highestVotedAnswer = getHighestVotedAnswer();
@@ -336,9 +298,53 @@ if (!accepetedDomElement) {
     displayAnswer = highestVotedAnswer;
 }
 
+let mainBody = document.body; // Add overlayed template before body
+let span = document.createElement("span");
+    span.innerHTML = "";
+    span.className = "blurBody";
+    mainBody.parentNode.insertBefore(span, mainBody); // Pushs the focusing Element before Overlay
+
+let styleElement = document.createElement("style"); // Add a head style onto the overlayed body
+    styleElement.type = "text/css";
+    styleElement.appendChild(document.createTextNode(style));
+    document.getElementsByTagName("head")[0].appendChild(styleElement);
+
+function changeLogoType(randomIndex) {
+// Changes the Logo Element inFrame after random setted seconds
+    if (randomIndex == 0) {
+        randomIndex++;
+    } else {
+        randomIndex--;
+    }
+    return logoImagePaths[randomIndex];
+}
+
 // Pushes the fired objects frome the functions into the mixed frontend body
-let overlayHtml = getOverlayHtml(randomIndex, randomMessage, displayAnswer.innerHTML);
+let overlayHtml = getOverlayHtml(changeLogoType(randomIndex), randomMessage, displayAnswer.innerHTML);
     document.body.innerHTML += overlayHtml;
+
+function buildRollEyes() {
+    let eyeWrapper = document.createElement("span");
+        eyeWrapper.id = "rollingEyes";
+    return eyeWrapper;
+} 
+
+if (randomIndex == 1) {
+    let eyeWrapper = buildRollEyes();
+    eyeWrapper.innerHTML = 
+    "<span class='ball rotateEyeLeft'>.</span>" +
+    "<span class='ball rotateEyeRight'>.</span>";
+    let logoLinkedWrapper = document.getElementById("logoWrapper");
+    logoLinkedWrapper += eyeWrapper;
+}
+    // Creates the animated douche-guy logo :-)    
+    function getLogoElement(logoElement) {
+        logoElement = document.getElementById("dbsLogo");
+        if (!logoElement) {
+            return null;
+        }
+        return logoElement;
+    }  
 
 // Delete original question-header 
     //*[@id="question-header"]
