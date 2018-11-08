@@ -50,8 +50,14 @@ $(function () {
     }
 
     function setAlertCounterValue(intervall) {
+        if (intervall) {
+            let chromeTextStamp = chrome.browserAction.setBadgeText(repeatedVisit, dbsCounter.val(intervall));
+            console.log(chromeTextStamp);
+        }
+
         return dbsCounter.val(intervall);
     }
+
 // Writes the inputted input settings into the chrome storage
     function writeSettings() {
         chrome.storage.sync.set({

@@ -5,9 +5,14 @@ function getOverlayHtml(logo, message, answer) {
         "<div class='-container'>" +
             "<div class='dbsHead'>" +
                 "<a href='#' class='left-sidebar-toggle p0 js-left-sidebar-toggle'>" +
-                    "<a id='logoWrapper' href='https://dont-be-stup.id'>" +
+                    "<a id='logoWrapper' href='#' title='comming soon - https://dont-be-stup.id'>" +
                         "<img id='dbsLogo' src='"+ logo +"' />" +
                     "</a>" +
+                    "<div id='drDoucheDialog'>" +
+                        "<nav id='dialogMenu'></nav>" +
+                        "<div class='innerDialog'></div>" +
+                        "<div class='innerDialog'></div>" +
+                    "</div>" +
                 "</a>" +
             "</div>" +
         "</div>" +
@@ -347,9 +352,8 @@ if (randomIndex == 1) {
     }  
 
 // Delete original question-header 
-    //*[@id="question-header"]
 
-    /* // Deactivates the button and counts to 0
+    // Deactivates the button and counts to 0
     let counter = 5;
     let interval = setInterval(o => {
         dbsButton.innerHTML = counter;
@@ -367,6 +371,5 @@ if (randomIndex == 1) {
 
     // Close the overlay box over the open tab
     dbsButton.onclick = (e) => {
-        overlayElement.remove();
-        span.remove();
-    }; */
+        dbsOverlay.remove();
+    };
