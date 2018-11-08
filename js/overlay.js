@@ -1,4 +1,4 @@
-function getOverlayHtml(logo, message, answer) {
+function getOverlayHtml(logo, message, question, answer) {
     // Appends the following element into the body of stackoverflow
     let html =
     "<header id='dbsNavbar' class='top-bar' style='border-top:unset;'>" +
@@ -10,8 +10,7 @@ function getOverlayHtml(logo, message, answer) {
                     "</a>" +
                     "<div id='drDoucheDialog'>" +
                         "<nav id='dialogMenu'></nav>" +
-                        "<div class='innerDialog'></div>" +
-                        "<div class='innerDialog'></div>" +
+                        message +
                     "</div>" +
                 "</a>" +
             "</div>" +
@@ -20,43 +19,48 @@ function getOverlayHtml(logo, message, answer) {
        
     "<div class='container dbsContainer'>" +
         "<div id='left-sidebar' data-is-here-when='md lg' class='left-sidebar js-pinned-left-sidebar'>" +
-            "<div class='left-sidebar--sticky-container js-sticky-leftnav'>left</div>" +
+            "<div class='left-sidebar--sticky-container js-sticky-leftnav'></div>" +
         "</div>" +
-            "<div id='content' style='background: transparent;' class='snippet-hidden'>" +
-                "<div id='dbsOverlay'>" +
-                    "<div class='inner-content clearfix'>" +
-                        "<div id='question-header' class='grid'>" + 
-                            message +
+            "<div id='dbsOverlay'>" +
+                "<div class='inner-content clearfix'>" +
+                    "<div id='question-header' class='grid'>" +
+                        "<h1 itemprop='name' class='grid--cell fs-headline1 fl1'>" +
+                            "<div class='question-hyperlink'>" +
+                            question +
+                            "</div>" +
+                        "</h1>" +
+                        "<div class='pl8 aside-cta grid--cell' role='navigation' aria-label='ask new question'>" +
+                            "<a href='/questions/ask' class='d-inline-flex ai-center ws-nowrap s-btn s-btn__primary'>Ask Question</a>" +
                         "</div>" +
-                        "<div id='mainbar' role='main' style='box-shadow: 9px 12px 28px rgba(55,55,55,0.1);'>" +
-                            "<div class='question' id='question'>" +
-                                "<div class='post-layout'>" + 
-                                    /* "<div class='votecell post-layout--left'>" +
-                                        "<div class='vote'>" +
-                                            "<a class='vote-up-off'>up vote</a>" +
-                                            "<span class='vote-count-post'></span>" +
-                                        "</div>" +
-                                    "</div>" + */
-                                    "<div class='postcell post-layout--right'>" +
-                                        "<div class='post-text'>" +
-                                            answer +
-                                        "</div>" +
-                                        "<div class='post-taglist grid gs4 gsy fd-column'>" +
-                                            "<div class='grid ps-relative d-block'>" +
-                                                "<a href='/questions/tagged/html' class='post-tag js-gps-track' rel='tag'></a>" +
-                                            "</div>" +
+                    "</div>" +
+                    "<div id='mainbar' role='main' style='background: white;'>" + // style='box-shadow: 9px 12px 28px rgba(55,55,55,0.1);'
+                        "<div class='question' id='question'>" +
+                            "<div class='post-layout'>" + 
+                                /* "<div class='votecell post-layout--left'>" +
+                                    "<div class='vote'>" +
+                                        "<a class='vote-up-off'>up vote</a>" +
+                                        "<span class='vote-count-post'></span>" +
+                                    "</div>" +
+                                "</div>" + */
+                                "<div class='postcell post-layout--right'>" +
+                                    "<div class='post-text'>" +
+                                        answer +
+                                    "</div>" +
+                                    "<div class='post-taglist grid gs4 gsy fd-column'>" +
+                                        "<div class='grid ps-relative d-block'>" +
+                                            "<a href='/questions/tagged/html' class='post-tag js-gps-track' rel='tag'></a>" +
                                         "</div>" +
                                     "</div>" +
-                                    "<div class='post-layout--right'>" +
-                                    "</div>" +
+                                "</div>" +
+                                "<div class='post-layout--right'>" +
                                 "</div>" +
                             "</div>" +
                         "</div>" +
-                        "<div id='sidebar' class='show-votes' role='complementary'>" +
-                        "</div>" +
+                    "</div>" +
+                    "<div id='sidebar' style='position:relative;top:-10px;' class='show-votes' role='complementary'>" +
                     "</div>" +
                 "</div>" +
-            "</div>" + 
+            "</div>" +
         "</div>";
     return html;
 }
@@ -107,29 +111,44 @@ function getQuestion() {
     }
 }
 
-// Fires randomly one of these text areas
+// Fires randomnly one of these text areas
 let dbsAlertMessages = [
-    "<h1 class='dbsPushMessageTitle grid--cell fs-headline1 fl1'>" +
-        "<a href='#' class='question-hyperlink'>Read focused!</a>" +
-    "</h1>" +
-        "<p class='dbsPushMessage'>Don`t waste your time looking up with stuff in the internet." +
-        "<br>" +
-        "Instead use your brain and spend your time with more meanfull things :-)</p>",
+    "<div class='innerDialog'>" + 
+        "<h1 class='dbsPushMessageTitle .question-hyperlink'>" +
+            "<a href='#' class='question-hyperlink'>Clam, Dude - try again!</a>" +
+        "</h1>" +
+        "<p class='dbsPushMessage'>" +
+            "Don`t waste your time looking up with stuff in the internet. Instead use your brain and spend your time with more meanfull things..." +
+        "</p>" +
+    "</div>",
 
-    "<h1 class='dbsPushMessageTitle grid--cell fs-headline1 fl1'>" +
-        "<a href='#' class='question-hyperlink'>R T F M !</a>" +
-    "</h1>" +
-    "<p class='dbsPushMessage'>Don`t be stupid fellow." +
-    "<br>" +
-    "Sometimes its helpfull to <b>R</b>ead <b>T</b>he <b>F</b>*king <b>M</b>anual :-)</p>",
+    "<div class='innerDialog'>" + 
+        "<h1 class='dbsPushMessageTitle question-hyperlink'>" +
+            "<a href='#' class='question-hyperlink'>R T F M !</a>" +
+        "</h1>" +
+        "<p class='dbsPushMessage'>" +
+            "Somtimes it is very helpfull to invest more Time. More Time to understand more - so <b>R</b>ead <b>T</b>he <b>F</b>*king <b>M</b>anual :-)" +
+        "</p>" +
+    "</div>",
 
-    "<h1 class='dbsPushMessageTitle grid--cell fs-headline1 fl1'>" +
-        "<a href='#' class='question-hyperlink'>Muhahahaha!</a>" +
-    "</h1>" +
-    "<p class='dbsPushMessage'>Ouw! Its better waste my time on Social Media" +
-    "<br></p>"
-]
+    "<div class='innerDialog'>" + 
+        "<h1 class='dbsPushMessageTitle question-hyperlink'>" +
+            "<a href='#' class='question-hyperlink'>Whats Wrong? - are you nuts?</a>" +
+        "</h1>" +
+        "<p class='dbsPushMessage'>Don`t be stupid fellow." +
+            "Don`t be stupid fellow. eat less Meat, more laughing bla bla - i`m not your Vather, Luke." +
+        "</p>" +
+    "</div>",
 
+    "<div class='innerDialog'>" + 
+        "<h1 class='dbsPushMessageTitle question-hyperlink'>" +
+            "<a href='#' class='question-hyperlink'>Muhaha ha ha!</a>" +
+        "</h1>" +
+        "<p class='dbsPushMessage'>Ouw! Its better waste my time on Social Media</p>" +
+    "</div>"
+];
+
+// Writes from javaScript inside the DOM element from the browser - sooo long...
 let style =
     "body {" + 
         "position: absolute;" + 
@@ -156,102 +175,161 @@ let style =
     "}" +
     "h1.dbsPushMessageTitle a {" +
         "margin-bottom: 0 !important;" +
-        "font-size: 46px !important;" +
-        "line-height: 1;" +
-        "display: inline-table;" +
-        "margin-top: -9px;" +
+        "font-size: 20px !important;" +
+        "letter-spacing: -1px;" +
     "}" +
     "p.dbsPushMessage {" +
-        "font-size: 1.4em;" +
-        "line-height: 22px;" +
+        "font-size: 15px;" +
+        "line-height: 18px;" +
         "margin: 0 auto;" +
-        "width: 56%;" +
-        "text-align: right;" +
-        "background: white !important;" +
-        "color: #666;" +
     "}" +
     "body .top-bar~.container {" + 
-        "margin: 0 43.5px; !important;" + 
-        "margin: 0 43.5px; !important;" + 
+        "margin: 0 43.5px !important;" + 
     "}" +
-    ".blurBody {" +
+    ".dbsBody {" +
         "position: absolute;" +
         "width: 55.8%;" +
         "height: 100vh;" +
-        "background: rgba(255,255,255,0.98);" +
+        "background: rgba(255,255,255,0.96);" +
         "animation: pulseBackground 12s 0 alternate;" +
         "top: 0;" +
         "left: 208px;" +
         "right: 15%;" +
         "bottom: 0;" +
-        "z-index: 1051;" +
+        "z-index: -1;" +
     "}" +
     "#dbsNavbar {" +
         "position: fixed;" +
-        "top: 0;" +
-        "left: 0;" +
-        "width: 100%;" +
-        "z-index: 1053;" +
         "background-color: #333333;" +
         "box-shadow: 0px 3px 6px #888888;" +
         "transition: box-shadow cubic-bezier(.165, .84, .44, 1) .25s;" +
         "height: 51px;" +
         "box-sizing: border-box;" +
-        "animation: animateNavbar .2s 1 ease-in;" +
+        "transition: all .4s;" +
+        "animation: animateNavbar .4s 1 alternate;" +
     "}" +
     "#dbsLogo {" +
-        "background: url(https://cdn.dribbble.com/users/1065420/screenshots/3933364/gary-big-eyes.gif);" +
-        "animation: showLogo .5s 1 ease-in;" +
-        "background-size: 136% 89%;" +
-        "background-position: -6px -22px;" +
-        "text-align: left;" +
         "width: 90px;" +
-        "margin: 49px 0 0 19px;" +
+        "margin: 0 0 0 19px;" +
+        "display:inline-flex;" +
+        "position:relative;" +
+        "float:left;" +
+        "z-index:1;" +
         "border: 4px solid #333333;" +
-        "animation: showLogo .5s 1 ease-in;" +
+        "animation: showLogo .3s 1 ease-in;" +
+        // background: url(https://cdn.dribbble.com/users/1065420/screenshots/3933364/gary-big-eyes.gif);" +
+        // "background-size: 136% 89%;" +
+        // "background-position: -6px -22px;" +
+    "}" +
+    "#drDoucheDialog {" +
+        "position: relative;" +
+        "display: inline-flex;" +
+        "padding: 0 5px 5px 5px;" +
+        "word-break: break-all;" +
+        "text-overflow: clip;" +
+        "margin-top: 5px;" +
+        "left: 14px;" +
+        "background: white;" +
+        "border: 4px solid #333;" +
+        "width: 62.8%;" +
+        "max-height: 80px;" +
+        "min-height: 60px;" +
+    "}" +
+    "#drDoucheDialog:after, #drDoucheDialog:before {" +
+        "left: -18px;" +
+        "top: 67%;" +
+        "border: solid transparent;" +
+        "content: ' ';" +
+        "height: 0;" +
+        "width: 0;" +
+        "position: absolute;" +
+        "pointer-events: none;" +
+    "}" +
+    "#drDoucheDialog:after {" +
+        "border-right-color: #333;" +
+        "border-width: 15px;" +
+        "margin-left: -11px;" +
+        "margin-top: -22px;" +
+        "z-index: -1;" +
+    "}" +
+    "#drDoucheDialog:before {" +
+        "border-color: rgba(194, 225, 245, 0);" +
+        "border-right-color: #FFF;" +
+        "border-width: 9px;" +
+       " margin-top: -16px;" +
+    "}" +
+    "}" +
+    ".innerDialog {" +
+        "line-height:30px;" +
+    "}" +
+    "nav#dialogMenu {" +
+        "display: none;" +
     "}" +
     ".dbsHead {" +
-        "text-align:center;font-family: Courier New;" +
+        "width: 100%;" +
+        "margin-top: 39px;" +
     "}" +
     ".dbsContainer {" +
-        "display: flex;" +
-        "margin: 0 43.5px !important;" +
+        "top: 51px;" +
         "position: absolute;" +
-        "top: 50px;" +
-        "left: 0;" +
-        "right: 0;" +
-        "bottom: 0;" +
-        "z-index: 1052;" +
+
+    "}" +
+    ".dbsContainer #content {" +
+        "padding:14px 24px 0 24px;" +
     "}" +
     "#dbsOverlay {" +
-        "animation: animateOverlay .5s 1 alternate;" +
+        "animation: animateOverlay 1s 1 alternate;" +
+        "top: 23px;" +
+        "position: relative;" +
+        "padding: 0 25px;" +
+    "}" +
+    "#dbsOverlay .inner-content #question-header {" +
+        "margin: 0 auto 26px auto;" +
+        "height: 49.5px;" +
+        "background: white;" +
+        "border-bottom: 1px solid #e4e6e8;" +
+    "}" +
+    "#dbsOverlay .inner-content #mainbar {" +
+        "background: white;" +
+        "position: relative;" +
+        "z-index: 1000;" +
+        "top: -12px;" +
     "}" +
     "#left-sidebar, #sidebar {" + 
-        "filter: blur(5px);" +
         "height: 84vh;" +
-        "animation: blurSidebars .5s 1 alternate;" +
+        "filter: blur(7px);" +
+        "transition: all .3s;" +
+        "animation: blurSidebars .6s 1 ease-out;" +
+    "}" +
+    "#rollingEyes {" + 
+        "width: 50px;" +
+        "height: 36px;" +
+        "position: absolute;" +
+        "left: 38px;" +
+        "top: 8px;" +
+        "z-index: 0;" +
     "}" +
     ".ball {" + 
-        "position: absolute;" +
+        "height: 22px;" +
+        "width: 22px;" +
+        "display: inline-flex;" +
         "color: #000 !important;" +
-        "font-size: 40px !important;" +
-        "top: 18px;" +
-        "width: 24px;" +
-        "height: 24px;" +
-        "line-height: 45px;" +
+        "background: #FFF !important;" +
+        "font-size: 57px !important;" +
+        "top: 13px;" +
     "}" +
     ".rotateEyeLeft {" + 
-        "position: absolute;" +
+        "margin: 15px 0 0 0;" +
         "animation: rotateEyeLeft 2s 3 alternate;" +
     "}" +
     ".rotateEyeRight {" + 
-        "position: absolute;" +
-        "animation: rotateEyeRight 2s 3 ease-in;" +
+        "margin: 15px 0 0 0;" +
+        "animation: rotateEyeRight 2s 3 ease-in;"  +
     "}" +
     
     "@-webkit-keyframes blurSidebars {" +
-        "0% { filter: translateZ(-100px); }" +
-        "100% { filter: translateZ(0); }" +
+        "0% { -webkit-filter: blur(0); filter: translateZ(-100px); }" +
+        "100% { -webkit-filter: blur(7px); filter: translateZ(0); }" +
     "}" +
     "@-webkit-keyframes animateOverlay {" +
         "0% { -webkit-filter: blur(5px); transform: translateY(-100%); }" +
@@ -261,13 +339,13 @@ let style =
         "0% { transform: translateY(-51px); }" +
         "100% { transform: translateY(0); }" +
     "}" +
+    "@-webkit-keyframes showLogo {" +
+    "0% { transform: scale(0); }" +
+        "100% { transform: scale(1); }" +
+    "}" +
     "@-webkit-keyframes pulseBackground {" +
         "0% { background: rgba(122,122,122,0.9); }" +
         "100% { background: rgba(255,255,255,0.9); }" +
-    "}" +
-    "@-webkit-keyframes showLogo {" +
-        "0% { transform: scale(0); }" +
-        "100% { transform: scale(1); }" +
     "}" +
     "@-webkit-keyframes rotateLeft {" +
         "0% { transform: scale(360deg); }" +
@@ -277,24 +355,26 @@ let style =
         "0% { transform: rotate(-360deg); }" +
         "100% { transform: scale(0deg); }" +
     "}";
-    
-let imagePaths = "https://diekommune.de.cool/";
+
+// Builds the Random Facelogo Ambient    
+let imgSrv = "https://diekommune.de.cool/";
 let logoImagePaths = [
-    imagePaths + "0.svg", // original
-    imagePaths + "1.svg", // empty eyes 
-    imagePaths + "2.svg", // eyes closed mouth open
-    imagePaths + "3.svg", // smirking eyes open
-    imagePaths + "4.svg" // both closed
+    imgSrv + "0.svg", // original
+    imgSrv + "1.svg", // empty eyes 
+    imgSrv + "2.svg", // eyes closed mouth open
+    imgSrv + "3.svg", // smirking eyes open
+    imgSrv + "4.svg" // both closed
 ];
 
 // Multiplies a random number with the array-length of the alert messages
-let randomIndex = Math.floor(Math.random() * Math.floor(dbsAlertMessages.length)); // Generates a random number
-let randomMessage = dbsAlertMessages[randomIndex]; // Choose randomly one of the thre text areas
+let randomIndex = Math.floor(Math.random() * Math.floor(dbsAlertMessages.length));
+// Choose randomly one of the thre text areas
+let randomMessage = dbsAlertMessages[randomIndex]; 
 
-// Fires the highest voted answer if no accepted answer avaiable
+// Fires the highest voted answers if no accepted answer avaiable
 let highestVotedAnswer = getHighestVotedAnswer();
 
-// Fires the accepted answer if avaiable
+// Fires the accepted answers if avaiable
 let accepetedDomElement = getAcceptedAnswer();
 
 // Proofes whether the Objects are correctly setted
@@ -306,7 +386,7 @@ if (!accepetedDomElement) {
 let mainBody = document.body; // Add overlayed template before body
 let span = document.createElement("span");
     span.innerHTML = "";
-    span.className = "blurBody";
+    span.className = "dbsBody";
     mainBody.parentNode.insertBefore(span, mainBody); // Pushs the focusing Element before Overlay
 
 let styleElement = document.createElement("style"); // Add a head style onto the overlayed body
@@ -314,7 +394,7 @@ let styleElement = document.createElement("style"); // Add a head style onto the
     styleElement.appendChild(document.createTextNode(style));
     document.getElementsByTagName("head")[0].appendChild(styleElement);
 
-function changeLogoType(randomIndex) {
+function changeLogoType() {
 // Changes the Logo Element inFrame after random setted seconds
     if (randomIndex == 0) {
         randomIndex++;
@@ -328,31 +408,24 @@ function changeLogoType(randomIndex) {
 let overlayHtml = getOverlayHtml(changeLogoType(randomIndex), randomMessage, displayAnswer.innerHTML);
     document.body.innerHTML += overlayHtml;
 
+if (randomIndex == 1) {
+    let logoLinkedWrapper = document.getElementById("logoWrapper");
+    let eyeWrapper = buildRollEyes();
+    logoLinkedWrapper.appendChild(eyeWrapper);
+}
+
 function buildRollEyes() {
     let eyeWrapper = document.createElement("span");
         eyeWrapper.id = "rollingEyes";
+        eyeWrapper.innerHTML = 
+        "<span class='ball rotateEyeLeft'>.</span>" +
+        "<span class='ball rotateEyeRight'>.</span>";
     return eyeWrapper;
 } 
 
-if (randomIndex == 1) {
-    let eyeWrapper = buildRollEyes();
-    eyeWrapper.innerHTML = 
-    "<span class='ball rotateEyeLeft'>.</span>" +
-    "<span class='ball rotateEyeRight'>.</span>";
-    let logoLinkedWrapper = document.getElementById("logoWrapper");
-    logoLinkedWrapper += eyeWrapper;
-}
-    // Creates the animated douche-guy logo :-)    
-    function getLogoElement(logoElement) {
-        logoElement = document.getElementById("dbsLogo");
-        if (!logoElement) {
-            return null;
-        }
-        return logoElement;
-    }  
-
-// Delete original question-header 
-
+// Delete original question-header
+// Deactive-Button dbsButton document.getElementById("acceptButton").disabled
+if ('hans' == 'peter') {
     // Deactivates the button and counts to 0
     let counter = 5;
     let interval = setInterval(o => {
@@ -373,3 +446,4 @@ if (randomIndex == 1) {
     dbsButton.onclick = (e) => {
         dbsOverlay.remove();
     };
+}
