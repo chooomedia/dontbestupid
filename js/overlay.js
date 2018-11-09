@@ -13,6 +13,32 @@ function getOverlayHtml(message, answer, question, voteBar, tags) {
                     "</div>" +
                 "</a>" +
             "</div>" +
+            "<div class='-main'>" +
+                "<ol class='-secondary js-secondary-topbar-links drop-icons-responsively the-js-is-handling-responsiveness'>" +
+                    /* "<li class='-item'>" +
+                        "<a href='#' class='-link'>" +
+                            "<svg aria-hidden='true' class='svg-icon iconSearch' width='18' height='18' viewBox='0 0 18 18'>" +
+                                "<path d='M12.86 11.32L18 16.5 16.5 18l-5.18-5.14v-.35a7 7 0 1 1 1.19-1.19h.35zM7 12A5 5 0 1 0 7 2a5 5 0 0 0 0 10z'></path>" +
+                            "</svg>" +
+                        "</a>" +
+                    "</li>" + */
+                    "<li class='-item'>" +
+                        "<a href='https://stackexchange.com/users/?tab=inbox' class='-link js-inbox-button'>" +
+                            "<svg aria-hidden='true' class='svg-icon iconInbox' width='20' height='18' viewBox='0 0 20 18'>" +
+                                "<path d='M15.19 1H4.63c-.85 0-1.6.54-1.85 1.35L0 10.79V15c0 1.1.9 2 2 2h16a2 2 0 0 0 2-2v-4.21l-2.87-8.44A2 2 0 0 0 15.19 1zm-.28 10l-2 2h-6l-2-2H1.96L4.4 3.68A1 1 0 0 1 5.35 3h9.12a1 1 0 0 1 .95.68L17.86 11h-2.95z'></path>" +
+                            "</svg>" +
+                            "<span class='indicator-badge js-unread-count _important' style='display: none;'></span>" +
+                        "</a>" +
+                    "</li>" +
+                    "<li class='-item help-button-item' data-remove-order='1'>" +
+                        "<a href='#' class='-link js-help-button'>" +
+                            "<svg aria-hidden='true' class='svg-icon iconHelp' width='18' height='18' viewBox='0 0 18 18'>" +
+                                "<path d='M9 1a8 8 0 1 0 0 16A8 8 0 0 0 9 1zm.81 12.13c-.02.71-.55 1.15-1.24 1.13-.66-.02-1.17-.49-1.15-1.2.02-.72.56-1.18 1.22-1.16.7.03 1.2.51 1.17 1.23zM11.77 8a5.8 5.8 0 0 1-1.02.91l-.53.37c-.26.2-.42.43-.5.69a4 4 0 0 0-.09.75c0 .05-.03.16-.18.16H7.88c-.16 0-.18-.1-.18-.15.03-.66.12-1.21.4-1.66a5.29 5.29 0 0 1 1.43-1.22c.16-.12.28-.25.38-.39a1.34 1.34 0 0 0 .02-1.71c-.24-.31-.51-.46-1.03-.46-.51 0-.8.26-1.02.6-.21.33-.18.73-.18 1.1H5.75c0-1.38.35-2.25 1.1-2.76.52-.35 1.17-.5 1.93-.5 1 0 1.79.18 2.49.71.64.5.98 1.18.98 2.12 0 .57-.2 1.05-.48 1.44z'></path>" +
+                            "</svg>" +
+                        "</a>" +
+                    "</li>" +
+                "</ol>" +
+            "</div>" +
         "</div>" +
     "</header>" +
        
@@ -455,7 +481,7 @@ setTimeout(function() {
 }, 5000); 
 
 // Sets the Height of the overlay parent div
-function copyFromOrgPage() {
+function createLogo() {
     let mainBarEl = document.getElementById("mainbar");
     let questHead = document.getElementById("question-header");
         questHead.style.display = "none";
@@ -465,7 +491,7 @@ function copyFromOrgPage() {
 }
 
 // Creates the logo element
-copyFromOrgPage();
+createLogo();
 let logoImageOrg = 'https://diekommune.de.cool/0.svg';
 let logoWrapper = document.getElementById("logoWrapper");
 let logoImagePath = logoImagePaths[randomLogoPathIndex];
@@ -526,9 +552,11 @@ function dbsCloseButton() {
             if (dbsNavbar.className === "top-bar hide") {
                 dbsNavStyle.transform = "translateY(-90px)";
                 dbsNavStyle.opacity = 0;
+                questHead.style.display = "block";
                 dbsContainer.style.opacity = 0;
                 window.setTimeout(function(){
                     dbsNavStyle.display = "none";
+                    dbsContainer.style.transform = "translateY(-7.77%)";
                 },4000); // timed to match animation-duration
             }
         };
@@ -547,6 +575,6 @@ function dbsCloseButton() {
     // Deactivates the button for 5 seconds
     setTimeout(function () {
         dbsButton.disabled = false;
-    }, 100);
+    }, 4000);
     return dbsButton;
 }
