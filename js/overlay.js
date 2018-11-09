@@ -1,9 +1,9 @@
-function getOverlayHtml(logo, message, question, answer) {
+function getOverlayHtml(logo, message, answer) {
     // Appends the following element into the body of stackoverflow
     let html =
     "<header id='dbsNavbar' class='top-bar' style='border-top:unset;'>" +
         "<div class='-container'>" +
-            "<div class='dbsHead'>" +
+            "<div class='dbsHeadOver'>" +
                 "<a href='#' class='left-sidebar-toggle p0 js-left-sidebar-toggle'>" +
                     "<a id='logoWrapper' href='#' title='comming soon - https://dont-be-stup.id'>" +
                         "<img id='dbsLogo' src='"+ logo +"' />" +
@@ -26,7 +26,7 @@ function getOverlayHtml(logo, message, question, answer) {
                     "<div id='question-header' class='grid'>" +
                         "<h1 itemprop='name' class='grid--cell fs-headline1 fl1'>" +
                             "<div class='question-hyperlink'>" +
-                            question +
+
                             "</div>" +
                         "</h1>" +
                         "<div class='pl8 aside-cta grid--cell' role='navigation' aria-label='ask new question'>" +
@@ -97,25 +97,29 @@ function getHighestVotedAnswer() {
 
 function getAcceptedAnswer() {
     let accepetedDomElement = document.querySelectorAll(".accepted-answer");
+    let result = {
+        voteCount: 0,
+        innerHTML: ''
+    };
+
     if (accepetedDomElement.length == 0) {
         return null;
     } else {
         return accepetedDomElement[0];
     }
+    
 }
 
 function getQuestion() {
     let getQuestionValue = document.getElementsByClassName("question-hyperlink");
-    if (getQuestionValue) {
-        return getQuestionValue[0].innerHTML;
-    }
-}
+        gevoteCounttQuestionValue.innerHTML = "";
+}voteCount
 
 // Fires randomnly one of these text areas
 let dbsAlertMessages = [
     "<div class='innerDialog'>" + 
-        "<h1 class='dbsPushMessageTitle .question-hyperlink'>" +
-            "<a href='#' class='question-hyperlink'>Clam, Dude - try again!</a>" +
+        "<h1 class='dbsPushMessageTitle'>" +
+            "<a href='#'>Clam, Dude - try again!</a>" +
         "</h1>" +
         "<p class='dbsPushMessage'>" +
             "Don`t waste your time looking up with stuff in the internet. Instead use your brain and spend your time with more meanfull things..." +
@@ -123,8 +127,8 @@ let dbsAlertMessages = [
     "</div>",
 
     "<div class='innerDialog'>" + 
-        "<h1 class='dbsPushMessageTitle question-hyperlink'>" +
-            "<a href='#' class='question-hyperlink'>R T F M !</a>" +
+        "<h1 class='dbsPushMessageTitle'>" +
+            "<a href='#'>R T F M !</a>" +
         "</h1>" +
         "<p class='dbsPushMessage'>" +
             "Somtimes it is very helpfull to invest more Time. More Time to understand more - so <b>R</b>ead <b>T</b>he <b>F</b>*king <b>M</b>anual :-)" +
@@ -132,8 +136,8 @@ let dbsAlertMessages = [
     "</div>",
 
     "<div class='innerDialog'>" + 
-        "<h1 class='dbsPushMessageTitle question-hyperlink'>" +
-            "<a href='#' class='question-hyperlink'>Whats Wrong? - are you nuts?</a>" +
+        "<h1 class='dbsPushMessageTitle'>" +
+            "<a href='#'>Whats Wrong? - are you nuts?</a>" +
         "</h1>" +
         "<p class='dbsPushMessage'>Don`t be stupid fellow." +
             "Don`t be stupid fellow. eat less Meat, more laughing bla bla - i`m not your Vather, Luke." +
@@ -141,8 +145,8 @@ let dbsAlertMessages = [
     "</div>",
 
     "<div class='innerDialog'>" + 
-        "<h1 class='dbsPushMessageTitle question-hyperlink'>" +
-            "<a href='#' class='question-hyperlink'>Muhaha ha ha!</a>" +
+        "<h1 class='dbsPushMessageTitle'>" +
+            "<a href='#>Muhaha ha ha!</a>" +
         "</h1>" +
         "<p class='dbsPushMessage'>Ouw! Its better waste my time on Social Media</p>" +
     "</div>"
@@ -191,7 +195,6 @@ let style =
         "width: 55.8%;" +
         "height: 100vh;" +
         "background: rgba(255,255,255,0.96);" +
-        "animation: pulseBackground 12s 0 alternate;" +
         "top: 0;" +
         "left: 208px;" +
         "right: 15%;" +
@@ -214,7 +217,7 @@ let style =
         "display:inline-flex;" +
         "position:relative;" +
         "float:left;" +
-        "z-index:1;" +
+        "z-index:2;" +
         "border: 4px solid #333333;" +
         "animation: showLogo .3s 1 ease-in;" +
         // background: url(https://cdn.dribbble.com/users/1065420/screenshots/3933364/gary-big-eyes.gif);" +
@@ -222,6 +225,9 @@ let style =
         // "background-position: -6px -22px;" +
     "}" +
     "#drDoucheDialog {" +
+        "animation: showDrDoucheDialog .3s 1 ease 1s forwards;" +
+        "opacity: 0;" +
+        "transition: all .3s;" +
         "position: relative;" +
         "display: inline-flex;" +
         "padding: 0 5px 5px 5px;" +
@@ -236,7 +242,7 @@ let style =
         "min-height: 60px;" +
     "}" +
     "#drDoucheDialog:after, #drDoucheDialog:before {" +
-        "left: -18px;" +
+        "left: -19px;" +
         "top: 67%;" +
         "border: solid transparent;" +
         "content: ' ';" +
@@ -255,7 +261,7 @@ let style =
     "#drDoucheDialog:before {" +
         "border-color: rgba(194, 225, 245, 0);" +
         "border-right-color: #FFF;" +
-        "border-width: 9px;" +
+        "border-width: 10px;" +
        " margin-top: -16px;" +
     "}" +
     "}" +
@@ -265,7 +271,7 @@ let style =
     "nav#dialogMenu {" +
         "display: none;" +
     "}" +
-    ".dbsHead {" +
+    ".dbsHeadOver {" +
         "width: 100%;" +
         "margin-top: 39px;" +
     "}" +
@@ -278,7 +284,7 @@ let style =
         "padding:14px 24px 0 24px;" +
     "}" +
     "#dbsOverlay {" +
-        "animation: animateOverlay 1s 1 alternate;" +
+        "animation: animateOverlay .6s 1 alternate .3s forwards;" +
         "top: 23px;" +
         "position: relative;" +
         "padding: 0 25px;" +
@@ -302,29 +308,31 @@ let style =
         "animation: blurSidebars .6s 1 ease-out;" +
     "}" +
     "#rollingEyes {" + 
-        "width: 50px;" +
-        "height: 36px;" +
+        "width: 60px;" +
+        "background: #f8c8b0;" +
+        "height: 20px;" +
+        "display: none;" +
         "position: absolute;" +
-        "left: 38px;" +
-        "top: 8px;" +
-        "z-index: 0;" +
+        "left: 34px;" +
+        "top: 19px;" +
+        "z-index: 1;" +
     "}" +
     ".ball {" + 
-        "height: 22px;" +
-        "width: 22px;" +
+        "height: 20px;" +
+        "width: 20px;" +
+        "margin: 0 5px;" +
+        "border-radius:50%;" +
         "display: inline-flex;" +
+        "line-height:2px;" +
         "color: #000 !important;" +
         "background: #FFF !important;" +
-        "font-size: 57px !important;" +
-        "top: 13px;" +
+        "font-size: 38px !important;" +
     "}" +
     ".rotateEyeLeft {" + 
-        "margin: 15px 0 0 0;" +
-        "animation: rotateEyeLeft 2s 3 alternate;" +
+        "animation: rotateLeft 2s 10 ease-out;" +
     "}" +
     ".rotateEyeRight {" + 
-        "margin: 15px 0 0 0;" +
-        "animation: rotateEyeRight 2s 3 ease-in;"  +
+        "animation: rotateRight 2s 10 ease-out;"  +
     "}" +
     
     "@-webkit-keyframes blurSidebars {" +
@@ -340,20 +348,20 @@ let style =
         "100% { transform: translateY(0); }" +
     "}" +
     "@-webkit-keyframes showLogo {" +
-    "0% { transform: scale(0); }" +
+        "0% { transform: scale(0); }" +
         "100% { transform: scale(1); }" +
     "}" +
-    "@-webkit-keyframes pulseBackground {" +
-        "0% { background: rgba(122,122,122,0.9); }" +
-        "100% { background: rgba(255,255,255,0.9); }" +
+    "@-webkit-keyframes showDrDoucheDialog {" +
+        "0% { transform: translateY(-100px); opacity: 0; }" +
+        "100% { transform: translateY(0); opacity: 1; }" +
     "}" +
     "@-webkit-keyframes rotateLeft {" +
-        "0% { transform: scale(360deg); }" +
-        "100% { transform: scale(0deg); }" +
+        "0% { transform: rotate(0deg); }" +
+        "100% { transform: rotate(359deg); }" +
     "}" +
     "@-webkit-keyframes rotateRight {" +
-        "0% { transform: rotate(-360deg); }" +
-        "100% { transform: scale(0deg); }" +
+        "0% { transform: rotate(0deg); }" +
+        "100% { transform: rotate(-359deg); }" +
     "}";
 
 // Builds the Random Facelogo Ambient    
@@ -366,10 +374,11 @@ let logoImagePaths = [
     imgSrv + "4.svg" // both closed
 ];
 
-// Multiplies a random number with the array-length of the alert messages
-let randomIndex = Math.floor(Math.random() * Math.floor(dbsAlertMessages.length));
+// Multiplies a random number with the array-length of the alert messages and logo type
+let randomMessagesIndex = Math.floor(Math.random() * Math.floor(dbsAlertMessages.length));
+let randomLogoTypeIndex = Math.floor(Math.random() * Math.floor(logoImagePaths.length));
 // Choose randomly one of the thre text areas
-let randomMessage = dbsAlertMessages[randomIndex]; 
+let randomMessage = dbsAlertMessages[randomMessagesIndex]; 
 
 // Fires the highest voted answers if no accepted answer avaiable
 let highestVotedAnswer = getHighestVotedAnswer();
@@ -394,21 +403,11 @@ let styleElement = document.createElement("style"); // Add a head style onto the
     styleElement.appendChild(document.createTextNode(style));
     document.getElementsByTagName("head")[0].appendChild(styleElement);
 
-function changeLogoType() {
-// Changes the Logo Element inFrame after random setted seconds
-    if (randomIndex == 0) {
-        randomIndex++;
-    } else {
-        randomIndex--;
-    }
-    return logoImagePaths[randomIndex];
-}
-
 // Pushes the fired objects frome the functions into the mixed frontend body
-let overlayHtml = getOverlayHtml(changeLogoType(randomIndex), randomMessage, displayAnswer.innerHTML);
+let overlayHtml = getOverlayHtml(logoImagePaths[randomLogoTypeIndex], randomMessage, displayAnswer.innerHTML);
     document.body.innerHTML += overlayHtml;
 
-if (randomIndex == 1) {
+if (randomLogoTypeIndex == 1) {
     let logoLinkedWrapper = document.getElementById("logoWrapper");
     let eyeWrapper = buildRollEyes();
     logoLinkedWrapper.appendChild(eyeWrapper);
@@ -420,12 +419,15 @@ function buildRollEyes() {
         eyeWrapper.innerHTML = 
         "<span class='ball rotateEyeLeft'>.</span>" +
         "<span class='ball rotateEyeRight'>.</span>";
+    setTimeout(function(){ 
+        eyeWrapper.style.display = 'block';
+    }, 200);
     return eyeWrapper;
 } 
 
 // Delete original question-header
 // Deactive-Button dbsButton document.getElementById("acceptButton").disabled
-if ('hans' == 'peter') {
+function dbsCloseButton() {
     // Deactivates the button and counts to 0
     let counter = 5;
     let interval = setInterval(o => {

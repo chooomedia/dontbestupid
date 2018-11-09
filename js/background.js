@@ -33,6 +33,10 @@ chrome.webNavigation['onCommitted'].addListener(function (data) {
       // Proofs if there was executed the same Tag loads a lot Timess
       let visitCount = await addVisit(data.url);
 
+      if (visitCount > 0) {
+        chrome.browserAction.setBadgeText({text: visitCount.toString()});
+      }
+
       if (visitCount > parseInt(intervall)) {
         // Checks the requested url and show overlay when you'll visit stackoverflow to much times :-)
         console.log('Stay Focused - agianst internet dementia :-)');
@@ -52,7 +56,6 @@ chrome.webNavigation['onCommitted'].addListener(function (data) {
 function addVisit(url) {
 
   let promise = new Promise((finished) => {
-
     // Try to get the existing entry
     chrome.storage.sync.get(url, function (pageMetadata) {
       

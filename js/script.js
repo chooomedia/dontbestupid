@@ -1,6 +1,6 @@
 $(function () {
 // The initial variables
-    let dbsPopupHead = $(".dbsHead");
+    let dbsPluginSettingsHead = $(".dbsPluginSettingsHead");
     let dbsActivity = $("#dbsCheckbox");
     let dbsMode = $("#dbsMode");
     let dbsStatus = $(".dbsStatus");
@@ -10,7 +10,7 @@ $(function () {
     function setEnabled() {
         dbsActivity.prop("checked", true);
         dbsStatus.text("Plugin active");
-        dbsPopupHead.html("<h1 title='stay tuned - don`t waste your time'>" +
+        dbsPluginSettingsHead.html("<h1 title='stay tuned - don`t waste your time'>" +
             "DON`T <span style='color:red;'>BE</span>" +
             "<br>" +
             "<span style='letter-spacing:2.4px;'>STUPID</span>" +
@@ -24,7 +24,7 @@ $(function () {
     function setDisabled() {
         dbsActivity.prop("checked", false);
         dbsStatus.text("Plugin deactivated!");
-        dbsPopupHead.html("<h1 title='stop searching and doing the same thing over and over again!'>" +
+        dbsPluginSettingsHead.html("<h1 title='stop searching and doing the same thing over and over again!'>" +
             "<span style='letter-spacing:8px;'>STAY</span>" +
             "<br>" +
             "<span style='color:red;'>STUPID</span>" +
@@ -49,15 +49,6 @@ $(function () {
         return dbsCounter.val();
     }
 
-    function setAlertCounterValue(intervall) {
-        if (intervall) {
-            let chromeTextStamp = chrome.browserAction.setBadgeText(repeatedVisit, dbsCounter.val(intervall));
-            console.log(chromeTextStamp);
-        }
-
-        return dbsCounter.val(intervall);
-    }
-
 // Writes the inputted input settings into the chrome storage
     function writeSettings() {
         chrome.storage.sync.set({
@@ -80,7 +71,6 @@ $(function () {
                 setDisabled();
             }
             setMode(storedMode);
-            setAlertCounterValue(alertCounterValue);
         });
     }
 

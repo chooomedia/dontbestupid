@@ -19,7 +19,7 @@
         "http://*/*"
     ],
     "background": {
-        "persistent": false,
+        "persistent": true,
         "scripts": [ "js/background.min.js"]
       },
     "content_scripts": [
