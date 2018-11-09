@@ -15,24 +15,29 @@ function getOverlayHtml(message, answer, question, voteBar, tags) {
             "</div>" +
             "<div class='-main'>" +
                 "<ol class='-secondary js-secondary-topbar-links drop-icons-responsively the-js-is-handling-responsiveness'>" +
-                    /* "<li class='-item'>" +
-                        "<a href='#' class='-link'>" +
-                            "<svg aria-hidden='true' class='svg-icon iconSearch' width='18' height='18' viewBox='0 0 18 18'>" +
-                                "<path d='M12.86 11.32L18 16.5 16.5 18l-5.18-5.14v-.35a7 7 0 1 1 1.19-1.19h.35zM7 12A5 5 0 1 0 7 2a5 5 0 0 0 0 10z'></path>" +
-                            "</svg>" +
-                        "</a>" +
-                    "</li>" + */
                     "<li class='-item'>" +
-                        "<a href='https://stackexchange.com/users/?tab=inbox' class='-link js-inbox-button'>" +
-                            "<svg aria-hidden='true' class='svg-icon iconInbox' width='20' height='18' viewBox='0 0 20 18'>" +
+                        "<a onclick='showWallet()' class='dbsLink'>" +
+                            "<svg aria-hidden='true' class='svg-icon iconStupidollar' width='18' height='18' viewBox='0 0 18 18'>" +
+                                "<path style='opacity:1;fill:#FFFFFF;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:259.50698853;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1' d='M 31.1875 0 C 13.904525 0.43835438 3.7379722e-013 14.612004 0 32 C 2.3684758e-015 49.663996 14.336004 64 32 64 C 49.663996 64 64 49.663996 64 32 C 64 14.336004 49.663996 1.3812956e-013 32 0 C 31.724 3.7007434e-017 31.461833 -0.0069580061 31.1875 0 z M 31.15625 5.5 C 31.439783 5.4910103 31.714297 5.5 32 5.5 C 46.628003 5.4999998 58.5 17.371998 58.5 32 C 58.499998 46.628001 46.628002 58.5 32 58.5 C 17.371999 58.499999 5.5 46.628002 5.5 32 C 5.4999999 17.657701 16.922915 5.9512829 31.15625 5.5 z '/>" +
+                                "<path style='font-size:53.81440353px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;opacity:1;fill:#FFFFFF;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial Narrow' d='M 25.645354,38.743144 C 27.706139,41.625309 33.995692,41.833441 36.155115,40.6114 C 36.947727,40.162852 37.145708,38.864507 37.145725,37.98432 C 37.145708,37.380283 36.986739,36.905677 36.668816,36.560499 C 36.333199,36.215341 35.479466,35.339232 34.490338,35.080346 C 29.473962,33.785975 25.998702,32.169274 24.638637,30.995688 C 22.942961,29.528736 22.669211,28.570622 22.669213,26.016357 C 22.669211,23.462132 23.403703,21.32133 25.064052,19.785304 C 26.724393,18.24933 29.135426,17.481331 32.297159,17.481304 C 35.317562,17.481331 39.565451,18.278588 41.636566,20.737131 L 38.183516,24.493331 C 36.236051,22.858359 34.787665,22.710631 32.403139,22.710609 C 30.901751,22.710631 30.120168,22.926362 29.484299,23.3578 C 28.848414,23.772024 28.530476,24.315664 28.530483,24.988721 C 28.530476,25.592786 28.821918,26.09328 29.404815,26.490205 C 29.987693,26.904426 31.511133,27.525729 34.549225,28.354116 C 37.958218,29.286087 40.272103,30.416513 41.490888,31.745396 C 42.691968,33.074309 43.292518,34.843296 43.292541,37.052364 C 43.292518,39.710168 42.356366,41.901988 40.484082,43.627827 C 38.629421,45.353671 36.346462,46.694998 33.061111,46.694997 C 28.832157,46.694996 23.187374,45.201054 21.630014,42.439699' sodipodi:nodetypes='cssscssssccscscscscsc'/>" +
+                                "<path style='opacity:1;fill:#FFFFFF;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:259.50698853;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1' d='M 30.375,12.875 L 30.375,19.71875 L 33.625,19.71875 L 33.625,12.875 L 30.375,12.875 z M 30.375,44.96875 L 30.375,51.125 L 33.625,51.125 L 33.625,44.96875 L 30.375,44.96875 z '/>" +
+                            "</svg>" +
+                            "<div class='dbsLinkTitle'>" +
+                                " 500" +
+                            "</div>" +
+                        "</a>" +
+                    "</li>" +
+                    "<li class='-item'>" +
+                        "<a onclick='showStorage()' class='dbsLink js-inbox-button'>" +
+                            "<svg style='color: #FFF !important;' aria-hidden='true' class='svg-icon iconInbox' width='20' height='18' viewBox='0 0 20 18'>" +
                                 "<path d='M15.19 1H4.63c-.85 0-1.6.54-1.85 1.35L0 10.79V15c0 1.1.9 2 2 2h16a2 2 0 0 0 2-2v-4.21l-2.87-8.44A2 2 0 0 0 15.19 1zm-.28 10l-2 2h-6l-2-2H1.96L4.4 3.68A1 1 0 0 1 5.35 3h9.12a1 1 0 0 1 .95.68L17.86 11h-2.95z'></path>" +
                             "</svg>" +
                             "<span class='indicator-badge js-unread-count _important' style='display: none;'></span>" +
                         "</a>" +
                     "</li>" +
                     "<li class='-item help-button-item' data-remove-order='1'>" +
-                        "<a href='#' class='-link js-help-button'>" +
-                            "<svg aria-hidden='true' class='svg-icon iconHelp' width='18' height='18' viewBox='0 0 18 18'>" +
+                        "<a onclick='showHelp()' class='dbsLink js-help-button'>" +
+                            "<svg style='color: #FFF !important;' aria-hidden='true' class='svg-icon iconHelp' width='18' height='18' viewBox='0 0 18 18'>" +
                                 "<path d='M9 1a8 8 0 1 0 0 16A8 8 0 0 0 9 1zm.81 12.13c-.02.71-.55 1.15-1.24 1.13-.66-.02-1.17-.49-1.15-1.2.02-.72.56-1.18 1.22-1.16.7.03 1.2.51 1.17 1.23zM11.77 8a5.8 5.8 0 0 1-1.02.91l-.53.37c-.26.2-.42.43-.5.69a4 4 0 0 0-.09.75c0 .05-.03.16-.18.16H7.88c-.16 0-.18-.1-.18-.15.03-.66.12-1.21.4-1.66a5.29 5.29 0 0 1 1.43-1.22c.16-.12.28-.25.38-.39a1.34 1.34 0 0 0 .02-1.71c-.24-.31-.51-.46-1.03-.46-.51 0-.8.26-1.02.6-.21.33-.18.73-.18 1.1H5.75c0-1.38.35-2.25 1.1-2.76.52-.35 1.17-.5 1.93-.5 1 0 1.79.18 2.49.71.64.5.98 1.18.98 2.12 0 .57-.2 1.05-.48 1.44z'></path>" +
                             "</svg>" +
                         "</a>" +
@@ -244,6 +249,13 @@ let style =
         "transition: all .4s;" +
         "animation: animateNavbar .2s 1 alternate;" +
     "}" +
+    ".iconStupidollar {" +
+        "width:20px;" +
+        "height:28px;" +
+        "overflow: visible;" +
+        "transform: scale(0.25) !important;" +
+        "margin: -11px 7px 0 -6px;" +
+    "}" +
     "#dbsLogo {" +
         "width: 90px;" +
         "margin: 0 0 0 19px;" +
@@ -271,15 +283,39 @@ let style =
         "background: white;" +
         "border: 4px solid #333;" +
     "}" +
+    "a.dbsLink {" +
+        "color: rgba(255,255,255,1) !important;" +
+        "background-color: #333 !important;" +
+        "transition: all .3s;" +
+        "display: inline-flex;" +
+        "align-items: center;" +
+        "padding: 0 10px;" +
+        "text-decoration: none;" +
+        "white-space: nowrap;" +
+        "position: relative;" +
+    "}" +
+    "a.dbsLink:hover {" +
+        "background-color: rgba(255,255,255,0.15) !important;" +
+    "}" +
+    ".dbsLinkTitle {" +
+        "margin: 2px 0 0 3px;" +
+        "font-size: 16px;" +
+        "line-height: 50px;" +
+    "}" +
     "#acceptButton {" +
-        "padding: 0 15px;" +
-        "margin-top: 4px;" +
-        "letter-spacing: -1px;" +
-        "font-size: 23px;" +
+        "min-width: 57px !important;" +
         "background: #333;" +
         "border: 1px solid #999;" +
-        "box-shadow: unset;" +
+        "padding: 0 15px;" +
+        "margin-top: 4px;" +
         "transition: all .3s;" +
+        "letter-spacing: -1px;" +
+        "font-size: 23px;" +
+        "box-shadow: unset;" +
+    "}" +
+    "#acceptButton:hover, #acceptButton:focus {" +
+        "background: rgba(255,255,255,1);" +
+        "color: rgba(0,0,0,1);" +
     "}" +
     "#acceptButton:disabled {" +
         "color: #FFF !important;" +
@@ -321,21 +357,22 @@ let style =
     "#left-sidebar, #sidebar {" + 
         "height: 84vh;" +
         "transition: all .3s;" +
-        "animation: blurSidebars .6s 1 ease-out forwards;" +
+        "animation: blurSidebars .7s 1 ease-out forwards;" +
     "}" +
     ".dbsContainer {" +
         "top: 51px;" +
         "box-sizing: border-box;" +
         "overflow:hidden;" +
         "position: absolute;" +
-        "animation: animateOverlay 1s 1 alternate;" +
+        "animation: animateOverlay .7s 1 linear;" +
     "}" +
     ".dbsContainer #content {" +
         "padding:14px 24px 0 24px;" +
     "}" +
     "#dbsOverlay {" +
         "position: relative;" +
-        "top: 23px;" +
+        "top: 14px;" +
+        "border-top: 9px solid white;" +
         "transition: all .3s;" +
         "padding: 0 24px;" +
     "}" +
@@ -374,18 +411,20 @@ let style =
         "font-size: 38px !important;" +
     "}" +
     ".rotateEyeLeft {" + 
-        "animation: rotateLeft 2s 10 alternate 1s forwards;" +
+        "transform: rotate(-11deg);" +
+        "animation: rotateLeft 3s 13 alternate;" +
     "}" +
     ".rotateEyeRight {" + 
-        "animation: rotateRight 2s 10 alternate .6s forwards;"  +
+        "transform: rotate(172deg);"  +
+        "animation: rotateRight 3s 13 linear;"  +
     "}" +
     "@-webkit-keyframes blurSidebars {" +
         "0% { -webkit-filter: blur(0); }" +
         "100% { -webkit-filter: blur(7px); }" +
     "}" +
     "@-webkit-keyframes animateOverlay {" +
-        "0% { -webkit-filter: blur(5px); transform: translateY(-100%); }" +
-        "100% { -webkit-filter: blur(0); transform: translateY(0); }" +
+        "to { -webkit-filter: blur(0)); opacity: 1; transform: translateY(0); }" +
+        "from { -webkit-filter: blur(5px); opacity: 0; transform: translateY(100%); }" +
     "}" +
     "@-webkit-keyframes animateNavbar {" +
         "0% { transform: translateY(-51px); }" +
@@ -426,6 +465,8 @@ let logoImagePaths = [
 let randomMessagesIndex = Math.floor(Math.random() * Math.floor(dbsAlertMessages.length));
 let randomLogoPathIndex = Math.floor(Math.random() * Math.floor(logoImagePaths.length));
 // Choose randomly one of the thre text areas
+
+let closeButton = dbsCloseButton();
 
 // Fires the highest voted answers if no accepted answer avaiable
 let highestVotedAnswer = getHighestVotedAnswer();
@@ -472,26 +513,28 @@ function dialogWidth() {
     return;    
 }
 
-// Close the dialog inside navigation after 7 seconds
-setTimeout(function() {
-    dialogSelector.innerHTML = "";
-    let closeButton = dbsCloseButton();
-    dialogWidth();
-    dialogSelector.appendChild(closeButton);    
-}, 5000); 
+let questHead = document.getElementById("question-header");
 
 // Sets the Height of the overlay parent div
-function createLogo() {
+function getValuesFromParrentPage() {
     let mainBarEl = document.getElementById("mainbar");
-    let questHead = document.getElementById("question-header");
         questHead.style.display = "none";
     let dbsMainbar = document.getElementsByClassName("dbsMainbar");
         dbsMainbar[0].style.height = mainBarEl.offsetHeight + 'px';
     return dbsMainbar;
 }
+// Took values from parent-page push it into child-page(overlayelement)
+getValuesFromParrentPage();
+
+// Close the dialog inside navigation after X seconds
+setTimeout(function() {
+    dialogSelector.innerHTML = "";
+    dialogWidth();
+    closeButton = dbsCloseButton();
+    dialogSelector.appendChild(closeButton);    
+}, 5000); 
 
 // Creates the logo element
-createLogo();
 let logoImageOrg = 'https://diekommune.de.cool/0.svg';
 let logoWrapper = document.getElementById("logoWrapper");
 let logoImagePath = logoImagePaths[randomLogoPathIndex];
@@ -499,7 +542,11 @@ let logoImgElement = document.createElement("img");
     logoImgElement.id = "dbsLogo";
     logoImgElement.src = logoImagePath;
     let i = 0;
-    logoImgElement.onclick = (logoImagePath) => {   
+    logoImgElement.onclick = (logoImagePath) => {
+        if (i == 1) {
+            let eyeWrapper = buildRollEyes();
+            logoWrapper.appendChild(eyeWrapper);
+        }   
         let url = logoImagePaths[i];
         document.getElementById('dbsLogo').src = url;
         if (i == logoImagePaths.length -1) {
@@ -508,13 +555,16 @@ let logoImgElement = document.createElement("img");
         }
         i = i + 1;
     };
+    
+// Appends the Logo Element
     logoWrapper.appendChild(logoImgElement);
-
+// Append the rolling eye container into child-page Logo when logo.src is the second
 if (randomLogoPathIndex == 1) {
     let eyeWrapper = buildRollEyes();
     logoWrapper.appendChild(eyeWrapper);
 }
 
+// Creates and append into the logoWrapper the rolling eye container
 function buildRollEyes() {
     let eyeWrapper = document.createElement("span");
         eyeWrapper.id = "rollingEyes";
@@ -523,58 +573,59 @@ function buildRollEyes() {
         "<span class='ball rotateEyeRight'>.</span>";
     setTimeout(function(){ 
         eyeWrapper.style.display = "block";
-    }, 200);
+    }, 3);
     return eyeWrapper;
 }
 
+// Selector on the navbar from child-page
 let dbsNavbar = document.getElementById("dbsNavbar");
 
 // Creates the close button
 function dbsCloseButton() {
     let dbsButton = document.createElement("button");
     let counter = 5;
+
         dbsButton.id = "acceptButton";
-        dbsButton.innerHTML = counter;
         dbsButton.disabled = true;
-        // Close the overlayered box over the open tab
-        dbsButton.onclick = (e) => {
-            // Selects the navigation header
-                dbsNavbar.className = dbsNavbar.className !== "top-bar show" ? "top-bar show" : "top-bar hide";
-            let dbsNavStyle = dbsNavbar.style;
-
-            if(dbsNavbar.className == "top-bar show"){
-                dbsNavStyle.display = "block";
-                dbsNavStyle.transform = "translateY(0)";
-                window.setTimeout(function(){
-                    dbsNavStyle.opacity = 1;
-                },0);
-              }
-            if (dbsNavbar.className === "top-bar hide") {
-                dbsNavStyle.transform = "translateY(-90px)";
-                dbsNavStyle.opacity = 0;
-                questHead.style.display = "block";
-                dbsContainer.style.opacity = 0;
-                window.setTimeout(function(){
-                    dbsNavStyle.display = "none";
-                    dbsContainer.style.transform = "translateY(-7.77%)";
-                },4000); // timed to match animation-duration
-            }
-        };
-
-    // Deactivates the button and counts to 0
-        counter = 4;
-    let interval = setInterval(o => {
+// Deactivates the button and counts to 0
+       let interval = setInterval(o => {
         dbsButton.innerHTML = counter;
         counter--;
         if (counter == 0) {
             clearInterval(interval);
             dbsButton.innerHTML = "okay, got it!";
         }
-    }, 1000);
+        }, 1000);
+        
+// Deactivates the button for 5 seconds
+        setTimeout(function () {
+            dbsButton.disabled = false;
+        }, 5000);
+// Close the overlayered box over the open tab
+        dbsButton.onclick = (e) => {
+    // Selects the navigation header
+                dbsNavbar.className = dbsNavbar.className !== "top-bar show" ? "top-bar show" : "top-bar hide";
+            let dbsNavStyle = dbsNavbar.style;
+                questHead.style.display = "flex";
+                dbsContainer.style.transform = "translateY(7.77%)";
+                dbsContainer.style.display = "none";
 
-    // Deactivates the button for 5 seconds
-    setTimeout(function () {
-        dbsButton.disabled = false;
-    }, 4000);
+            if(dbsNavbar.className == "top-bar show"){
+                dbsNavStyle.display = "block";
+                dbsNavStyle.transform = "translateY(0)";
+                window.setTimeout(function(){
+                    dbsNavStyle.opacity = 1;
+                    dbsContainer.style.opacity = 1;
+                },0);
+              }
+            if (dbsNavbar.className === "top-bar hide") {
+                dbsNavStyle.transform = "translateY(-90px)";
+                dbsNavStyle.opacity = 0;
+                dbsContainer.style.opacity = 0;
+                window.setTimeout(function(){
+                    dbsNavStyle.display = "none";
+                },5000); // timed to match animation-duration
+            }
+        };
     return dbsButton;
 }
