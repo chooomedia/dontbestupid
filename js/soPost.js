@@ -19,7 +19,6 @@ class SoEntry {
     }
 }
 
-
 class SoTag {
     constructor() {
         this.text = null;

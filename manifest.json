@@ -26,7 +26,7 @@
         {
             "matches": ["<all_urls>","http://*/*"],
             "all_frames": true,
-            "css": ["dbsStyles.css"], 
+            "css": ["dbsStyle.css"], 
             "js":["js/jquery-3.3.1.min.js", "js/script.min.js", "js/drDouche.js", "js/soParser.js", "js/soPost.js"],
             "run_at": "document_end"
         }
@@ -36,4 +36,4 @@
         "default_title": "DON`T BE STUPID",
         "default_popup": "dontbestupid.html"
       }
-}
+}   

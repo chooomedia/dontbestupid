@@ -1,0 +1,452 @@
+body {
+  min-height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #FFF;
+  background-image: none;
+  background-position: top left;
+  background-repeat: repeat;
+  background-size: auto;
+  background-attachment: auto;
+  min-width: 1279px;
+  padding-top: 50px;
+}
+
+body > .container {
+  max-width: 1264px;
+  width: 100%;
+  background: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 0 auto;
+}
+
+h1.dbsPushMessageTitle {
+  margin-bottom: 0 !important;
+}
+
+h1.dbsPushMessageTitle a {
+  margin-bottom: 0 !important;
+  font-size: 20px !important;
+  letter-spacing: -1px;
+}
+
+p.dbsPushMessage {
+  font-size: 15px;
+  line-height: 18px;
+  margin: 0 auto;
+}
+
+.dbsBody {
+  position: absolute;
+  width: 55.8%;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.96);
+  top: 0;
+  left: 208px;
+  right: 15%;
+  bottom: 0;
+  z-index: 0;
+}
+
+#dbsNavbar {
+  position: fixed;
+  background-color: #333333;
+  -webkit-box-shadow: 0px 3px 6px #888888;
+          box-shadow: 0px 3px 6px #888888;
+  -webkit-transition: -webkit-box-shadow cubic-bezier(0.165, 0.84, 0.44, 1) 0.25s;
+  transition: -webkit-box-shadow cubic-bezier(0.165, 0.84, 0.44, 1) 0.25s;
+  transition: box-shadow cubic-bezier(0.165, 0.84, 0.44, 1) 0.25s;
+  transition: box-shadow cubic-bezier(0.165, 0.84, 0.44, 1) 0.25s, -webkit-box-shadow cubic-bezier(0.165, 0.84, 0.44, 1) 0.25s;
+  height: 51px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  opacity: 1;
+  -webkit-transition: all .4s;
+  transition: all .4s;
+  -webkit-animation: animateNavbar .2s 1 alternate;
+          animation: animateNavbar .2s 1 alternate;
+}
+
+.iconStupidollar {
+  width: 20px;
+  height: 28px;
+  overflow: visible;
+  -webkit-transform: scale(0.25) !important;
+          transform: scale(0.25) !important;
+  margin: -11px 7px 0 -6px;
+}
+
+#dbsLogo {
+  width: 90px;
+  margin: 0 0 0 40px;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  position: relative;
+  float: left;
+  z-index: 2;
+  border: 4px solid #333333;
+  -webkit-animation: showLogo .5s 1 ease-in;
+          animation: showLogo .5s 1 ease-in;
+  /* background: url(https://cdn.dribbble.com/users/1065420/screenshots/3933364/gary-big-eyes.gif); 
+    background-size: 136% 89%; 
+    background-position: -6px -22px; */
+}
+
+#drDoucheDialog {
+  max-height: 74px;
+  min-height: 60px;
+  -webkit-animation: showDrDoucheDialog .5s 1 ease-in .6s forwards;
+          animation: showDrDoucheDialog .5s 1 ease-in .6s forwards;
+  opacity: 0;
+  position: relative;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  padding: 0 5px 5px 5px;
+  word-break: break-all;
+  text-overflow: clip;
+  left: 14px;
+  background: white;
+  border: 4px solid #333;
+}
+
+a.dbsLink {
+  color: white !important;
+  background-color: #333 !important;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 10px;
+  text-decoration: none;
+  white-space: nowrap;
+  position: relative;
+}
+
+a.dbsLink:hover {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.dbsLinkTitle {
+  margin: 2px 0 0 3px;
+  font-size: 16px;
+  line-height: 50px;
+}
+
+#acceptButton {
+  min-width: 57px !important;
+  background: #333;
+  border: 1px solid #999;
+  padding: 0 15px;
+  margin-top: 4px;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+  letter-spacing: -1px;
+  font-size: 23px;
+  -webkit-box-shadow: unset;
+          box-shadow: unset;
+}
+
+#acceptButton:hover, #acceptButton:focus {
+  background: white;
+  color: black;
+}
+
+#acceptButton:disabled {
+  color: #FFF !important;
+  opacity: .4;
+}
+
+#drDoucheDialog:after,
+#drDoucheDialog:before {
+  left: -19px;
+  top: 67%;
+  border: solid transparent;
+  content: ' ';
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+#drDoucheDialog:after {
+  border-right-color: #333;
+  border-width: 15px;
+  margin-left: -11px;
+  margin-top: -22px;
+  z-index: -1;
+}
+
+#drDoucheDialog:before {
+  border-color: rgba(194, 225, 245, 0);
+  border-right-color: #FFF;
+  border-width: 10px;
+  margin-top: -16px;
+}
+
+.innerDialog {
+  line-height: 30px;
+}
+
+nav#dialogMenu {
+  display: none;
+}
+
+.dbsHeadOver {
+  width: 100%;
+  margin-top: 39px;
+}
+
+.dbsContainer {
+  top: 50px;
+  position: absolute;
+  display: none;
+  top: 50px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  -webkit-animation: animateOverlay .5s 1 linear;
+          animation: animateOverlay .5s 1 linear;
+}
+
+#dbsOverlay {
+  position: relative;
+  top: 14px;
+  border-top: 9px solid white;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+  padding: 0 16px 0 24px;
+}
+
+#dbsOverlay .inner-content #question-header {
+  height: 49.5px;
+  background: white;
+  border-bottom: 1px solid #e4e6e8;
+}
+
+.dbsMainbar {
+  padding-top: 12px !important;
+  position: relative;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(80%, white), color-stop(20%, rgba(255, 255, 255, 0)));
+  background: linear-gradient(to bottom, white 80%, rgba(255, 255, 255, 0) 20%);
+  z-index: 1000;
+  top: -13px;
+  left: 1px;
+}
+
+#rollingEyes {
+  width: 60px;
+  background: #f8c8b0;
+  height: 20px;
+  display: none;
+  position: absolute;
+  left: 55px;
+  top: 19px;
+  z-index: 1;
+}
+
+.ball {
+  height: 20px;
+  width: 20px;
+  margin: 0 5px;
+  border-radius: 50%;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  line-height: 2px;
+  color: #000 !important;
+  background: #FFF !important;
+  font-size: 38px !important;
+}
+
+.rotateEyeLeft {
+  -webkit-transform: rotate(-11deg);
+          transform: rotate(-11deg);
+  -webkit-animation: rotateLeft 3s 13 alternate;
+          animation: rotateLeft 3s 13 alternate;
+}
+
+.rotateEyeRight {
+  -webkit-transform: rotate(172deg);
+          transform: rotate(172deg);
+  -webkit-animation: rotateRight 3s 13 linear;
+          animation: rotateRight 3s 13 linear;
+}
+
+@-webkit-keyframes animateOverlay {
+  to {
+    -webkit-filter: blur(0);
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+  from {
+    -webkit-filter: blur(7px);
+    opacity: 0;
+    -webkit-transform: translateY(100%);
+            transform: translateY(100%);
+  }
+}
+
+@keyframes animateOverlay {
+  to {
+    -webkit-filter: blur(0);
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+  from {
+    -webkit-filter: blur(7px);
+    opacity: 0;
+    -webkit-transform: translateY(100%);
+            transform: translateY(100%);
+  }
+}
+
+@-webkit-keyframes animateNavbar {
+  0% {
+    -webkit-transform: translateY(-51px);
+            transform: translateY(-51px);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+@keyframes animateNavbar {
+  0% {
+    -webkit-transform: translateY(-51px);
+            transform: translateY(-51px);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+@-webkit-keyframes showLogo {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes showLogo {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@-webkit-keyframes showDrDoucheDialog {
+  0% {
+    -webkit-transform: translateY(-100px);
+            transform: translateY(-100px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes showDrDoucheDialog {
+  0% {
+    -webkit-transform: translateY(-100px);
+            transform: translateY(-100px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes rotateLeft {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+  }
+}
+
+@keyframes rotateLeft {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+  }
+}
+
+@-webkit-keyframes rotateRight {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(-359deg);
+            transform: rotate(-359deg);
+  }
+}
+
+@keyframes rotateRight {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(-359deg);
+            transform: rotate(-359deg);
+  }
+}
+
+@-webkit-keyframes changeDoucheDialogContent {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes changeDoucheDialogContent {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+/*# sourceMappingURL=dbsStyle.css.map */
