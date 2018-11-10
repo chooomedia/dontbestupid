@@ -1,3 +1,9 @@
+let soParser = new SoParser(document.body);
+// let answers = soParser.getAllAnswers();
+// let question = soParser.getQuestion();
+
+soParser.blurSidebars();
+
 function getOverlayHtml(message, answer, question, voteBar, tags) {
     // Appends the following element into the body of stackoverflow
     let html =
@@ -47,7 +53,7 @@ function getOverlayHtml(message, answer, question, voteBar, tags) {
         "</div>" +
     "</header>" +
        
-    "<div class='container dbsContainer'>" +
+    "<div class='container dbsContainer' style='position:absolute;'>" +
         "<div id='left-sidebar' data-is-here-when='md lg' class='left-sidebar js-pinned-left-sidebar'>" +
             "<div class='left-sidebar--sticky-container js-sticky-leftnav'></div>" +
         "</div>" +
@@ -192,7 +198,8 @@ let dbsAlertMessages = [
 // Writes from javaScript inside the DOM element from the browser - sooo long...
 let style =
     "body {" + 
-        "position: absolute;" + 
+        "min-height: 100%;" + 
+        "display: flex;" + 
         "flex-direction: column;" + 
         "background-color: #FFF;" + 
         "background-image: none;" + 
@@ -223,9 +230,6 @@ let style =
         "font-size: 15px;" +
         "line-height: 18px;" +
         "margin: 0 auto;" +
-    "}" +
-    "body .top-bar~.container {" + 
-        "margin: 0 43.5px !important;" + 
     "}" +
     ".dbsBody {" +
         "position: absolute;" +
@@ -258,13 +262,13 @@ let style =
     "}" +
     "#dbsLogo {" +
         "width: 90px;" +
-        "margin: 0 0 0 19px;" +
+        "margin: 0 0 0 40px;" +
         "display:inline-flex;" +
         "position:relative;" +
         "float:left;" +
         "z-index:2;" +
         "border: 4px solid #333333;" +
-        "animation: showLogo .3s 1 ease-in;" +
+        "animation: showLogo .5s 1 ease-in;" +
         // background: url(https://cdn.dribbble.com/users/1065420/screenshots/3933364/gary-big-eyes.gif);" +
         // "background-size: 136% 89%;" +
         // "background-position: -6px -22px;" +
@@ -272,7 +276,7 @@ let style =
     "#drDoucheDialog {" +
         "max-height: 74px;" +
         "min-height: 60px;" +
-        "animation: showDrDoucheDialog .3s 1 ease-in .6s forwards;" +
+        "animation: showDrDoucheDialog .5s 1 ease-in .6s forwards;" +
         "opacity: 0;" +
         "position: relative;" +
         "display: inline-flex;" +
@@ -286,7 +290,7 @@ let style =
     "a.dbsLink {" +
         "color: rgba(255,255,255,1) !important;" +
         "background-color: #333 !important;" +
-        "transition: all .3s;" +
+        "transition: all .5s;" +
         "display: inline-flex;" +
         "align-items: center;" +
         "padding: 0 10px;" +
@@ -308,7 +312,7 @@ let style =
         "border: 1px solid #999;" +
         "padding: 0 15px;" +
         "margin-top: 4px;" +
-        "transition: all .3s;" +
+        "transition: all .5s;" +
         "letter-spacing: -1px;" +
         "font-size: 23px;" +
         "box-shadow: unset;" +
@@ -354,26 +358,22 @@ let style =
         "width: 100%;" +
         "margin-top: 39px;" +
     "}" +
-    "#left-sidebar, #sidebar {" + 
-        "height: 84vh;" +
-        "transition: all .3s;" +
-        "animation: blurSidebars .7s 1 ease-out forwards;" +
-    "}" +
+
     ".dbsContainer {" +
-        "top: 51px;" +
-        "box-sizing: border-box;" +
-        "overflow:hidden;" +
-        "position: absolute;" +
-        "animation: animateOverlay .7s 1 linear;" +
-    "}" +
-    ".dbsContainer #content {" +
-        "padding:14px 24px 0 24px;" +
+        "top: 50px;" +
+        "position: absolute" +
+        "display: none" +
+        "top:50px;" +
+        "right:0;" +
+        "bottom:0;" +
+        "left:0;" +
+        "animation: animateOverlay .5s 1 linear;" +
     "}" +
     "#dbsOverlay {" +
         "position: relative;" +
         "top: 14px;" +
         "border-top: 9px solid white;" +
-        "transition: all .3s;" +
+        "transition: all .5s;" +
         "padding: 0 24px;" +
     "}" +
     "#dbsOverlay .inner-content #question-header {" +
@@ -395,7 +395,7 @@ let style =
         "height: 20px;" +
         "display: none;" +
         "position: absolute;" +
-        "left: 34px;" +
+        "left: 55px;" +
         "top: 19px;" +
         "z-index: 1;" +
     "}" +
@@ -418,13 +418,9 @@ let style =
         "transform: rotate(172deg);"  +
         "animation: rotateRight 3s 13 linear;"  +
     "}" +
-    "@-webkit-keyframes blurSidebars {" +
-        "0% { -webkit-filter: blur(0); }" +
-        "100% { -webkit-filter: blur(7px); }" +
-    "}" +
     "@-webkit-keyframes animateOverlay {" +
         "to { -webkit-filter: blur(0)); opacity: 1; transform: translateY(0); }" +
-        "from { -webkit-filter: blur(5px); opacity: 0; transform: translateY(100%); }" +
+        "from { -webkit-filter: blur(7px); opacity: 0; transform: translateY(100%); }" +
     "}" +
     "@-webkit-keyframes animateNavbar {" +
         "0% { transform: translateY(-51px); }" +
@@ -466,8 +462,6 @@ let randomMessagesIndex = Math.floor(Math.random() * Math.floor(dbsAlertMessages
 let randomLogoPathIndex = Math.floor(Math.random() * Math.floor(logoImagePaths.length));
 // Choose randomly one of the thre text areas
 
-let closeButton = dbsCloseButton();
-
 // Fires the highest voted answers if no accepted answer avaiable
 let highestVotedAnswer = getHighestVotedAnswer();
 
@@ -496,6 +490,8 @@ function getRandomMessage() {
     return RandomMessageObj;
 }
 
+// Creates dialog after click event for navbar icons
+
 // CALL ME CONSTRUCTOR :-P
 // Pushes the fired objects frome the functions into the mixed frontend body
 let overlayHtml = getOverlayHtml(getRandomMessage(), displayAnswer.innerHtml, getQuestion(), displayAnswer.voteBar, displayAnswer.tags);
@@ -518,7 +514,6 @@ let questHead = document.getElementById("question-header");
 // Sets the Height of the overlay parent div
 function getValuesFromParrentPage() {
     let mainBarEl = document.getElementById("mainbar");
-        questHead.style.display = "none";
     let dbsMainbar = document.getElementsByClassName("dbsMainbar");
         dbsMainbar[0].style.height = mainBarEl.offsetHeight + 'px';
     return dbsMainbar;
@@ -526,12 +521,66 @@ function getValuesFromParrentPage() {
 // Took values from parent-page push it into child-page(overlayelement)
 getValuesFromParrentPage();
 
+// Creates the close button
+function dbsCloseButton() {
+    let counter = 5;
+    let dbsButton = document.createElement("button");
+        dbsButton.id = "acceptButton";
+        dbsButton.innerHTML = "";
+        dbsButton.disabled = true;
+// Deactivates the button and counts to 0
+    let interval = setInterval(o => {
+        dbsButton.innerHTML = counter;
+        counter--;
+    if (counter == 0) {
+            clearInterval(interval);
+            dbsButton.innerHTML = "okay, got it!";
+        }
+    }, 1000);
+
+// Deactivates the button for 5 seconds
+        setTimeout(function () {
+            dbsButton.disabled = false;
+        }, 5000);
+
+// Close the overlayered box over the open tab
+        dbsButton.onclick = (e) => {
+            soParser.unBlurSidebars();
+    // Selects the navigation header
+        let dbsNavbar = document.getElementById("dbsNavbar");
+            dbsNavbar.className = dbsNavbar.className !== "top-bar show" ? "top-bar show" : "top-bar hide";
+        let dbsNavStyle = dbsNavbar.style;
+            dbsContainer.style.display = "none";
+
+        if (dbsNavbar.className == "top-bar show") {
+            dbsNavStyle.display = "block";
+            dbsNavStyle.transform = "translateY(0)";
+            // window.setTimeout(function(){
+                dbsNavStyle.opacity = 1;
+                dbsContainer.style.opacity = 1;
+                dbsContainer.style.display = "block";
+            //},0); 
+            }
+        if (dbsNavbar.className == "top-bar hide") {
+                dbsNavStyle.transform = "translateY(-90px)";
+                dbsNavStyle.opacity = 0;
+                dbsContainer.style.opacity = 0;
+                window.setTimeout(function(){
+                dbsNavStyle.display = "none";
+            },5000); // timed to match animation-duration
+        }
+    };
+    return dbsButton;
+}
+
 // Close the dialog inside navigation after X seconds
 setTimeout(function() {
-    dialogSelector.innerHTML = "";
-    dialogWidth();
-    closeButton = dbsCloseButton();
-    dialogSelector.appendChild(closeButton);    
+        dialogWidth();
+        dialogSelector = document.getElementById("drDoucheDialog");
+        dialogSelector.innerHTML = "";
+        let closeButton = dbsCloseButton();
+            closeButton.innerHTML = "";
+        dialogSelector.appendChild(closeButton);    
 }, 5000); 
 
 // Creates the logo element
@@ -539,21 +588,22 @@ let logoImageOrg = 'https://diekommune.de.cool/0.svg';
 let logoWrapper = document.getElementById("logoWrapper");
 let logoImagePath = logoImagePaths[randomLogoPathIndex];
 let logoImgElement = document.createElement("img");
+    
     logoImgElement.id = "dbsLogo";
     logoImgElement.src = logoImagePath;
     let i = 0;
     logoImgElement.onclick = (logoImagePath) => {
-        if (i == 1) {
-            let eyeWrapper = buildRollEyes();
-            logoWrapper.appendChild(eyeWrapper);
-        }   
-        let url = logoImagePaths[i];
+    if (i == 1) {
+        let eyeWrapper = buildRollEyes();
+        logoWrapper.appendChild(eyeWrapper);
+    }   
+    let url = logoImagePaths[i];
         document.getElementById('dbsLogo').src = url;
-        if (i == logoImagePaths.length -1) {
-            i = 0;
-            return;
-        }
-        i = i + 1;
+    if (i == logoImagePaths.length -1) {
+        i = 0;
+        return;
+    }
+    i = i + 1;
     };
     
 // Appends the Logo Element
@@ -575,57 +625,4 @@ function buildRollEyes() {
         eyeWrapper.style.display = "block";
     }, 3);
     return eyeWrapper;
-}
-
-// Selector on the navbar from child-page
-let dbsNavbar = document.getElementById("dbsNavbar");
-
-// Creates the close button
-function dbsCloseButton() {
-    let dbsButton = document.createElement("button");
-    let counter = 5;
-
-        dbsButton.id = "acceptButton";
-        dbsButton.disabled = true;
-// Deactivates the button and counts to 0
-       let interval = setInterval(o => {
-        dbsButton.innerHTML = counter;
-        counter--;
-        if (counter == 0) {
-            clearInterval(interval);
-            dbsButton.innerHTML = "okay, got it!";
-        }
-        }, 1000);
-        
-// Deactivates the button for 5 seconds
-        setTimeout(function () {
-            dbsButton.disabled = false;
-        }, 5000);
-// Close the overlayered box over the open tab
-        dbsButton.onclick = (e) => {
-    // Selects the navigation header
-                dbsNavbar.className = dbsNavbar.className !== "top-bar show" ? "top-bar show" : "top-bar hide";
-            let dbsNavStyle = dbsNavbar.style;
-                questHead.style.display = "flex";
-                dbsContainer.style.transform = "translateY(7.77%)";
-                dbsContainer.style.display = "none";
-
-            if(dbsNavbar.className == "top-bar show"){
-                dbsNavStyle.display = "block";
-                dbsNavStyle.transform = "translateY(0)";
-                window.setTimeout(function(){
-                    dbsNavStyle.opacity = 1;
-                    dbsContainer.style.opacity = 1;
-                },0);
-              }
-            if (dbsNavbar.className === "top-bar hide") {
-                dbsNavStyle.transform = "translateY(-90px)";
-                dbsNavStyle.opacity = 0;
-                dbsContainer.style.opacity = 0;
-                window.setTimeout(function(){
-                    dbsNavStyle.display = "none";
-                },5000); // timed to match animation-duration
-            }
-        };
-    return dbsButton;
 }
