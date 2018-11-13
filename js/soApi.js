@@ -152,6 +152,14 @@ class SoApi {
                 let eyeWrapper = this.createRollEyes();
                 logoWrapper.appendChild(eyeWrapper);
             }
+
+            let self = this;
+            if (i == 2) {
+                setTimeout(function () {
+                    logoImgElement.src = self.logoImagePaths[0];
+                }, 1200);
+                clearTimeout();
+            } 
         };
         
         return logoImgElement;
