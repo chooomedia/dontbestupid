@@ -37,11 +37,14 @@ chrome.webNavigation['onCommitted'].addListener(function (data) {
         chrome.browserAction.setBadgeText({text: visitCount.toString()});
       }
 
-      if (visitCount > parseInt(intervall)) {
+      if (visitCount + 1 > parseInt(intervall)) {
         // Checks the requested url and show overlay when you'll visit stackoverflow to much times :-)
-        console.log('Stay Focused - agianst internet dementia :-)');
         // Executes the Overlay Script to show the random Message
-        displayYoureStupidMesssage();
+        displayStupidMessage();
+      }
+
+      if (visitCount == 10) {
+        displayStupidMessage();
       }
     });
   }
@@ -87,7 +90,7 @@ function addVisit(url) {
 }
 
 // Executes the external overlay box inside the acitve tab
-function displayYoureStupidMesssage() {
+function displayStupidMessage() {
   chrome.tabs.query({
     active: true,
     currentWindow: true
@@ -96,4 +99,4 @@ function displayYoureStupidMesssage() {
       file: "js/overlay.js"
     });
   });
-};
+}
