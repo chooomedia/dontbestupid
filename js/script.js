@@ -1,6 +1,6 @@
 $(function () {
 // The initial variables
-    let dbsPluginSettingsHead = $(".dbsPluginSettingsHead");
+    let dbsHeader = $(".dbsHead");
     let dbsActivity = $("#dbsCheckbox");
     let dbsMode = $("#dbsMode");
     let dbsStatus = $(".dbsStatus");
@@ -10,7 +10,7 @@ $(function () {
     function setEnabled() {
         dbsActivity.prop("checked", true);
         dbsStatus.text("Plugin active");
-        dbsPluginSettingsHead.html("<h1 title='stay tuned - don`t waste your time'>" +
+        dbsHeader.html("<h1 title='stay tuned - don`t waste your time'>" +
             "DON`T <span style='color:red;'>BE</span>" +
             "<br>" +
             "<span style='letter-spacing:2.4px;'>STUPID</span>" +
@@ -24,7 +24,7 @@ $(function () {
     function setDisabled() {
         dbsActivity.prop("checked", false);
         dbsStatus.text("Plugin deactivated!");
-        dbsPluginSettingsHead.html("<h1 title='stop searching and doing the same thing over and over again!'>" +
+        dbsHeader.html("<h1 title='stop searching and doing the same thing over and over again!'>" +
             "<span style='letter-spacing:8px;'>STAY</span>" +
             "<br>" +
             "<span style='color:red;'>STUPID</span>" +
@@ -95,5 +95,5 @@ $(function () {
 
     dbsCounter.change(function () {
         writeSettings();
-    })
+    });
 });

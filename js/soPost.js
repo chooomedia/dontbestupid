@@ -68,5 +68,6 @@ class SoAnswer extends SoPost {
          * Es kann immer nur eine Antwort die Accepted-Answer sein.
          */
         this.isAccepted = null;
+        this.voteBar = null;
     }
 }

@@ -77,25 +77,51 @@ p.dbsPushMessage {
     float: left;
     z-index: 2;
     border: 4px solid #333333;
-    animation: showLogo .5s 1 ease-in;
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
     /* background: url(https://cdn.dribbble.com/users/1065420/screenshots/3933364/gary-big-eyes.gif); 
     background-size: 136% 89%; 
     background-position: -6px -22px; */
 }
 
 #drDoucheDialog {
-    max-height: 74px;
-    min-height: 60px;
-    animation: showDrDoucheDialog .5s 1 ease-in .6s forwards;
-    opacity: 0;
     position: relative;
     display: inline-flex;
+    opacity: 0;
+    transition: all .2s;
+    animation: showDrDoucheDialog .5s 1 ease-in .6s forwards;
     padding: 0 5px 5px 5px;
     word-break: break-all;
     text-overflow: clip;
     left: 14px;
     background: white;
     border: 4px solid #333;
+}
+
+#drDoucheDialog:after,
+#drDoucheDialog:before {
+    left: -19px;
+    top: 67%;
+    border: solid transparent;
+    content: ' ';
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+#drDoucheDialog:after {
+    border-right-color: #333;
+    border-width: 15px;
+    margin-left: -11px;
+    margin-top: -22px;
+    z-index: -1;
+}
+
+#drDoucheDialog:before {
+    border-color: rgba(194, 225, 245, 0);
+    border-right-color: #FFF;
+    border-width: 10px;
+    margin-top: -16px;
 }
 
 a.dbsLink {
@@ -143,33 +169,6 @@ a.dbsLink {
     }
 }
 
-#drDoucheDialog:after,
-#drDoucheDialog:before {
-    left: -19px;
-    top: 67%;
-    border: solid transparent;
-    content: ' ';
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-}
-
-#drDoucheDialog:after {
-    border-right-color: #333;
-    border-width: 15px;
-    margin-left: -11px;
-    margin-top: -22px;
-    z-index: -1;
-}
-
-#drDoucheDialog:before {
-    border-color: rgba(194, 225, 245, 0);
-    border-right-color: #FFF;
-    border-width: 10px;
-    margin-top: -16px;
-}
-
 .innerDialog {
     line-height: 30px;
 }
@@ -196,16 +195,9 @@ nav#dialogMenu {
 
 #dbsOverlay {
     position: relative;
-    top: 14px;
-    border-top: 9px solid white;
+    top: 21px;
     transition: all .5s;
     padding: 0 16px 0 24px;
-
-    .inner-content #question-header {
-        height: 49.5px;
-        background: white;
-        border-bottom: 1px solid #e4e6e8;
-    }
 }
 
 .dbsMainbar {
@@ -272,12 +264,21 @@ nav#dialogMenu {
     }
 }
 
-@keyframes showLogo {
-    0% {
-        transform: scale(0);
+@keyframes shake {
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0);
     }
-    100% {
-        transform: scale(1);
+    
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+  
+    30%, 50%, 70% {
+      transform: translate3d(-4px, 0, 0);
+    }
+  
+    40%, 60% {
+      transform: translate3d(4px, 0, 0);
     }
 }
 
@@ -318,4 +319,3 @@ nav#dialogMenu {
         opacity: 1;
     }
 }
-;

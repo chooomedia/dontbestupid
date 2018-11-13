@@ -1,15 +1,19 @@
-let soParser = new SoParser(document.body);
+let soApi = new SoApi(document.body);
 // let answers = soParser.getAllAnswers();
 // let question = soParser.getQuestion();
 
-soParser.blurSidebars();
-
-function getOverlayHtml(message, answer, question, voteBar, tags) {
+soApi.blurSidebars();
+/*
+  soApi.getRandomMessage()
+, soApi.getDisplayAnswer()
+, soApi.getQuestion());
+*/
+function getOverlayHtml(message, answer, question) {
     // Appends the following element into the body of stackoverflow
     let html =
     "<header id='dbsNavbar' class='top-bar show' style='border-top:unset;'>" +
         "<div class='-container'>" +
-            "<div class='dbsHeadOver'>" +
+            "<div class='dbsHeadOver' style='height:90px'>" +
                 "<a href='#' class='left-sidebar-toggle p0 js-left-sidebar-toggle'>" +
                     "<a id='logoWrapper' href='#' title='comming soon - https://dont-be-stup.id'>" +
                     "</a>" +
@@ -59,29 +63,29 @@ function getOverlayHtml(message, answer, question, voteBar, tags) {
         "</div>" +
             "<div id='dbsOverlay'>" +
                 "<div class='inner-content clearfix'>" +
-                    "<div id='question-header' class='grid'>" +
-                        "<h1 itemprop='name' class='grid--cell fs-headline1 fl1'>" +
-                        question.title +
-                        "</h1>" +
-                        "<div class='pl8 aside-cta grid--cell' role='navigation' aria-label='ask new question'>" +
-                            "<a href='/questions/ask' class='d-inline-flex ai-center ws-nowrap s-btn s-btn__primary'>Donate</a>" +
+                    "<div id='question-header' class='grid' style='background: white;'>" +
+                        "<h1 itemprop='name' class='grid--cell fs-headline1 fl1'" +
+                        "style='margin: 5px auto 3px auto;position: relative;'>" +
+                        "<div class='question-hyperlink'>" + 
+                            question.title +  
                         "</div>" +
+                        "</h1>" +
                     "</div>" +
                     "<div id='mainbar' class='dbsMainbar' role='main'>" + // style='box-shadow: 9px 12px 28px rgba(55,55,55,0.1);'
                         "<div class='question' id='question'>" +
                             "<div class='post-layout'>" + 
                                 "<div class='votecell post-layout--left'>" +
                                     "<div class='vote'>" +
-                                        voteBar +
+                                        answer.voteBar +
                                     "</div>" +
                                 "</div>" +
                                 "<div class='postcell post-layout--right'>" +
                                     "<div class='post-text'>" +
-                                        answer +
+                                        answer.innerHtml +
                                     "</div>" +
                                     "<div class='post-taglist grid gs4 gsy fd-column'>" +
                                         "<div class='grid ps-relative d-block'>" +
-                                        tags +
+                                        question.tags +
                                         "</div>" +
                                     "</div>" +
                                 "</div>" +
@@ -147,16 +151,6 @@ function getAcceptedAnswer() {
     return acceptedAnswers[0];
 }
 
-function getQuestion() {
-    let questionElement = document.getElementById("question-header")
-    let questionElementTitle = document.getElementsByClassName("question-hyperlink")[0];
-    let questionElementX = {
-        innerHTML: questionElement.innerHTML,
-        title: questionElementTitle.innerHTML
-    };
-    return questionElementX;
-}
-
 // Fires randomnly one of these text areas
 let dbsAlertMessages = [
     "<div class='innerDialog'>" + 
@@ -194,65 +188,29 @@ let dbsAlertMessages = [
             "Ouw! Its better waste my time on Social Media</p>" +
     "</div>"
 ];
-
-// Builds the Random Facelogo Ambient    
-let imgSrv = "https://diekommune.de.cool/";
-let logoImagePaths = [
-    imgSrv + "0.svg", // original
-    imgSrv + "1.svg", // empty eyes 
-    imgSrv + "2.svg", // eyes closed mouth open
-    imgSrv + "3.svg", // smirking eyes open
-    imgSrv + "4.svg" // both closed
-];
-
-// Multiplies a random number with the array-length of the alert messages and logo type
-let randomMessagesIndex = Math.floor(Math.random() * Math.floor(dbsAlertMessages.length));
-let randomLogoPathIndex = Math.floor(Math.random() * Math.floor(logoImagePaths.length));
-// Choose randomly one of the thre text areas
-
-// Fires the highest voted answers if no accepted answer avaiable
-let highestVotedAnswer = getHighestVotedAnswer();
-
-// Fires the accepted answers if avaiable
-let accepetedDomElement = getAcceptedAnswer();
-
-// Proofes whether the Objects are correctly setted
-let displayAnswer = accepetedDomElement;
-if (!accepetedDomElement || accepetedDomElement.voteCount < highestVotedAnswer.voteCount) {
-    displayAnswer = highestVotedAnswer;
-}
-
-let mainBody = document.body; // Add overlayed template before body
-let span = document.createElement("span");
-    span.innerHTML = "";
-    span.className = "dbsBody";
-    mainBody.parentNode.insertBefore(span, mainBody); // Pushs the focusing Element before Overlay
-
-
-
 function getRandomMessage() {
-    let RandomMessageObj = dbsAlertMessages[randomMessagesIndex];
-    return RandomMessageObj;
+    // Multiplies a random number with the array-length of the alert messages and logo type
+    let randomMessagesIndex = Math.floor(Math.random() * Math.floor(dbsAlertMessages.length));
+    return dbsAlertMessages[randomMessagesIndex];
 }
-
-// Creates dialog after click event for navbar icons
 
 // CALL ME CONSTRUCTOR :-P
 // Pushes the fired objects frome the functions into the mixed frontend body
-let overlayHtml = getOverlayHtml(getRandomMessage(), displayAnswer.innerHtml, getQuestion(), displayAnswer.voteBar, displayAnswer.tags);
-    document.body.innerHTML += overlayHtml;
+let overlayHtml = getOverlayHtml(
+                      getRandomMessage()
+                    , soApi.getDisplayAnswer()
+                    , soApi.getQuestion()
+                    );
+// Adds the overlay-content to the DOM
+document.body.innerHTML += overlayHtml;
+// Adds the animated Logo
+soApi.insertLogoWrapper();
+// Adds dr Douche`s Dialog
+soApi.drDoucheDialogMode();
 
 // Main Selector of the overlayerd dbs content
 let dbsContainer = document.getElementsByClassName("dbsContainer")[0];
 // Selects dr`s douche`s dialog
-let dialogSelector = document.getElementById("drDoucheDialog");
-    dialogSelector.style.minWidth = "794px";
-
-function dialogWidth() {
-    dialogSelector.style.minWidth = "40px";
-    dialogSelector.style.transition = "all .2s";
-    return;    
-}
 
 let questHead = document.getElementById("question-header");
 
@@ -260,114 +218,8 @@ let questHead = document.getElementById("question-header");
 function getValuesFromParrentPage() {
     let mainBarEl = document.getElementById("mainbar");
     let dbsMainbar = document.getElementsByClassName("dbsMainbar");
-        dbsMainbar[0].style.height = mainBarEl.offsetHeight + 'px';
+        dbsMainbar[0].style.height = mainBarEl.offsetHeight + 180 + 'px';
     return dbsMainbar;
 }
 // Took values from parent-page push it into child-page(overlayelement)
 getValuesFromParrentPage();
-
-// Creates the close button
-function dbsCloseButton() {
-    let counter = 5;
-    let dbsButton = document.createElement("button");
-        dbsButton.id = "acceptButton";
-        dbsButton.innerHTML = "";
-        dbsButton.disabled = true;
-// Deactivates the button and counts to 0
-    let interval = setInterval(o => {
-        dbsButton.innerHTML = counter;
-        counter--;
-    if (counter == 0) {
-            clearInterval(interval);
-            dbsButton.innerHTML = "okay, got it!";
-        }
-    }, 1000);
-
-// Deactivates the button for 5 seconds
-        setTimeout(function () {
-            dbsButton.disabled = false;
-        }, 5000);
-
-// Close the overlayered box over the open tab
-        dbsButton.onclick = (e) => {
-            soParser.unBlurSidebars();
-    // Selects the navigation header
-        let dbsNavbar = document.getElementById("dbsNavbar");
-            dbsNavbar.className = dbsNavbar.className !== "top-bar show" ? "top-bar show" : "top-bar hide";
-        let dbsNavStyle = dbsNavbar.style;
-            dbsContainer.style.display = "none";
-
-        if (dbsNavbar.className == "top-bar show") {
-            dbsNavStyle.display = "block";
-            dbsNavStyle.transform = "translateY(0)";
-            // window.setTimeout(function(){
-                dbsNavStyle.opacity = 1;
-                dbsContainer.style.opacity = 1;
-                dbsContainer.style.display = "block";
-            //},0); 
-            }
-        if (dbsNavbar.className == "top-bar hide") {
-                dbsNavStyle.transform = "translateY(-90px)";
-                dbsNavStyle.opacity = 0;
-                dbsContainer.style.opacity = 0;
-                window.setTimeout(function(){
-                dbsNavStyle.display = "none";
-            },5000); // timed to match animation-duration
-        }
-    };
-    return dbsButton;
-}
-
-// Close the dialog inside navigation after X seconds
-setTimeout(function() {
-        dialogWidth();
-        dialogSelector = document.getElementById("drDoucheDialog");
-        dialogSelector.innerHTML = "";
-        let closeButton = dbsCloseButton();
-            closeButton.innerHTML = "";
-        dialogSelector.appendChild(closeButton);    
-}, 5000); 
-
-// Creates the logo element
-let logoImageOrg = 'https://diekommune.de.cool/0.svg';
-let logoWrapper = document.getElementById("logoWrapper");
-let logoImagePath = logoImagePaths[randomLogoPathIndex];
-let logoImgElement = document.createElement("img");
-    
-    logoImgElement.id = "dbsLogo";
-    logoImgElement.src = logoImagePath;
-    let i = 0;
-    logoImgElement.onclick = (logoImagePath) => {
-    if (i == 1) {
-        let eyeWrapper = buildRollEyes();
-        logoWrapper.appendChild(eyeWrapper);
-    }   
-    let url = logoImagePaths[i];
-        document.getElementById('dbsLogo').src = url;
-    if (i == logoImagePaths.length -1) {
-        i = 0;
-        return;
-    }
-    i = i + 1;
-    };
-    
-// Appends the Logo Element
-    logoWrapper.appendChild(logoImgElement);
-// Append the rolling eye container into child-page Logo when logo.src is the second
-if (randomLogoPathIndex == 1) {
-    let eyeWrapper = buildRollEyes();
-    logoWrapper.appendChild(eyeWrapper);
-}
-
-// Creates and append into the logoWrapper the rolling eye container
-function buildRollEyes() {
-    let eyeWrapper = document.createElement("span");
-        eyeWrapper.id = "rollingEyes";
-        eyeWrapper.innerHTML = 
-        "<span class='ball rotateEyeLeft'>.</span>" +
-        "<span class='ball rotateEyeRight'>.</span>";
-    setTimeout(function(){ 
-        eyeWrapper.style.display = "block";
-    }, 3);
-    return eyeWrapper;
-}
