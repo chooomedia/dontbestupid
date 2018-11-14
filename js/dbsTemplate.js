@@ -325,7 +325,7 @@ class DbsTemplate {
     getValuesFromParrentPage() {
         let mainBarEl = document.getElementById("mainbar");
         let dbsMainbar = document.getElementsByClassName("dbsMainbar");
-            dbsMainbar[0].style.height = mainBarEl.offsetHeight + 380 + 'px';
+            dbsMainbar[0].style.height = mainBarEl.offsetHeight + 'px';
         return dbsMainbar;
     }
 }

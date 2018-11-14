@@ -235,8 +235,8 @@ nav#dialogMenu {
 .dbsMainbar {
   padding-top: 12px !important;
   position: relative;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(80%, white), color-stop(20%, rgba(255, 255, 255, 0)));
-  background: linear-gradient(to bottom, white 80%, rgba(255, 255, 255, 0) 20%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(65%, white), color-stop(100%, rgba(255, 255, 255, 0)), color-stop(101%, rgba(255, 255, 255, 0)));
+  background: linear-gradient(to bottom, white 65%, rgba(255, 255, 255, 0) 100%, rgba(255, 255, 255, 0) 101%);
   z-index: 1000;
   top: -13px;
   left: 1px;
