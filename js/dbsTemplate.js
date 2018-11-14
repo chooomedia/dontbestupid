@@ -1,8 +1,9 @@
 class DbsTemplate {
 
-    constructor() {
+    constructor(wallet) {
         let imgSrv = "https://diekommune.de.cool/";
 
+        this.wallet = wallet;
         this.closeButtonClick = null;
         this._klipKlapInterval = 0;
 
@@ -60,7 +61,7 @@ class DbsTemplate {
 
     getOverlayHtml(answer, question) {
         let message = this.getRandomMessage();
-        let wallet = new DbsAccount();
+        let wallet = this.wallet;
         // Appends the following element into the body of stackoverflow
         let html =
         "<header id='dbsNavbar' class='top-bar show' style='border-top:unset;'>" +
@@ -85,7 +86,7 @@ class DbsTemplate {
                                     "<path style='opacity:1;fill:#FFFFFF;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:259.50698853;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1' d='M 30.375,12.875 L 30.375,19.71875 L 33.625,19.71875 L 33.625,12.875 L 30.375,12.875 z M 30.375,44.96875 L 30.375,51.125 L 33.625,51.125 L 33.625,44.96875 L 30.375,44.96875 z '/>" +
                                 "</svg>" +
                                 "<div class='dbsLinkTitle'>" +
-                                    wallet.balance +
+                                wallet.balance +
                                 "</div>" +
                             "</a>" +
                         "</li>" +
@@ -118,44 +119,44 @@ class DbsTemplate {
             "<div id='left-sidebar' data-is-here-when='md lg' class='left-sidebar js-pinned-left-sidebar'>" +
                 "<div class='left-sidebar--sticky-container js-sticky-leftnav'></div>" +
             "</div>" +
-                "<div id='dbsOverlay'>" +
-                    "<div class='inner-content clearfix'>" +
-                        "<div id='question-header' class='grid' style='background: white;'>" +
-                            "<h1 itemprop='name' class='grid--cell fs-headline1 fl1'" +
-                            "style='margin: 5px auto 3px auto;position: relative;'>" +
-                            "<div class='question-hyperlink'>" + 
-                                question.title +  
-                            "</div>" +
-                            "</h1>" +
+            "<div id='dbsOverlay'>" +
+                "<div class='inner-content clearfix'>" +
+                    "<div id='question-header' class='grid' style='background: white;'>" +
+                        "<h1 itemprop='name' class='grid--cell fs-headline1 fl1'" +
+                        "style='margin: 5px auto 3px auto;position: relative;'>" +
+                        "<div class='question-hyperlink'>" + 
+                            question.title +  
                         "</div>" +
-                        "<div id='mainbar' class='dbsMainbar' role='main'>" + // style='box-shadow: 9px 12px 28px rgba(55,55,55,0.1);'
-                            "<div class='question' id='question'>" +
-                                "<div class='post-layout'>" + 
-                                    "<div class='votecell post-layout--left'>" +
-                                        "<div class='vote'>" +
-                                            answer.voteBar +
+                        "</h1>" +
+                    "</div>" +
+                    "<div id='mainbar' class='dbsMainbar' role='main'>" + // style='box-shadow: 9px 12px 28px rgba(55,55,55,0.1);'
+                        "<div class='question' id='question'>" +
+                            "<div class='post-layout'>" + 
+                                "<div class='votecell post-layout--left'>" +
+                                    "<div class='vote'>" +
+                                        answer.voteBar +
+                                    "</div>" +
+                                "</div>" +
+                                "<div class='postcell post-layout--right'>" +
+                                    "<div class='post-text'>" +
+                                        answer.innerHtml +
+                                    "</div>" +
+                                    "<div class='post-taglist grid gs4 gsy fd-column'>" +
+                                        "<div class='grid ps-relative d-block'>" +
+                                        question.tags +
                                         "</div>" +
                                     "</div>" +
-                                    "<div class='postcell post-layout--right'>" +
-                                        "<div class='post-text'>" +
-                                            answer.innerHtml +
-                                        "</div>" +
-                                        "<div class='post-taglist grid gs4 gsy fd-column'>" +
-                                            "<div class='grid ps-relative d-block'>" +
-                                            question.tags +
-                                            "</div>" +
-                                        "</div>" +
-                                    "</div>" +
-                                    "<div class='post-layout--right'>" +
-                                    "</div>" +
+                                "</div>" +
+                                "<div class='post-layout--right'>" +
                                 "</div>" +
                             "</div>" +
                         "</div>" +
-                        "<div id='sidebar' style='position:relative;top:-10px;' class='show-votes' role='complementary'>" +
-                        "</div>" +
+                    "</div>" +
+                    "<div id='sidebar' style='position:relative;top:-10px;' class='show-votes' role='complementary'>" +
                     "</div>" +
                 "</div>" +
             "</div>" +
+        "</div>" +
             "<div style='display:none;'>" +
             "   <div class='buttonContent item-summary'><a onclick='window.location = \"https://paypal.me/choooomedia/\" + prompt(\"Donate for beer and more delicous features :-)\", \"5\");' href='#' alt='donate me stupid bitch!'>donate the devs</a></div>" +
             "   <div class='buttonContent item-summary'>Button 2 DropDown</div>" +
@@ -194,11 +195,7 @@ class DbsTemplate {
 
         // Close the overlayered box over the open tab
         dbsButton.onclick = (e) => {
-            let account1 = new DbsAccount();
-            account1.withdraw(50);
-
-            let account2 = new DbsAccount();
-            account2.withdraw(150);
+            this.wallet.withdraw(50);
             
             // Beende die Klip-Klap animation
             if (this._klipKlapInterval) {

@@ -253,12 +253,11 @@ nav#dialogMenu {
 
 .dbsContainer {
   top: 50px;
+  bottom: 53px;
+  right: 0;
+  left: 0;
   position: absolute;
   display: none;
-  top: 50px;
-  right: 0;
-  bottom: 0;
-  left: 0;
   -webkit-animation: animateOverlay .5s 1 linear;
           animation: animateOverlay .5s 1 linear;
 }
@@ -274,8 +273,8 @@ nav#dialogMenu {
 .dbsMainbar {
   padding-top: 12px !important;
   position: relative;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(65%, white), color-stop(90%, rgba(255, 255, 255, 0.6)), color-stop(101%, rgba(255, 255, 255, 0)));
-  background: linear-gradient(to bottom, white 65%, rgba(255, 255, 255, 0.6) 90%, rgba(255, 255, 255, 0) 101%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(50%, white), color-stop(75%, rgba(255, 255, 255, 0.66)), color-stop(95%, rgba(255, 255, 255, 0.55)), color-stop(101%, rgba(255, 255, 255, 0.44)));
+  background: linear-gradient(to bottom, white 50%, rgba(255, 255, 255, 0.66) 75%, rgba(255, 255, 255, 0.55) 95%, rgba(255, 255, 255, 0.44) 101%);
   z-index: 1000;
   top: -13px;
   left: 1px;
