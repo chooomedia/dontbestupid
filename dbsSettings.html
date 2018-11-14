@@ -3,31 +3,22 @@
     <title>DONT BE STUPID - AGAINST STUPIDITY</title>
 </head>
 <script src="js/jquery-3.3.1.min.js"></script>
-<script src="js/script.min.js"></script>
+<script src="js/script.js"></script>
 <style>
     body {background:rgba(0,0,0,0.8);font-family: 'Courier New', Courier, monospace; font-size:16px; color: white;}
     #dbsMain {display:grid;width:282px;grid-auto-columns: 2fr;}
     .dbsHead {
         border-bottom: 1px solid grey !important;
-        background: url(https://diekommune.de.cool/0.svg) -86px center no-repeat;
+        background: url(https://diekommune.de.cool/0.svg) -61px center no-repeat;
         text-align: center;
-        background-size: 80% 80%;
+        background-size: 56% 56%;
     }
-    .dbsHead h1 {font-size:18px;}
+    .dbsHead h1 {font-size:18px;margin: 9px auto;}
     .dbsInput {padding: .5em 0;}
     .dbsInput label {width:140px;}
     .dbsInput select{width:140px;float:right;font-family: 'Courier New', Courier, monospace;}
     .dbsInput Input[type=checkbox] {float:right;}
-    #overlay { 
-        font-family:Courier New;
-        width:60%; height:80%;
-        position:fixed; z-index:99999;
-        top:20%; right:10%;
-        bottom:20%; left:10%;
-        padding:7vh 1em;
-        text-align:center; font-size:2.7em;color:white;
-        background:rgba(0,0,0,0.93); 
-    }
+
     .edition {
         background: url("https://upload.wikimedia.org/wikipedia/commons/0/02/Stack_Overflow_logo.svg") center center no-repeat;
         background-size: contain;
@@ -43,12 +34,15 @@
     }
     .dbsInput input[type="number"], .dbsInput input[type="checkbox"], .dbsInput select {
         background: rgba(0,0,0,0.4) !important;
+        transition: all .3s;
         padding: 1px 3px !important;
         border-radius: 3px !important;
         line-height: 16px !important;
         color: #FFF !important;
         border: 1px solid grey !important;
     }
+
+    .dbsInput input[type="number"]:disabled, .dbsInput select:disabled {opacity: 0.5;}
 </style>
 
 <body>

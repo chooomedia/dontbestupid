@@ -16,6 +16,7 @@ class SoEntry {
          * Jeder Eintrag hat innerHTML, deshalb -> Basis
          */
         this.innerHtml = null;
+        this.classes = null;
     }
 }
 

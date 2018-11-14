@@ -1,3 +1,5 @@
+//let loaded = false;
+
 // Writes the chrome storage settings options from the plugin popup box
 chrome.storage.sync.get("_settings", function (settingsObj) {
   if (settingsObj["_settings"]) {
@@ -14,41 +16,83 @@ chrome.storage.sync.get("_settings", function (settingsObj) {
   });
 });
 
+/*
+chrome.webRequest.onBeforeRequest.addListener(function(data) {
+    return {
+      redirectUrl:"https://loser.com"
+    };
+  }, {
+  urls: [
+    "*://stackoverflow.com/*"
+  ]
+});
+*/
+
 // Scanns if active tab content executed
 chrome.webNavigation['onCommitted'].addListener(function (data) {
-  if (typeof data && data.frameId == 0) {
+
+  if (!(typeof data && data.frameId == 0)) 
+    return;
+
+    /*
+  if (loaded == data.url) {
+    //window.stop();
+    displayMessageFromStorage();
+  }
+  */
+    
     // Writes the chrome storage settings options from the plugin popup box
-    chrome.storage.sync.get("_settings", async function (settingsObj) {
-      let storedIsEnabledValue = settingsObj["_settings"].isEnabled;
-      let storedMode = settingsObj["_settings"].mode;
-      let intervall = settingsObj["_settings"].intervall;
+  chrome.storage.sync.get("_settings", function (settingsObj) {
+    let storedIsEnabledValue = settingsObj["_settings"].isEnabled;
+    // let storedMode = settingsObj["_settings"].mode;
 
-      // Check if is the Plugin actived or not
-      if (!storedIsEnabledValue && storedMode) {
-        return;
-      }
-      if (!data.url.startsWith("https://stackoverflow.com/")) {
-        return;
-      }
-      // Proofs if there was executed the same Tag loads a lot Timess
-      let visitCount = await addVisit(data.url);
+    // Check if is the Plugin actived or not
+    if (!storedIsEnabledValue) {
+      return;
+    }
+    if (!data.url.startsWith("https://stackoverflow.com/")) {
+      return;
+    }
 
+    // Proofs if there was executed the same Tag loads a lot Timess
+    // Programm is "splitting" with the function await, so the other lines will also executes
+    addVisit(data.url); // same as .then(function ...)
+  });
+});
+
+chrome.webNavigation['onDOMContentLoaded'].addListener(function(data) {
+
+  if (!(typeof data && data.frameId == 0)) 
+    return;
+    
+  // Writes the chrome storage settings options from the plugin popup box
+  chrome.storage.sync.get("_settings", function (settingsObj) {
+    let storedIsEnabledValue = settingsObj["_settings"].isEnabled;
+    let intervall = settingsObj["_settings"].intervall;
+
+    if (!storedIsEnabledValue) {
+      return;
+    }
+    if (!data.url.startsWith("https://stackoverflow.com/")) {
+      return;
+    }
+
+    new DbsStorage().getDbsStorage(data.url, pageMetadata => {
+      let visitCount = pageMetadata[data.url].timestamps.length;
+  
       if (visitCount > 0) {
         chrome.browserAction.setBadgeText({text: visitCount.toString()});
       }
-
-      if (visitCount + 1 > parseInt(intervall)) {
+  
+      if (visitCount >= parseInt(intervall)) {
         // Checks the requested url and show overlay when you'll visit stackoverflow to much times :-)
         // Executes the Overlay Script to show the random Message
         displayStupidMessage();
       }
-
-      if (visitCount == 10) {
-        displayStupidMessage();
-      }
     });
-  }
+  });
 });
+
 
 /**
  * Adds a new visit to the database.
@@ -79,11 +123,8 @@ function addVisit(url) {
       // And store it back
       chrome.storage.sync.set(pageMetadata);
 
-      // Store the current length of the array in the return variable
-      let newVisitCount = pageMetadata[url].timestamps.length;
-
       // Finish the promise (this will execute the .then() of the caller )
-      finished(newVisitCount);
+      finished(pageMetadata);
     });
   });
   return promise;
@@ -100,3 +141,17 @@ function displayStupidMessage() {
     });
   });
 }
+
+// Executes the external overlay box inside the acitve tab
+/*
+function displayMessageFromStorage() {
+  chrome.tabs.query({
+    active: true,
+    currentWindow: true
+  }, function (tabs) {
+    chrome.tabs.executeScript(tabs[0].id, {
+      file: "js/overlayFromStorage.js"
+    });
+  });
+}
+*/
