@@ -158,9 +158,30 @@ class DbsTemplate {
             "</div>" +
         "</div>" +
             "<div style='display:none;'>" +
-            "   <div class='buttonContent item-summary'><a onclick='window.location = \"https://paypal.me/choooomedia/\" + prompt(\"Donate for beer and more delicous features :-)\", \"5\");' href='#' alt='donate me stupid bitch!'>donate the devs</a></div>" +
-            "   <div class='buttonContent item-summary'>Button 2 DropDown</div>" +
-            "   <div class='buttonContent item-summary'>Button 3 DropDown</div>" +
+                "<div class='buttonContent item-summary'>Piece of Text</div>" +
+                "<div class='buttonContent item-summary'>" +
+                    "" +
+                "</div>" +
+                "<div class='buttonContent item-summary'>" +
+                    "<ul>" +
+                        "<li>" +
+                            "<a title='Start with the Disover-Tour'>" +
+                                "Discover dont be stupid!" +
+                                "<span class='item-summary'>" +
+                                    "Experience the functionality of the extension and quickly learn to be more effective in your daily work" +
+                                "</span>" +
+                            "</a>" +
+                        "</li>" +
+                        "<li>" +
+                            "<a title='donate us :-)'>" +
+                                "Donate the Developers" +
+                                "<span class='item-summary' onclick='window.location = \"https://paypal.me/choooomedia/\" + prompt(\"Donate for beer and more delicous pieces of code :-)\", \"5\");' href='#' alt='donate now -thank you!'>" +
+                                    "We are grateful for any support as we put a lot of heart and soul into this project in addition to our regular work. Every piece of code a little poetry." +
+                                    "</span>" +
+                            "</a>" +
+                        "</li>" +
+                    "</ul>" +
+                "</div>" +
             "</div>";
         return html;
     }
