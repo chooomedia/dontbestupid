@@ -5,6 +5,7 @@ class SoApi {
      */
     constructor(body) {
         this.body = body;
+        this._cryptClass = new DbsContentcrypt();
     }
 
     getHighestVotedAnswer() {
@@ -124,8 +125,14 @@ class SoApi {
             return soAnswer;
         };
 
+        let self =  this;    
         let soAnswersArray = htmlElementAnswersArray.map(convertHtmlAnswerToSoAnswerObject);
-        
-        return soAnswersArray;
+
+        let soAnswersCrypted = soAnswersArray.forEach(function(element) {
+            let innerContent = element.innerHTML;
+            return self._cryptClass.scrambleInnerNodes(innerContent);
+        });
+
+        return soAnswersCrypted;
     }    
 }

@@ -16,6 +16,7 @@ dbsStorage.getDbsStorage(window.location.href, (pageMetadata) => {
     chrome.storage.sync.set(pageMetadata);
 });
 
+
 wallet.loaded = function() {
     // CALL ME CONSTRUCTOR :-P
     // Pushes the fired objects frome the functions into the mixed frontend body

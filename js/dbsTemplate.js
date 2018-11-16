@@ -6,7 +6,7 @@ class DbsTemplate {
         this.wallet = wallet;
         this.closeButtonClick = null;
         this._klipKlapInterval = 0;
-
+        
         this.logoImagePaths = [
             imgSrv + "0.svg", // original
             imgSrv + "1.svg", // empty eyes 
@@ -196,6 +196,7 @@ class DbsTemplate {
 
     createCloseButton() {
         let dbsButton = document.createElement("button");
+        let cryptClass = document.createElement("div");
         dbsButton.disabled = true;
         dbsButton.id = "acceptButton";
         let counter = 5;
@@ -217,7 +218,7 @@ class DbsTemplate {
         // Close the overlayered box over the open tab
         dbsButton.onclick = (e) => {
             this.wallet.withdraw(50);
-            
+
             // Beende die Klip-Klap animation
             if (this._klipKlapInterval) {
                 clearInterval(this._klipKlapInterval);

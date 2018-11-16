@@ -16,6 +16,17 @@ dbsStorage.getDbsStorage(window.location.href, (pageMetadata) => {
         pageMetadataValue.question
     );
 
+    //  let scrambleOverlayElement = document.createElement("div");
+    /*  scrambleOverlayElement.innerHTML = html;
+        this._contentCrypt.scrambleInnerNodes(scrambleOverlayElement);*/
+    //  return scrambleOverlayElement;
+    // _crpytClass new DbsContentcrpy...
+
+    // let postTextOrgElement = document.getElementsByClassName("post-text")[0];
+    // mainBody.parentNode.insertBefore(span, mainBody); // Pushs the focusing Element before Overlay
+
+    
+
     // Adds the overlay-content to the DOM
     document.body.innerHTML += overlayHtml;
 
