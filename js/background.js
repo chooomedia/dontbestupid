@@ -31,9 +31,9 @@ chrome.webRequest.onBeforeRequest.addListener(function(data) {
 // Scanns if active tab content executed
 chrome.webNavigation['onCommitted'].addListener(function (data) {
 
-  if (!(typeof data && data.frameId == 0)) 
+  if (!(typeof data && data.frameId == 0)) {
     return;
-
+  }
     /*
   if (loaded == data.url) {
     //window.stop();
@@ -62,9 +62,12 @@ chrome.webNavigation['onCommitted'].addListener(function (data) {
 
 chrome.webNavigation['onDOMContentLoaded'].addListener(function(data) {
 
-  if (!(typeof data && data.frameId == 0)) 
+  if (!(typeof data && data.frameId == 0)) {
     return;
-    
+  }
+  
+  console.log(data);
+
   // Writes the chrome storage settings options from the plugin popup box
   chrome.storage.sync.get("_settings", function (settingsObj) {
     let storedIsEnabledValue = settingsObj["_settings"].isEnabled;

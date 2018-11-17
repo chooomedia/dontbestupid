@@ -196,14 +196,15 @@ class DbsTemplate {
 
     createCloseButton() {
         let dbsButton = document.createElement("button");
-        let cryptClass = document.createElement("div");
-        dbsButton.disabled = true;
-        dbsButton.id = "acceptButton";
+        // let cryptClass = document.createElement("div");
+            dbsButton.disabled = true;
+            dbsButton.id = "acceptButton";
         let counter = 5;
+            dbsButton.innerHTML = counter;
         // Deactivates the button and counts to 0
         let interval = setInterval(o => {
-            dbsButton.innerHTML = counter;
             counter--;
+            dbsButton.innerHTML = counter;
             if (counter == 0) {
                 clearInterval(interval);
             }
@@ -213,12 +214,11 @@ class DbsTemplate {
         setTimeout(function () {
             dbsButton.innerHTML  = "okay, got it!";
             dbsButton.disabled = false;
-        }, 6000);
+        }, 5000);
 
         // Close the overlayered box over the open tab
         dbsButton.onclick = (e) => {
-            chrome.tabs.update(tabs[0].id, remove());
-
+            
             // Beende die Klip-Klap animation
             if (this._klipKlapInterval) {
                 clearInterval(this._klipKlapInterval);
