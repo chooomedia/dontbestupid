@@ -21,7 +21,7 @@ wallet.loaded = function() {
     // CALL ME CONSTRUCTOR :-P
     // Pushes the fired objects frome the functions into the mixed frontend body
     let overlayHtml = template.getOverlayHtml(
-                          soApi.getDisplayAnswer()
+                          soApi.getDisplayAnswer(true)
                         , soApi.getQuestion()
                         );
 

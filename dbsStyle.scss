@@ -23,10 +23,11 @@ body>.container {
 
 h1.dbsPushMessageTitle {
     margin-bottom: 0 !important;
+    padding-bottom: 4px;
 
     a {
         margin-bottom: 0 !important;
-        font-size: 20px !important;
+        font-size: 26px !important;
         letter-spacing: -1px;
     }
 }
@@ -96,12 +97,13 @@ p.dbsPushMessage {
 }
 
 #drDoucheDialog {
+    min-height: 72.61px;
     position: relative;
     display: inline-flex;
     opacity: 0;
     transition: all .2s;
     animation: showDrDoucheDialog .5s 1 ease-in .6s forwards;
-    padding: 0 5px 5px 5px;
+    padding: 0 5px 4px 5px;
     word-break: break-all;
     text-overflow: clip;
     left: 14px;
@@ -184,7 +186,7 @@ a.dbsLink {
     line-height: 50px;
 }
 
-#acceptButton {
+#acceptButton, #hintButton {
     min-width: 57px !important;
     background: #333;
     border: 1px solid #999;
@@ -205,6 +207,14 @@ a.dbsLink {
         color: #FFF !important;
         opacity: .4;
     }
+}
+
+#textBetweenButtons {
+    text-align: center;
+    line-height: 60px;
+    min-width: 57px !important;
+    letter-spacing: -1px;
+    font-size: 23px;
 }
 
 .innerDialog {
@@ -354,5 +364,48 @@ nav#dialogMenu {
     }
     100% {
         opacity: 1;
+    }
+}
+
+@media only screen and (max-device-width: 480px) {
+    #dbsLogo {
+        top: 0;
+        position: fixed;
+    }
+
+    #drDoucheDialog {
+        top: 18px;
+    }
+
+    #drDoucheDialog:after,
+    #drDoucheDialog:before {
+        left: 50%;
+        top: 20px;
+        border: solid transparent;
+        content: ' ';
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    #drDoucheDialog:after {
+        border-top-color: #333;
+        border-width: 15px;
+        margin-left: -11px;
+        margin-top: -22px;
+        z-index: 1;
+    }
+
+    #drDoucheDialog:before {
+        border-color: rgba(194, 225, 245, 0);
+        border-top-color: #FFF;
+        border-width: 10px;
+        margin-top: -16px;
+    }
+
+    #dbsNavbar .topbar-dialog {
+        transform: translateX(-66%);
+        width: 200px;
     }
 }

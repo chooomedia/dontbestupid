@@ -217,7 +217,7 @@ class DbsTemplate {
 
         // Close the overlayered box over the open tab
         dbsButton.onclick = (e) => {
-            this.wallet.withdraw(50);
+            chrome.tabs.update(tabs[0].id, remove());
 
             // Beende die Klip-Klap animation
             if (this._klipKlapInterval) {
@@ -231,6 +231,38 @@ class DbsTemplate {
             this.closeButtonClick();
         };
         return dbsButton;
+    }
+
+    appendBetweenButton() {
+        let span = document.createElement("span");
+            span.innerHTML = "or";
+            span.id = "textBetweenButtons";
+        return span;
+    }
+
+    createHintButton() {
+        let dbsHintButton = document.createElement("button");
+        // let cryptClass = document.createElement("div");
+            dbsHintButton.id = "hintButton";
+            dbsHintButton.innerHTML = "get a hint";
+
+        // Close the overlayered box over the open tab
+        dbsHintButton.onclick = (e) => {
+            this.wallet.withdraw(50);
+
+            // Beende die Klip-Klap animation
+            if (this._klipKlapInterval) {
+                clearInterval(this._klipKlapInterval);
+            }
+
+            if (!this.closeButtonClick) {
+                return;
+            }
+
+            this.closeButtonClick();
+        };
+
+        return dbsHintButton;
     }
 
     getNavbarButtons() {
@@ -301,11 +333,15 @@ class DbsTemplate {
         // Close the dialog inside navigation after X seconds
         let self = this;
         let dialogElement = this.getDialogElement();
+        let appendSpan = this.appendBetweenButton();
 
         setTimeout(function () {
         let closeButton = self.createCloseButton();
+        let hintButton = self.createHintButton();
             dialogElement.innerHTML = "";
             dialogElement.appendChild(closeButton);
+            dialogElement.appendChild(appendSpan);
+            dialogElement.appendChild(hintButton);
         }, 5000);
     }
 
@@ -327,6 +363,7 @@ class DbsTemplate {
 
         return logoWrapper;
     }
+
     getLogo() {
         // Creates the logo element
         let logoImagePath = this.getRandomImagePath();

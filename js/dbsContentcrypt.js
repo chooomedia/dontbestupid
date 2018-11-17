@@ -49,7 +49,7 @@ class DbsContentcrypt {
                     return self.scrambleWord(word, 2);
                 }
                 return word;
-        })
+        });
         return scrambledWords.join(" ");
     }
 

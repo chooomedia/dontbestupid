@@ -8,8 +8,8 @@ class SoApi {
         this._cryptClass = new DbsContentcrypt();
     }
 
-    getHighestVotedAnswer() {
-        let allAnswers = this.getAllAnswers();
+    getHighestVotedAnswer(scramble) {
+        let allAnswers = this.getAllAnswers(scramble);
         let maxVotedAnswer = {};
 
         allAnswers.forEach(answers => {
@@ -21,8 +21,8 @@ class SoApi {
         return maxVotedAnswer;
     }
 
-    getAcceptedAnswer() {
-        let allAnswers = this.getAllAnswers();
+    getAcceptedAnswer(scramble) {
+        let allAnswers = this.getAllAnswers(scramble);
         let acceptedAnswers = allAnswers.filter(answers => answers.classes.indexOf("accepted-answer") > -1);
         if (acceptedAnswers.length == 0){
             return null;
@@ -31,11 +31,11 @@ class SoApi {
         return acceptedAnswers[0];
     }
 
-    getDisplayAnswer() {
+    getDisplayAnswer(scramble) {
         // Finds the highest voted answers if no accepted answer avaiable
-        let highestVotedAnswer = this.getHighestVotedAnswer();
+        let highestVotedAnswer = this.getHighestVotedAnswer(scramble);
         // Finds the accepted answers if avaiable
-        let accepetedDomElement = this.getAcceptedAnswer();
+        let accepetedDomElement = this.getAcceptedAnswer(scramble);
         // Proofes whether the Objects are correctly setted
         let displayAnswer = accepetedDomElement;
         if (!accepetedDomElement || accepetedDomElement.voteCount < highestVotedAnswer.voteCount) {
@@ -98,7 +98,8 @@ class SoApi {
     /**
      * Reads all answer elements from the so page
      */
-    getAllAnswers() {
+    getAllAnswers(scramble) {
+        let self = this;
         let allAnswers = document.querySelectorAll(".answer");
         if (allAnswers.length == 0) {
             return [];
@@ -113,26 +114,27 @@ class SoApi {
             let votes = voteBarLeft.getElementsByTagName("span")[0];
             // let tagsArray = Array.from(answerHtmlElement.getElementsByClassName("post-tag"));
             let voteCount = parseInt(votes.innerText.trim());
+            let contentElement = contentDiv.children[0];
     
+            let scrambledElement = scramble ? document.createElement("div") : contentElement;
+            if (scramble) {
+                scrambledElement.innerHTML = contentElement.innerHTML;
+                self._cryptClass.scrambleInnerNodes(scrambledElement);
+            }
+            
             let soAnswer = new SoAnswer();
             soAnswer.author = null;
             soAnswer.voteCount = voteCount;
             soAnswer.classes = Array.from(answerHtmlElement.classList);
-            soAnswer.innerHtml = contentDiv.children[0].innerHTML;
+            soAnswer.innerHtml = scrambledElement.innerHTML;
             soAnswer.isAccepted = null;
             soAnswer.voteBar = voteBarLeft.innerHTML;
 
             return soAnswer;
         };
 
-        let self =  this;    
         let soAnswersArray = htmlElementAnswersArray.map(convertHtmlAnswerToSoAnswerObject);
 
-        let soAnswersCrypted = soAnswersArray.forEach(function(element) {
-            let innerContent = element.innerHTML;
-            return self._cryptClass.scrambleInnerNodes(innerContent);
-        });
-
-        return soAnswersCrypted;
+        return soAnswersArray;
     }    
 }
