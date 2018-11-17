@@ -1,3 +1,6 @@
+// global Color
+$color: #333333;
+
 body {
     min-height: 100%;
     display: flex;
@@ -52,7 +55,7 @@ p.dbsPushMessage {
 
 #dbsNavbar {
     position: fixed;
-    background-color: #333333;
+    background-color: $color;
     box-shadow: 0px 3px 6px #888888;
     transition: box-shadow cubic-bezier(.165, .84, .44, 1) .25s;
     height: 51px;
@@ -70,7 +73,7 @@ p.dbsPushMessage {
 
     .topbar-dialog {
         background: #FFF;
-        border: 4px solid #333;
+        border: 4px solid $color;
     }
 }
 
@@ -89,7 +92,7 @@ p.dbsPushMessage {
     position: relative;
     float: left;
     z-index: 2;
-    border: 4px solid #333333;
+    border: 4px solid $color;
     animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
     /* background: url(https://cdn.dribbble.com/users/1065420/screenshots/3933364/gary-big-eyes.gif); 
     background-size: 136% 89%; 
@@ -108,13 +111,13 @@ p.dbsPushMessage {
     text-overflow: clip;
     left: 14px;
     background: white;
-    border: 4px solid #333;
+    border: 4px solid $color;
 }
 
 #drDoucheDialog:after,
 #drDoucheDialog:before {
     left: -19px;
-    top: 67%;
+    top: 90%;
     border: solid transparent;
     content: ' ';
     height: 0;
@@ -124,7 +127,7 @@ p.dbsPushMessage {
 }
 
 #drDoucheDialog:after {
-    border-right-color: #333;
+    border-right-color: $color;
     border-width: 15px;
     margin-left: -11px;
     margin-top: -22px;
@@ -140,7 +143,7 @@ p.dbsPushMessage {
 
 a.dbsLink {
     color: rgba(255, 255, 255, 1) !important;
-    background-color: #333;
+    background-color: $color;
     transition: all .5s;
     display: inline-flex;
     align-items: center;
@@ -188,7 +191,7 @@ a.dbsLink {
 
 #acceptButton, #hintButton {
     min-width: 57px !important;
-    background: #333;
+    background: $color;
     border: 1px solid #999;
     padding: 0 15px;
     margin-top: 4px;
@@ -392,7 +395,7 @@ nav#dialogMenu {
     }
 
     #drDoucheDialog:after {
-        border-top-color: #333;
+        border-top-color: $color;
         border-width: 15px;
         margin-left: -11px;
         margin-top: -22px;

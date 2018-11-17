@@ -3,4 +3,5 @@
 *.min.js
 .png
 .scss
+.css.map
 .jshintrc

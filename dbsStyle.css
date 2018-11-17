@@ -87,7 +87,7 @@ p.dbsPushMessage {
 
 #dbsNavbar .topbar-dialog {
   background: #FFF;
-  border: 4px solid #333;
+  border: 4px solid #333333;
 }
 
 .iconStupidollar {
@@ -132,13 +132,13 @@ p.dbsPushMessage {
   text-overflow: clip;
   left: 14px;
   background: white;
-  border: 4px solid #333;
+  border: 4px solid #333333;
 }
 
 #drDoucheDialog:after,
 #drDoucheDialog:before {
   left: -19px;
-  top: 67%;
+  top: 90%;
   border: solid transparent;
   content: ' ';
   height: 0;
@@ -148,7 +148,7 @@ p.dbsPushMessage {
 }
 
 #drDoucheDialog:after {
-  border-right-color: #333;
+  border-right-color: #333333;
   border-width: 15px;
   margin-left: -11px;
   margin-top: -22px;
@@ -164,7 +164,7 @@ p.dbsPushMessage {
 
 a.dbsLink {
   color: white !important;
-  background-color: #333;
+  background-color: #333333;
   -webkit-transition: all .5s;
   transition: all .5s;
   display: -webkit-inline-box;
@@ -218,7 +218,7 @@ a.dbsLink:hover {
 
 #acceptButton, #hintButton {
   min-width: 57px !important;
-  background: #333;
+  background: #333333;
   border: 1px solid #999;
   padding: 0 15px;
   margin-top: 4px;
@@ -529,7 +529,7 @@ nav#dialogMenu {
     pointer-events: none;
   }
   #drDoucheDialog:after {
-    border-top-color: #333;
+    border-top-color: #333333;
     border-width: 15px;
     margin-left: -11px;
     margin-top: -22px;

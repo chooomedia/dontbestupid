@@ -218,6 +218,7 @@ class DbsTemplate {
 
         // Close the overlayered box over the open tab
         dbsButton.onclick = (e) => {
+            this.closeActiveTab();
             
             // Beende die Klip-Klap animation
             if (this._klipKlapInterval) {

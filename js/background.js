@@ -96,7 +96,6 @@ chrome.webNavigation['onDOMContentLoaded'].addListener(function(data) {
   });
 });
 
-
 /**
  * Adds a new visit to the database.
  * The key is the url and the value an array of timestamps (Dates)
