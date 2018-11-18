@@ -31,6 +31,9 @@ class DbsAccount {
     }
 
     deposit(amount) {
+        let element = this.createWalletAnimation(amount);
+            element.style.background = "green";
+        this.createWalletAnimation(amount);
         this.balance += amount;
         chrome.storage.sync.set({
             "_account": {
@@ -40,11 +43,25 @@ class DbsAccount {
     }
 
     withdraw(amount) {
+        let element = this.createWalletAnimation(amount);
+            element.style.background = "red";
         this.balance -= amount;
         chrome.storage.sync.set({
             "_account": {
                 balance: this.balance
             }
         });
+    }
+
+    createWalletAnimation(amount) {
+        let animationElement = document.createElement("span");
+            animationElement.id = "stupiDollarVal";
+            animationElement.style.fontSize = "16px";
+            animationElement.innerHTML = amount;
+
+        let dialogElement = document.getElementById("drDoucheDialog");
+            dialogElement.appendChild(animationElement);
+
+        return animationElement;
     }
 }

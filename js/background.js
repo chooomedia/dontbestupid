@@ -65,8 +65,6 @@ chrome.webNavigation['onDOMContentLoaded'].addListener(function(data) {
   if (!(typeof data && data.frameId == 0)) {
     return;
   }
-  
-  console.log(data);
 
   // Writes the chrome storage settings options from the plugin popup box
   chrome.storage.sync.get("_settings", function (settingsObj) {
@@ -130,6 +128,12 @@ function addVisit(url) {
     });
   });
   return promise;
+}
+
+function closeActiveTab() {
+    chrome.tabs.getCurrent(function(tab) {
+      chrome.tabs.remove(tab.id, function() { });
+  });
 }
 
 // Executes the external overlay box inside the acitve tab

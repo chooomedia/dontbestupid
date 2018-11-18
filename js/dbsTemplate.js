@@ -215,11 +215,10 @@ class DbsTemplate {
             dbsButton.innerHTML  = "okay, got it!";
             dbsButton.disabled = false;
         }, 5000);
-
+        clearTimeout(dbsButton);
+        
         // Close the overlayered box over the open tab
         dbsButton.onclick = (e) => {
-            this.closeActiveTab();
-            
             // Beende die Klip-Klap animation
             if (this._klipKlapInterval) {
                 clearInterval(this._klipKlapInterval);
@@ -230,6 +229,7 @@ class DbsTemplate {
             }
 
             this.closeButtonClick();
+            // window.close();
         };
         return dbsButton;
     }
@@ -249,7 +249,7 @@ class DbsTemplate {
 
         // Close the overlayered box over the open tab
         dbsHintButton.onclick = (e) => {
-            this.wallet.withdraw(50);
+            this.wallet.withdraw(25);
 
             // Beende die Klip-Klap animation
             if (this._klipKlapInterval) {
@@ -260,7 +260,12 @@ class DbsTemplate {
                 return;
             }
 
-            this.closeButtonClick();
+            // Shows the withdraw animation to the wallet
+            let self = this;
+            setTimeout(function () {
+                self.closeButtonClick();
+            }, 5000);
+            clearTimeout(self);
         };
 
         return dbsHintButton;
