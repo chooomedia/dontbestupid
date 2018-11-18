@@ -59,19 +59,9 @@ p.dbsPushMessage {
   z-index: 0;
 }
 
-#stupiDollarVal {
-  font-weight: 600;
-  border-radius: 16px;
-  width: 32px;
-  height: 32px;
-  text-align: center;
-  line-height: 28px;
-  border: 2px solid #FFF;
-  color: #fff;
-  -webkit-animation: animateToRight 1s 1 ease-out;
-          animation: animateToRight 1s 1 ease-out;
-}
-
+/* #stupiDollarVal {
+    color: red;
+} */
 #dbsNavbar {
   position: fixed;
   background-color: #333333;
@@ -251,6 +241,19 @@ a.dbsLink:hover {
 #acceptButton:disabled, #hintButton:disabled {
   color: #FFF !important;
   opacity: .4;
+}
+
+#dbsWalletValue {
+  width: auto;
+  padding: 0 12px;
+  line-height: 50px;
+  -webkit-transform: all .6s;
+          transform: all .6s;
+}
+
+.animateValue {
+  -webkit-animation: animationScale .4s 1 ease;
+          animation: animationScale .4s 1 ease;
 }
 
 #textBetweenButtons {
@@ -522,29 +525,29 @@ nav#dialogMenu {
   }
 }
 
-@-webkit-keyframes animateToRight {
+@-webkit-keyframes animationScale {
   0% {
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
-    opacity: 1;
+    -webkit-transform: scale(3);
+            transform: scale(3);
+    opacity: 0;
   }
   100% {
-    -webkit-transform: translateX(52vw);
-            transform: translateX(52vw);
-    opacity: 0.5;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1;
   }
 }
 
-@keyframes animateToRight {
+@keyframes animationScale {
   0% {
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
-    opacity: 1;
+    -webkit-transform: scale(3);
+            transform: scale(3);
+    opacity: 0;
   }
   100% {
-    -webkit-transform: translateX(52vw);
-            transform: translateX(52vw);
-    opacity: 0.5;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1;
   }
 }
 

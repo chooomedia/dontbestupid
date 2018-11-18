@@ -78,6 +78,9 @@ class DbsTemplate {
                 "</div>" +
                 "<li class='-main'>" +
                     "<ol class='-secondary js-secondary-topbar-links drop-icons-responsively the-js-is-handling-responsiveness'>" +
+                        "<li>" +
+                        "   <span id='dbsWalletValue' class='dbsLink -link'></span>" +
+                        "</li>" +
                         "<li class='-item wallet-button-item'>" +
                             "<a class='dbsLink -link' title='There are "+ wallet.balance +" Stupidollars in your Wallet'>" +
                                 "<svg aria-hidden='true' class='svg-icon iconStupidollar' width='18' height='18' viewBox='0 0 18 18'>" +
@@ -234,7 +237,7 @@ class DbsTemplate {
         return dbsButton;
     }
 
-    appendBetweenButton() {
+    appendTextBlock() {
         let span = document.createElement("span");
             span.innerHTML = "or";
             span.id = "textBetweenButtons";
@@ -339,14 +342,14 @@ class DbsTemplate {
         // Close the dialog inside navigation after X seconds
         let self = this;
         let dialogElement = this.getDialogElement();
-        let appendSpan = this.appendBetweenButton();
+        let appendTextBlock = this.appendTextBlock();
 
         setTimeout(function () {
         let closeButton = self.createCloseButton();
         let hintButton = self.createHintButton();
             dialogElement.innerHTML = "";
             dialogElement.appendChild(closeButton);
-            dialogElement.appendChild(appendSpan);
+            dialogElement.appendChild(appendTextBlock);
             dialogElement.appendChild(hintButton);
         }, 5000);
     }

@@ -30,9 +30,25 @@ class DbsAccount {
         });
     }
 
+
+    createWalletAnimation(amount, color) {
+        let animationElement = document.getElementById("dbsWalletValue");
+            animationElement.classList.add("animateValue");
+            animationElement.style.fontSize = "16px"; 
+            animationElement.style.fontWeight = "600"; 
+
+            if (color == "red") {
+                animationElement.innerHTML = "- " + amount;
+            } else {
+                animationElement.innerHTML = "+ " + amount;
+            }
+            animationElement.style.color = color;
+
+        return animationElement;
+    }
+
     deposit(amount) {
-        let element = this.createWalletAnimation(amount);
-            element.style.background = "green";
+        this.createWalletAnimation(amount, "green");
         this.createWalletAnimation(amount);
         this.balance += amount;
         chrome.storage.sync.set({
@@ -43,25 +59,12 @@ class DbsAccount {
     }
 
     withdraw(amount) {
-        let element = this.createWalletAnimation(amount);
-            element.style.background = "red";
+        this.createWalletAnimation(amount, "red");
         this.balance -= amount;
         chrome.storage.sync.set({
             "_account": {
                 balance: this.balance
             }
         });
-    }
-
-    createWalletAnimation(amount) {
-        let animationElement = document.createElement("span");
-            animationElement.id = "stupiDollarVal";
-            animationElement.style.fontSize = "16px";
-            animationElement.innerHTML = amount;
-
-        let dialogElement = document.getElementById("drDoucheDialog");
-            dialogElement.appendChild(animationElement);
-
-        return animationElement;
     }
 }

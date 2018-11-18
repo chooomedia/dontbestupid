@@ -53,17 +53,9 @@ p.dbsPushMessage {
     z-index: 0;
 }
 
-#stupiDollarVal {
-    font-weight: 600;
-    border-radius: 16px;
-    width: 32px;
-    height: 32px;
-    text-align: center;
-    line-height: 28px;
-    border: 2px solid #FFF;
-    color: #fff;
-    animation: animateToRight 1s 1 ease-out;
-}
+/* #stupiDollarVal {
+    color: red;
+} */
 
 #dbsNavbar {
     position: fixed;
@@ -222,6 +214,17 @@ a.dbsLink {
         color: #FFF !important;
         opacity: .4;
     }
+}
+
+#dbsWalletValue {
+    width: auto;
+    padding: 0 12px;
+    line-height: 50px;
+    transform: all .6s;
+}
+
+.animateValue {
+    animation: animationScale .4s 1 ease;
 }
 
 #textBetweenButtons {
@@ -384,14 +387,14 @@ nav#dialogMenu {
     }
 }
 
-@keyframes animateToRight {
+@keyframes animationScale {
     0% {
-        transform: translateX(0);
-        opacity: 1;
+        transform: scale(3.0);
+        opacity: 0;
     }
     100% {
-        transform: translateX(52vw);
-        opacity: 0.5;
+        transform: scale(1.0);
+        opacity: 1;
     }
 }
 
