@@ -24,22 +24,44 @@ wallet.lowBalance = function() {
         innerDonateDialogDiv.style.minWidth = "763px";
         innerDonateDialogDiv.style.display = "grid"; 
         innerDonateDialogDiv.style.gridTemplateColumns = "1fr 57px 1fr";
-        innerDonateDialogDiv.style.gridColumnGap = "4px"; 
+        innerDonateDialogDiv.style.gridColumnGap = "4px";
+        
+    let showWalletAmount = document.createElement("div");
+        showWalletAmount.id = document.createElement("showWalletAmount");
+        showWalletAmount.innerHTML = "<p>+ 500</p>";
+        showWalletAmount.style.lineHeight = "431px";
+        showWalletAmount.style.color = "#FFF";
+        showWalletAmount.style.fontSize = "32px";
+        showWalletAmount.style.textAlign = "center";
 
 // Selects the inner class-elements of the inner Dialog and iterate through the array and do some stuff for every element
     let innerDonateDialogs = document.getElementsByClassName("gridDialogElement");
         for (let i = 0; i < innerDonateDialogs.length; i++) { 
-            let dialog = innerDonateDialogs[i].style.wordBreak = "keep-all";
+            if (i == 1) {
+                continue;
+            } else {
+                innerDonateDialogs[i].style.wordBreak = "keep-all";
+                innerDonateDialogs[i].style.overflow = "hidden";
+                innerDonateDialogs[i].style.textAlign = "center";
+                innerDonateDialogs[i].onmouseover = "toggle(el);";
+                innerDonateDialogs[i].onmouseout = "toggle(el);";
+            }
         }
 
-        innerDonateDialogDiv.style.lineHeight = "413px";
+        function toggle(el) {
+            let item = document.getElementById(el);
+            if(item.style.visibility == 'visible') { item.style.visibility = 'hidden'; }
+            else { item.style.visibility = 'visible'; }
+        }
+
+        innerDonateDialogDiv.style.lineHeight = "423px";
 
     let innerThxDialog = document.createElement("div");
         innerThxDialog.id = "innerThxDialog";
         innerThxDialog.innerHTML = "Thank you very much for your support!";
         innerThxDialog.style.marginTop = "5px";
-        innerThxDialog.style.background = "#333333";
-        innerThxDialog.style.color = "#FFFFFF";
+        innerThxDialog.style.background = "#333";
+        innerThxDialog.style.color = "#FFF";
         innerThxDialog.style.textAlign = "center";
         innerThxDialog.style.fontSize = "22px";
         innerThxDialog.style.padding = "12px";
