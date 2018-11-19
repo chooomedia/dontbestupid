@@ -59,6 +59,22 @@ class DbsTemplate {
         return this.dbsAlertMessages[randomMessagesIndex];
     }
 
+    getDonateOverlayHtml() {
+        // Appends the following element into the body of stackoverflow
+        let html =
+        "<div id='drDoucheDonateDialog'>" +
+            "<div class='innerDialog'>" + 
+                "<h1 class='dbsPushMessageTitle'>" +
+                    "<span>Your wallet is empty you have the following options:</span>" +
+                "</h1>" +
+                "<p class='dbsPushMessage'>" +
+                    "Don`t waste your time looking up with stuff in the internet. Instead use your brain and spend your time with more meanfull things..." +
+                "</p>" +
+            "</div>" +
+        "</div>";
+        return html;
+    }
+
     getOverlayHtml(answer, question) {
         let message = this.getRandomMessage();
         let wallet = this.wallet;
@@ -163,7 +179,7 @@ class DbsTemplate {
             "<div style='display:none;'>" +
                 "<div class='buttonContent item-summary'>Piece of Text</div>" +
                 "<div class='buttonContent item-summary'>" +
-                    "" +
+                    "Another piece of text." +
                 "</div>" +
                 "<div class='buttonContent item-summary'>" +
                     "<ul>" +
@@ -177,10 +193,10 @@ class DbsTemplate {
                         "</li>" +
                         "<li>" +
                             "<a title='donate us :-)'>" +
-                                "Donate the Developers" +
+                                "This one is against stupidy!" +
                                 "<span class='item-summary' onclick='window.location = \"https://paypal.me/choooomedia/\" + prompt(\"Donate for beer and more delicous pieces of code :-)\", \"5\");' href='#' alt='donate now -thank you!'>" +
                                     "We are grateful for any support as we put a lot of heart and soul into this project in addition to our regular work. Every piece of code a little poetry." +
-                                    "</span>" +
+                                "</span>" +
                             "</a>" +
                         "</li>" +
                     "</ul>" +
@@ -252,7 +268,7 @@ class DbsTemplate {
 
         // Close the overlayered box over the open tab
         dbsHintButton.onclick = (e) => {
-            this.wallet.withdraw(25);
+            this.wallet.withdraw(250);
 
             // Beende die Klip-Klap animation
             if (this._klipKlapInterval) {
@@ -267,7 +283,7 @@ class DbsTemplate {
             let self = this;
             setTimeout(function () {
                 self.closeButtonClick();
-            }, 5000);
+            }, 1300);
             clearTimeout(self);
         };
 
@@ -345,12 +361,12 @@ class DbsTemplate {
         let appendTextBlock = this.appendTextBlock();
 
         setTimeout(function () {
-        let closeButton = self.createCloseButton();
-        let hintButton = self.createHintButton();
-            dialogElement.innerHTML = "";
-            dialogElement.appendChild(closeButton);
-            dialogElement.appendChild(appendTextBlock);
-            dialogElement.appendChild(hintButton);
+            let closeButton = self.createCloseButton();
+            let hintButton = self.createHintButton();
+                dialogElement.innerHTML = "";
+                dialogElement.appendChild(closeButton);
+                dialogElement.appendChild(appendTextBlock);
+                dialogElement.appendChild(hintButton);
         }, 5000);
     }
 
@@ -451,6 +467,13 @@ class DbsTemplate {
 
     getDialogElement() {
         let dialogElement = document.getElementById("drDoucheDialog");
+        let drDoucheDonateDialog = document.getElementById("drDoucheDonateDialog");
+
+        if (drDoucheDonateDialog) {
+            dialogElement.style.display = "none";
+            return;
+        }
+
         return dialogElement;
     }
 

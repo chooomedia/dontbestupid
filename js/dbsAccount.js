@@ -3,19 +3,28 @@ class DbsAccount {
     constructor() {
         this.balance = 500;
         this.loaded = null;
-
+        this.lowBalance = null;
+        this.template = new DbsTemplate();
         let self = this;
 
         // Writes the chrome storage Wallet from Local Storage
         chrome.storage.sync.get("_account", function (accountObj) {
-            if (accountObj._account && accountObj._account.balance) {
+            if (accountObj._account && accountObj._account.balance !== undefined) {
                 self.balance = accountObj._account.balance;
 
                 if (self.loaded) {
                     self.loaded();
                 }
+                
+                let getBalance = accountObj._account.balance;
+                if (getBalance <= 0) {
+                    if (self.lowBalance) {
+                        self.lowBalance();
+                    }
+                }
                 return;
             }
+
         
             // The plugin was started for the first time, set the default values
             chrome.storage.sync.set({
@@ -49,7 +58,6 @@ class DbsAccount {
 
     deposit(amount) {
         this.createWalletAnimation(amount, "green");
-        this.createWalletAnimation(amount);
         this.balance += amount;
         chrome.storage.sync.set({
             "_account": {

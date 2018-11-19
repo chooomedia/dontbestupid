@@ -16,6 +16,10 @@ dbsStorage.getDbsStorage(window.location.href, (pageMetadata) => {
     chrome.storage.sync.set(pageMetadata);
 });
 
+wallet.lowBalance = function() {
+    let donateOverlayHtml = template.getDonateOverlayHtml();
+        document.getElementById("drDoucheDialog").outerHTML = donateOverlayHtml;
+};
 
 wallet.loaded = function() {
     // CALL ME CONSTRUCTOR :-P

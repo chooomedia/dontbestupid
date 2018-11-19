@@ -119,7 +119,7 @@ p.dbsPushMessage {
     background-position: -6px -22px; */
 }
 
-#drDoucheDialog {
+#drDoucheDialog, #drDoucheDonateDialog {
   min-height: 72.61px;
   position: relative;
   display: -webkit-inline-box;
@@ -138,6 +138,22 @@ p.dbsPushMessage {
   border: 4px solid #333333;
 }
 
+#drDoucheDonateDialog {
+  max-width: 781px;
+}
+
+#drDoucheDonateDialog:after,
+#drDoucheDonateDialog:before {
+  left: -19px;
+  top: 58px;
+  border: solid transparent;
+  content: ' ';
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
 #drDoucheDialog:after,
 #drDoucheDialog:before {
   left: -19px;
@@ -150,7 +166,7 @@ p.dbsPushMessage {
   pointer-events: none;
 }
 
-#drDoucheDialog:after {
+#drDoucheDialog:after, #drDoucheDonateDialog:after {
   border-right-color: #333333;
   border-width: 15px;
   margin-left: -11px;
@@ -158,11 +174,11 @@ p.dbsPushMessage {
   z-index: -1;
 }
 
-#drDoucheDialog:before {
+#drDoucheDialog:before, #drDoucheDonateDialog:before {
   border-color: rgba(194, 225, 245, 0);
   border-right-color: #FFF;
   border-width: 10px;
-  margin-top: -16px;
+  margin-top: -17px;
 }
 
 a.dbsLink {
@@ -252,8 +268,8 @@ a.dbsLink:hover {
 }
 
 .animateValue {
-  -webkit-animation: animationScale .4s 1 ease;
-          animation: animationScale .4s 1 ease;
+  -webkit-animation: animationWalletValue .4s 1 linear;
+          animation: animationWalletValue .4s 1 linear;
 }
 
 #textBetweenButtons {
@@ -525,7 +541,7 @@ nav#dialogMenu {
   }
 }
 
-@-webkit-keyframes animationScale {
+@-webkit-keyframes animationWalletValue {
   0% {
     -webkit-transform: scale(3);
             transform: scale(3);
@@ -538,7 +554,7 @@ nav#dialogMenu {
   }
 }
 
-@keyframes animationScale {
+@keyframes animationWalletValue {
   0% {
     -webkit-transform: scale(3);
             transform: scale(3);
@@ -556,7 +572,7 @@ nav#dialogMenu {
     top: 0;
     position: fixed;
   }
-  #drDoucheDialog {
+  #drDoucheDialog, #drDoucheDonateDialog {
     top: 18px;
   }
   #drDoucheDialog:after,
