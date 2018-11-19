@@ -19,6 +19,34 @@ dbsStorage.getDbsStorage(window.location.href, (pageMetadata) => {
 wallet.lowBalance = function() {
     let donateOverlayHtml = template.getDonateOverlayHtml();
         document.getElementById("drDoucheDialog").outerHTML = donateOverlayHtml;
+// Select the donate inner Dialog an write some style values
+    let innerDonateDialogDiv = document.getElementById("innerDonateDialog");
+        innerDonateDialogDiv.style.minWidth = "763px";
+        innerDonateDialogDiv.style.display = "grid"; 
+        innerDonateDialogDiv.style.gridTemplateColumns = "1fr 57px 1fr";
+        innerDonateDialogDiv.style.gridColumnGap = "4px"; 
+
+// Selects the inner class-elements of the inner Dialog and iterate through the array and do some stuff for every element
+    let innerDonateDialogs = document.getElementsByClassName("gridDialogElement");
+        for (let i = 0; i < innerDonateDialogs.length; i++) { 
+            let dialog = innerDonateDialogs[i].style.wordBreak = "keep-all";
+        }
+
+        innerDonateDialogDiv.style.lineHeight = "413px";
+
+    let innerThxDialog = document.createElement("div");
+        innerThxDialog.id = "innerThxDialog";
+        innerThxDialog.innerHTML = "Thank you very much for your support!";
+        innerThxDialog.style.marginTop = "5px";
+        innerThxDialog.style.background = "#333333";
+        innerThxDialog.style.color = "#FFFFFF";
+        innerThxDialog.style.textAlign = "center";
+        innerThxDialog.style.fontSize = "22px";
+        innerThxDialog.style.padding = "12px";
+
+    let innerDialog = document.getElementsByClassName("innerDialog")[0];
+
+        innerDialog.append(innerThxDialog);
 };
 
 wallet.loaded = function() {

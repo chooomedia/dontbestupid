@@ -64,14 +64,31 @@ class DbsTemplate {
         let html =
         "<div id='drDoucheDonateDialog'>" +
             "<div class='innerDialog'>" + 
-                "<h1 class='dbsPushMessageTitle'>" +
-                    "<span>Your wallet is empty you have the following options:</span>" +
+                "<h1 class='dbsPushMessageTitle' style='text-align:center;margin-top:5px;'>" +
+                    "<span>Ouw! Your wallet is empty you have the following options:</span>" +
                 "</h1>" +
-                "<p class='dbsPushMessage'>" +
-                    "Don`t waste your time looking up with stuff in the internet. Instead use your brain and spend your time with more meanfull things..." +
-                "</p>" +
+                "<div id='innerDonateDialog' style='display:none;'>" +
+                    "<div class='gridDialogElement' style='line-height:18px;border:1px solid rgb(51, 51, 51, 0.3);padding:6px;'>" +
+                        "<img src='https://diekommune.de.cool/logo-dontbestupid-sad-jail-big.png' alt='Logo dontbestupid sad because in jail...' />" + 
+                        "<h2 style='margin: 6px 0;'>Preserve the Dev freedom by donating</h2>" + 
+                        "<span>The developer of this extension likes to spend a lot of time with the fine tuning. " +
+                            "But he doesn't handle money that well.  The state demands 1500 Euro from him otherwise" + 
+                            "this extension will not be able to be further developed soon...</span>" +
+                    "</div>" +
+                    "<div class='gridDialogElement' style='font-size:23px;padding:6px;text-align:center;'>" +
+                        "or" +
+                    "</div>" +
+                    "<div class='gridDialogElement' style='line-height:18px;border:1px solid rgb(51, 51, 51, 0.3);padding:6px;'>" +
+                        "<img src='https://placehold.it/333x230' alt='placeholderimg' />" +
+                        "<h2 style='margin: 6px 0;'>Share your opinion about this extension</h2>" + 
+                        "<span>The developer of this extension likes to spend a lot of time with the fine tuning. " +
+                            "But he doesn't handle money that well.  The state demands 1500 Euro from him otherwise" + 
+                            "this extension will not be able to be further developed soon...</span>" 
+                    "</div>" +
+                "</div>" +
             "</div>" +
         "</div>";
+
         return html;
     }
 
@@ -87,7 +104,6 @@ class DbsTemplate {
                         "<a id='logoWrapper' href='#' title='comming soon - https://dont-be-stup.id'>" +
                         "</a>" +
                         "<div id='drDoucheDialog'>" +
-                            "<nav id='dialogMenu'></nav>" +
                             message +
                         "</div>" +
                     "</a>" +
@@ -268,7 +284,7 @@ class DbsTemplate {
 
         // Close the overlayered box over the open tab
         dbsHintButton.onclick = (e) => {
-            this.wallet.withdraw(250);
+            this.wallet.withdraw(500);
 
             // Beende die Klip-Klap animation
             if (this._klipKlapInterval) {
@@ -283,7 +299,7 @@ class DbsTemplate {
             let self = this;
             setTimeout(function () {
                 self.closeButtonClick();
-            }, 1300);
+            }, 1200);
             clearTimeout(self);
         };
 

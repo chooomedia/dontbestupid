@@ -6,7 +6,7 @@
         "48": "icons/48x48.png",
         "128": "icons/128x128.png"
       },
-    "version": "0.5",
+    "version": "0.6",
     "author": "No Pain No Gain Applications Enterprises",
     "manifest_version": 2,
     "permissions": [
