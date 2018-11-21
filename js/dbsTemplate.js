@@ -1,12 +1,14 @@
 class DbsTemplate {
 
+    //TODO implement: _dani
+
     constructor(wallet) {
-        let imgSrv = "https://diekommune.de.cool/";
 
         this.wallet = wallet;
         this.closeButtonClick = null;
         this._klipKlapInterval = 0;
-        
+
+        let imgSrv = "https://diekommune.de.cool/";
         this.logoImagePaths = [
             imgSrv + "0.svg", // original
             imgSrv + "1.svg", // empty eyes 
@@ -59,38 +61,20 @@ class DbsTemplate {
         return this.dbsAlertMessages[randomMessagesIndex];
     }
 
-    getDonateOverlayHtml() {
-        // Appends the following element into the body of stackoverflow
-        let html =
-        "<div id='drDoucheDonateDialog'>" +
-            "<div class='innerDialog'>" + 
-                "<h1 class='dbsPushMessageTitle' style='text-align:center;font-size:26px;padding:12px 0;'>" +
-                    "<span>Ouw! Your wallet is empty you have the following options:</span>" +
-                "</h1>" +
-                "<div id='innerDonateDialog' style='display:none;'>" +
-                    "<div class='gridDialogElement' style='line-height:18px;border:1px solid rgb(51, 51, 51, 0.3);padding:6px;'>" +
-                    // Optimal image dimensions: 290px x 210px
-                        "<img src='https://diekommune.de.cool/no-jail.png' style='margin-top:7px;' alt='Logo dontbestupid sad because in jail...' />" + 
-                        "<h2 style='margin: 6px 0;font-size:22px;'>Preserve the Developer`s<br> freedom by donating</h2>" + 
-                        "<span>The developer of this extension likes to spend a lot of time with the fine tuning. " +
-                            "But he doesn't handle money that well.  The state demands 1500 Euro from him otherwise" + 
-                            "this extension will not be able to be further developed soon...</span>" +
-                    "</div>" +
-                    "<div class='gridDialogElement' style='font-size:23px;padding:6px;text-align:center;'>" +
-                        "or" +
-                    "</div>" +
-                    "<div class='gridDialogElement' style='filter: grayscale(1);line-height:18px;border:1px solid rgb(51, 51, 51, 0.3);padding:6px;'>" +
-                        "<img src='https://diekommune.de.cool/share-new.gif' style='width:321px;margin-top:7px;' alt='placeholderimg' />" +
-                        "<h2 style='margin: 6px 0;font-size:22px;'>Share your opinion<br> about this extension</h2>" + 
-                        "<span>The developer of this extension likes to spend a lot of time with the fine tuning. " +
-                            "But he doesn't handle money that well.  The state demands 1500 Euro from him otherwise" + 
-                            "this extension will not be able to be further developed soon...</span>" + 
-                    "</div>" +
-                "</div>" +
-            "</div>" +
-        "</div>";
+    createDonateThxDialog() {
+        let innerThxDialog = document.createElement("div");
+            innerThxDialog.id = "innerThxDialog";
+            innerThxDialog.innerHTML = "Thank you very much for your support (-:";
+            innerThxDialog.style.marginTop = "5px";
+            innerThxDialog.style.background = "#333";
+            innerThxDialog.style.color = "#FFF";
+            innerThxDialog.style.textAlign = "center";
+            innerThxDialog.style.fontSize = "22px";
+            innerThxDialog.style.padding = "12px";
 
-        return html;
+        let innerDialog = document.getElementsByClassName("innerDialog")[0];
+            innerDialog.append(innerThxDialog);
+        return innerDialog;
     }
 
     getOverlayHtml(answer, question) {
@@ -109,7 +93,7 @@ class DbsTemplate {
                         "</div>" +
                     "</a>" +
                 "</div>" +
-                "<li class='-main'>" +
+                "<div class='-main' style='position: fixed;right: 0;height: 51px;z-index: 1;'>" +
                     "<ol class='-secondary js-secondary-topbar-links drop-icons-responsively the-js-is-handling-responsiveness'>" +
                         "<li>" +
                         "   <span id='dbsWalletValue' class='dbsLink -link'></span>" +
@@ -300,7 +284,7 @@ class DbsTemplate {
             let self = this;
             setTimeout(function () {
                 self.closeButtonClick();
-            }, 1200);
+            }, 600);
             clearTimeout(self);
         };
 
@@ -484,13 +468,6 @@ class DbsTemplate {
 
     getDialogElement() {
         let dialogElement = document.getElementById("drDoucheDialog");
-        let drDoucheDonateDialog = document.getElementById("drDoucheDonateDialog");
-
-        if (drDoucheDonateDialog) {
-            dialogElement.style.display = "none";
-            return;
-        }
-
         return dialogElement;
     }
 

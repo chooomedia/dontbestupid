@@ -78,6 +78,9 @@ p.dbsPushMessage {
     .topbar-dialog {
         background: #FFF;
         border: 4px solid $color;
+        position: fixed;
+        right: 0;
+        top: 47px;
     }
 }
 
@@ -103,29 +106,25 @@ p.dbsPushMessage {
     background-position: -6px -22px; */
 }
 
-#drDoucheDialog, #drDoucheDonateDialog {
+#drDoucheDialog {
     min-height: 72.61px;
-    max-width: 830px;
+    max-width: 784px;
     position: relative;
     display: inline-flex;
     opacity: 0;
-    transition: all .2s;
+    transition: all .3s;
+    font-size: 14px !important;
     animation: showDrDoucheDialog .5s 1 ease-in .6s forwards;
     padding: 0 5px 4px 5px;
     word-break: keep-all;
     left: 14px;
     background: white;
     border: 4px solid $color;
-}
-
-#drDoucheDonateDialog {
-    max-width: 781px;
-    font-size: 14px !important;
     color: rgba(0,0,0,0.8) !important;
 }
 
-#drDoucheDonateDialog:after,
-#drDoucheDonateDialog:before {
+#drDoucheDialog:after,
+#drDoucheDialog:before {
     left: -19px;
     top: 58px;
     border: solid transparent;
@@ -136,19 +135,7 @@ p.dbsPushMessage {
     pointer-events: none;
 }
 
-#drDoucheDialog:after,
-#drDoucheDialog:before {
-    left: -19px;
-    top: 90%;
-    border: solid transparent;
-    content: ' ';
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-}
-
-#drDoucheDialog:after, #drDoucheDonateDialog:after {
+#drDoucheDialog:after {
     border-right-color: $color;
     border-width: 15px;
     margin-left: -11px;
@@ -156,7 +143,7 @@ p.dbsPushMessage {
     z-index: -1;
 }
 
-#drDoucheDialog:before, #drDoucheDonateDialog:before {
+#drDoucheDialog:before {
     border-color: rgba(194, 225, 245, 0);
     border-right-color: #FFF;
     border-width: 10px;
@@ -429,6 +416,8 @@ a.dbsLink {
 
     #drDoucheDialog, #drDoucheDonateDialog {
         top: 18px;
+        z-index: 2;
+        position: relative;
     }
 
     #drDoucheDialog:after,

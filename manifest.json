@@ -29,7 +29,19 @@
             "matches": ["<all_urls>","http://*/*"],
             "all_frames": true,
             "css": ["dbsStyle.css"], 
-            "js":["js/jquery-3.3.1.min.js", "js/script.js", "js/drDouche.js", "js/soApi.js","js/dbsContentcrypt.js", "js/dbsAccount.js", "js/soPost.js", "js/dbsStorage.js", "js/dbsTemplate.js"],
+            "js":[
+                  "js/jquery-3.3.1.min.js"
+                , "js/script.js"
+                , "js/dbsTemplate.js"
+                , "js/drDouche.js"
+                , "js/soApi.js"
+                , "js/soPost.js"
+                , "js/dbsStorage.js"
+                , "js/dbsContentcrypt.js"
+                , "js/dbsAccount.js"
+                , "js/dbsCards.js"
+                , "js/dbsCardsStack.js"
+            ],
             "run_at": "document_end"
         }
     ],

@@ -67,9 +67,9 @@ class SoApi {
         let sideBars = this.getSidebars();
         let s = sideBars;
             s.sidebarLeftSo.style.filter = "blur(7px)";
-            s.sidebarLeftSo.style.transition = "filter .6s ease-in";
+            s.sidebarLeftSo.style.transition = "filter .4s ease-in";
             s.sidebarRightSo.style.filter = "blur(7px)";
-            s.sidebarRightSo.style.transition = "filter .6s ease-out";
+            s.sidebarRightSo.style.transition = "filter .4s ease-out";
             s.sidebarLeftSo.classList.add("blurred");
             s.sidebarRightSo.classList.add("blurred");
     }
@@ -123,12 +123,12 @@ class SoApi {
             }
             
             let soAnswer = new SoAnswer();
-            soAnswer.author = null;
-            soAnswer.voteCount = voteCount;
-            soAnswer.classes = Array.from(answerHtmlElement.classList);
-            soAnswer.innerHtml = scrambledElement.innerHTML;
-            soAnswer.isAccepted = null;
-            soAnswer.voteBar = voteBarLeft.innerHTML;
+                soAnswer.author = null;
+                soAnswer.voteCount = voteCount;
+                soAnswer.classes = Array.from(answerHtmlElement.classList);
+                soAnswer.innerHtml = scrambledElement.innerHTML;
+                soAnswer.isAccepted = null;
+                soAnswer.voteBar = voteBarLeft.innerHTML;
 
             return soAnswer;
         };
