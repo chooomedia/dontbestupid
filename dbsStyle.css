@@ -1,33 +1,4 @@
-body {
-  min-height: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  background-color: #FFF;
-  background-image: none;
-  background-position: top left;
-  background-repeat: repeat;
-  background-size: auto;
-  background-attachment: auto;
-  min-width: 1279px;
-}
 
-body > .container {
-  max-width: 1264px;
-  width: 100%;
-  background: none;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  margin: 0 auto;
-}
 
 h1.dbsPushMessageTitle {
   margin-bottom: 0 !important;
