@@ -1,7 +1,7 @@
 
 class DbsAccount {
     constructor() {
-        this.balance = 500;
+        this.balance = 0; // 500 Default
         this.loaded = null;
         this.lowBalance = null;
         this.template = new DbsTemplate();

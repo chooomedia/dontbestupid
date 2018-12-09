@@ -6,12 +6,10 @@ class CardStack {
         
         this.innerDialogElement = document.createElement("div");
         this.innerDialogElement.className = "innerDialog";
-        this.innerDialogElement.style.minWidth = "763px";
+        this.innerDialogElement.style.minWidth = "767px";
         this.innerDialogElement.style.display = "grid"; 
-        this.innerDialogElement.style.gridTemplateColumns = "";
-        this.innerDialogElement.style.gridColumnGap = "4px";
+        this.innerDialogElement.style.gridTemplateColumns = "repeat(2, 1fr)";
         this.innerDialogElement.style.fontSize = "18px";
-        this.innerDialogElement.style.paddingTop = "6px";
 
         document.onmousemove = (event) => {
             let elementAtMousePosition = document.elementFromPoint(event.x, event.y);
@@ -46,17 +44,15 @@ class CardStack {
      */
     addCard(card) {
         if (this.options && this.options.itemHeight) {
-            card.domElement.style.height = this.options.itemHeight;
+            card.domElement.style.minHeight = this.options.itemHeight;
         }
         
         card.show();
-
         this.cards.push(card);
         this.innerDialogElement.appendChild(card.domElement);
         let cardColumns = [];
         for (let i = 0; i < this.innerDialogElement.childElementCount; i++) {
-            cardColumns.push("1fr");
-            this.innerDialogElement.children[i].style.width = (this.innerDialogElement.offsetWidth / this.innerDialogElement.childElementCount) + "px";
+            cardColumns.push("auto");
         }
         this.innerDialogElement.style.gridTemplateColumns = cardColumns.join(" ");
     }

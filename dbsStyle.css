@@ -1,4 +1,34 @@
+body {
+  min-height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #FFF;
+  background-image: none;
+  background-position: top left;
+  background-repeat: repeat;
+  background-size: auto;
+  background-attachment: auto;
+  min-width: 1279px;
+  padding-top: 50px;
+}
 
+body > .container {
+  max-width: 1264px;
+  width: 100%;
+  background: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 0 auto;
+}
 
 h1.dbsPushMessageTitle {
   margin-bottom: 0 !important;
@@ -92,9 +122,13 @@ p.dbsPushMessage {
     background-position: -6px -22px; */
 }
 
+.inner {
+  margin: 0 2px !important;
+}
+
 #drDoucheDialog {
   min-height: 72.61px;
-  max-width: 784px;
+  max-width: 800px;
   position: relative;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
@@ -105,7 +139,7 @@ p.dbsPushMessage {
   font-size: 14px !important;
   -webkit-animation: showDrDoucheDialog .5s 1 ease-in .6s forwards;
           animation: showDrDoucheDialog .5s 1 ease-in .6s forwards;
-  padding: 0 5px 4px 5px;
+  padding: 4px;
   word-break: keep-all;
   left: 14px;
   background: white;
@@ -194,12 +228,12 @@ a.dbsLink:hover {
   line-height: 50px;
 }
 
-#acceptButton, #hintButton {
+#acceptButton,
+#hintButton {
   min-width: 57px !important;
   background: #333333;
   border: 1px solid #999;
   padding: 0 15px;
-  margin-top: 4px;
   -webkit-transition: all .5s;
   transition: all .5s;
   letter-spacing: -1px;
@@ -208,12 +242,15 @@ a.dbsLink:hover {
           box-shadow: unset;
 }
 
-#acceptButton:hover, #acceptButton:focus, #hintButton:hover, #hintButton:focus {
+#acceptButton:hover, #acceptButton:focus,
+#hintButton:hover,
+#hintButton:focus {
   background: white;
   color: black;
 }
 
-#acceptButton:disabled, #hintButton:disabled {
+#acceptButton:disabled,
+#hintButton:disabled {
   color: #FFF !important;
   opacity: .4;
 }
@@ -233,7 +270,7 @@ a.dbsLink:hover {
 
 #textBetweenButtons {
   text-align: center;
-  line-height: 60px;
+  line-height: 58px;
   min-width: 57px !important;
   letter-spacing: -1px;
   font-size: 23px;
@@ -249,7 +286,9 @@ a.dbsLink:hover {
 
 .innerDialog .innerDonateDialog .flexDialogElement {
   width: 50%;
-  padding: 6px;
+  padding: 4px;
+  -webkit-box-sizing: padding-box;
+          box-sizing: padding-box;
 }
 
 .dbsHeadOver {
@@ -380,38 +419,48 @@ a.dbsLink:hover {
 }
 
 @-webkit-keyframes shake {
-  10%, 90% {
+  10%,
+  90% {
     -webkit-transform: translate3d(-1px, 0, 0);
             transform: translate3d(-1px, 0, 0);
   }
-  20%, 80% {
+  20%,
+  80% {
     -webkit-transform: translate3d(2px, 0, 0);
             transform: translate3d(2px, 0, 0);
   }
-  30%, 50%, 70% {
+  30%,
+  50%,
+  70% {
     -webkit-transform: translate3d(-4px, 0, 0);
             transform: translate3d(-4px, 0, 0);
   }
-  40%, 60% {
+  40%,
+  60% {
     -webkit-transform: translate3d(4px, 0, 0);
             transform: translate3d(4px, 0, 0);
   }
 }
 
 @keyframes shake {
-  10%, 90% {
+  10%,
+  90% {
     -webkit-transform: translate3d(-1px, 0, 0);
             transform: translate3d(-1px, 0, 0);
   }
-  20%, 80% {
+  20%,
+  80% {
     -webkit-transform: translate3d(2px, 0, 0);
             transform: translate3d(2px, 0, 0);
   }
-  30%, 50%, 70% {
+  30%,
+  50%,
+  70% {
     -webkit-transform: translate3d(-4px, 0, 0);
             transform: translate3d(-4px, 0, 0);
   }
-  40%, 60% {
+  40%,
+  60% {
     -webkit-transform: translate3d(4px, 0, 0);
             transform: translate3d(4px, 0, 0);
   }
@@ -536,7 +585,8 @@ a.dbsLink:hover {
     top: 0;
     position: fixed;
   }
-  #drDoucheDialog, #drDoucheDonateDialog {
+  #drDoucheDialog,
+  #drDoucheDonateDialog {
     top: 18px;
     z-index: 2;
     position: relative;

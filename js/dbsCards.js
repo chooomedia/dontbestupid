@@ -18,11 +18,10 @@ class Card {
 
         this.domElement = document.createElement('div');
         this.domElement.className = "gridDialogElement";
+        this.domElement.style.gridRowStart = "2";
         this.domElement.style.transition = "all .3s ease";
-        this.domElement.style.border ="1px solid rgb(51, 51, 51, 0.3)";
-        this.domElement.style.padding = "6px";
         this.domElement.style.fontSize = "14px";
-        this.domElement.style.lineHeight = "18px";
+        this.domElement.style.lineHeight = "22px";
     }
 
     onMouseEnter() {

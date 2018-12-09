@@ -100,27 +100,31 @@ p.dbsPushMessage {
     float: left;
     z-index: 2;
     border: 4px solid $color;
-    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
     /* background: url(https://cdn.dribbble.com/users/1065420/screenshots/3933364/gary-big-eyes.gif); 
     background-size: 136% 89%; 
     background-position: -6px -22px; */
 }
 
+.inner {
+    margin: 0 2px !important;
+}
+
 #drDoucheDialog {
     min-height: 72.61px;
-    max-width: 784px;
+    max-width: 800px;
     position: relative;
     display: inline-flex;
     opacity: 0;
     transition: all .3s;
     font-size: 14px !important;
     animation: showDrDoucheDialog .5s 1 ease-in .6s forwards;
-    padding: 0 5px 4px 5px;
+    padding: 4px;
     word-break: keep-all;
     left: 14px;
     background: white;
     border: 4px solid $color;
-    color: rgba(0,0,0,0.8) !important;
+    color: rgba(0, 0, 0, 0.8) !important;
 }
 
 #drDoucheDialog:after,
@@ -198,12 +202,12 @@ a.dbsLink {
     line-height: 50px;
 }
 
-#acceptButton, #hintButton {
+#acceptButton,
+#hintButton {
     min-width: 57px !important;
     background: $color;
     border: 1px solid #999;
     padding: 0 15px;
-    margin-top: 4px;
     transition: all .5s;
     letter-spacing: -1px;
     font-size: 23px;
@@ -234,7 +238,7 @@ a.dbsLink {
 
 #textBetweenButtons {
     text-align: center;
-    line-height: 60px;
+    line-height: 58px;
     min-width: 57px !important;
     letter-spacing: -1px;
     font-size: 23px;
@@ -248,8 +252,9 @@ a.dbsLink {
 
         .flexDialogElement {
             width: 50%;
-            padding: 6px;
-         }
+            padding: 4px;
+            box-sizing: padding-box;
+        }
     }
 }
 
@@ -280,7 +285,7 @@ a.dbsLink {
 .dbsMainbar {
     padding-top: 12px !important;
     position: relative;
-    background: linear-gradient(to bottom, rgba(255,255,255,1) 50%,rgba(255,255,255,0.66) 75%,rgba(255,255,255,0.55) 95%, rgba(255,255,255,0.44) 101%);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0.66) 75%, rgba(255, 255, 255, 0.55) 95%, rgba(255, 255, 255, 0.44) 101%);
     z-index: 1000;
     top: -13px;
     left: 1px;
@@ -325,6 +330,7 @@ a.dbsLink {
         opacity: 1;
         transform: translateY(0);
     }
+
     from {
         -webkit-filter: blur(7px);
         opacity: 0;
@@ -336,26 +342,33 @@ a.dbsLink {
     0% {
         transform: translateY(-51px);
     }
+
     100% {
         transform: translateY(0);
     }
 }
 
 @keyframes shake {
-    10%, 90% {
-      transform: translate3d(-1px, 0, 0);
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
     }
-    
-    20%, 80% {
-      transform: translate3d(2px, 0, 0);
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
     }
-  
-    30%, 50%, 70% {
-      transform: translate3d(-4px, 0, 0);
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
     }
-  
-    40%, 60% {
-      transform: translate3d(4px, 0, 0);
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
     }
 }
 
@@ -364,6 +377,7 @@ a.dbsLink {
         transform: translateY(-100px);
         opacity: 0;
     }
+
     100% {
         transform: translateY(0);
         opacity: 1;
@@ -374,6 +388,7 @@ a.dbsLink {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(359deg);
     }
@@ -383,6 +398,7 @@ a.dbsLink {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(-359deg);
     }
@@ -392,6 +408,7 @@ a.dbsLink {
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -402,6 +419,7 @@ a.dbsLink {
         transform: scale(3.0);
         opacity: 0;
     }
+
     100% {
         transform: scale(1.0);
         opacity: 1;
@@ -414,7 +432,8 @@ a.dbsLink {
         position: fixed;
     }
 
-    #drDoucheDialog, #drDoucheDonateDialog {
+    #drDoucheDialog,
+    #drDoucheDonateDialog {
         top: 18px;
         z-index: 2;
         position: relative;
