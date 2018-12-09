@@ -484,10 +484,40 @@ class DbsTemplate {
     }
 
     setDonateDialogButton() {
-        let donateDialogButton = document.createElement('button');
+        let donateDialogButton = document.createElement("button");
         donateDialogButton.className = "donateDialogButton";
+        donateDialogButton.style.lineHeight = "32px";
+        donateDialogButton.style.minWidth = "220px";
+        donateDialogButton.style.outline = "unset";
+        donateDialogButton.innerHTML = "send";
 
-        
+        function insertValue(text) {
+            document.getElementById('commentExtension').value= text;
+        }
+
+        if (donateDialogButton.parentNode == 'commentExtension') {
+            donateDialogButton.addEventListener('DOMContentLoaded', function() {
+                donateDialogButton.addEventListener('click', function() {
+                    window.open('https://chrome.google.com/webstore/category/extensions/');
+                });
+            });
+        } else if (donateDialogButton.parentNode == 'donateDev') {
+            console.log('misk');
+        }
+
+        return donateDialogButton.outerHTML;
+    }
+
+    setDonateDialogMeta() {
+        let metaData = document.createElement("div");
+        metaData.style.display = "grid";
+        metaData.style.padding = "4px";
+        metaData.style.height = "32px";
+        metaData.style.gridTemplateColumns = "27% 47% 26%";
+        metaData.innerHTML = "<p>+500 Stupi$</p>" +
+                            "<p>last Donate: Feb 21 2018</p>" +
+                            "<p>227 Donates</p>";
+        return metaData.outerHTML;
     }
 
     getRandomImagePath() {

@@ -46,16 +46,23 @@ wallet.loaded = function() {
                                 "<h2 style='margin: 0 0 4px 0;font-size: 26px;line-height: 54px;background: rgba(43,43,43,.9);color: #fff;'>Preserve the Dev's freedom</h2>" + 
                                 "<img src='https://diekommune.de.cool/no-jail.png' style='width:inherit;max-height:160px;' alt='Logo dontbestupid sad because in jail...' />" + 
                             "</div>" +
+                            "<div style='height28px;padding:4px;margin: 0 0 4px 0;border:1px solid rgba(43,43,43,.3);'>" +
+                                template.setDonateDialogMeta() + 
+                            "</div>" +
                             "<div style='padding:4px;box-sizing:padding-box;border:1px solid rgba(43,43,43,.3);'>" +
-                                "So that this extension can be used in the near future also for e.g. Facebook or Youporn, I have to reinholen hobby development time. I'm very thankful for every little Ovulums and this will be mainly used in coffee or frozen pizza next to the further development." +
+                                "So that this extension can be used in the near future also for e.g. Facebook or Youporn, I have to reinholen hobby development time." +
                             "</div>" +
                         "</div>";
 
-        let card1Back = "<div class='inner' style='display:inline-block;transform:rotateY(180deg);text-align:center;font-size:16px;line-height:22px;background:#333;color:#FFF;'>" +
-                            "<div style='text-align:center;max-width:100%;'>" +
-                                "<h2>Time</h2>" +
-                                "<input id='donateDev' type ='number' placeholder='1' pattern='.*' />" +
-                                template.setDonateDialogButton(); + 
+        let card1Back = "<div class='inner' style='display:inline-block;transform:rotateY(180deg);text-align:center;font-size:16px;line-height:22px;'>" +
+                            "<div style='text-align:center;max-width:387px;'>" +
+                                "<h2 style='margin: 0 0 4px 0;font-size: 26px;line-height: 54px;background: rgba(43,43,43,.9);color: #fff;'>" +
+                                    "Donate some Bucks" + 
+                                "</h2>" +
+                                "<input required style='line-height:54px;color:#555;width:220px;border:unset;border-bottom:1px solid grey;background:transparent;'" +
+                                    "id='donateDev' type ='text' placeholder='1' pattern='.*' />" +
+                                "<br>" +
+                                template.setDonateDialogButton() + 
                             "</div>" +
                         "</div>";
         let card1 = new Card(card1Front, card1Back);
@@ -66,16 +73,23 @@ wallet.loaded = function() {
                                 "<h2 style='margin: 0 0 4px 0;font-size: 26px;line-height: 54px;background: rgba(43,43,43,.9);color: #fff;'>Share your opinion</h2>" + 
                                 "<img src='https://diekommune.de.cool/share-new.gif' style='width:inherit%;max-height:160px;' alt='placeholderimg' />" +
                             "</div>" +
+                            "<div style='height28px;padding:4px;margin: 0 0 4px 0;border:1px solid rgba(43,43,43,.3);'>" +
+                                template.setDonateDialogMeta() + 
+                            "</div>" +
                             "<div style='padding:4px;box-sizing:padding-box;border:1px solid rgba(43,43,43,.3);'>" +
-                                "So that this extension can be used in the near future also for e.g. Facebook or Youporn, I have to reinholen hobby development time. I'm very thankful for every little Ovulums and this will be mainly used in coffee or frozen pizza next to the further development." +
+                                "So that this extension can be used in the near future also for e.g. Facebook or Youporn, I have to reinholen hobby development time." +
                             "</div>" +
                         "</div>";
 
-        let card2Back = "<div class='inner' style='display:inline-block;transform:rotateY(180deg);text-align:center;font-size:16px;line-height:22px;background:#333;color:#FFF;'>" +
-                            "<div style='text-align:center;max-width:100%;'>" +
-                                "<h2>Time</h2>" +
-                                "<input id='commentExtension' type ='text' placeholder='write a comment for this chrome extension' pattern='.*' />" +
-                                template.setDonateDialogButton(); + 
+        let card2Back = "<div class='inner' style='display:inline-block;transform:rotateY(180deg);text-align:center;font-size:16px;line-height:22px;'>" +
+                            "<div style='text-align:center;max-width:387px;'>" +
+                                "<h2 style='margin: 0 0 4px 0;font-size: 26px;line-height: 54px;background: rgba(43,43,43,.9);color: #fff;'>" +
+                                    "Share your opinion " + 
+                                "</h2>" +
+                                "<textarea required style='min-height:54px;max-height:162px;line-height:22px;color:#555;width:220px;border:unset;border-bottom:1px solid grey;background:transparent;' " + 
+                                    "id='commentExtension' type ='text' placeholder='write something about this browser extension' pattern='.*'></textarea>" +
+                                "<br>" +
+                                template.setDonateDialogButton() + 
                             "</div>" +
                         "</div>";
         let card2 = new Card(card2Front, card2Back);
