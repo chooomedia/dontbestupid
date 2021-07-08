@@ -6,7 +6,7 @@
         "48": "icons/48x48.png",
         "128": "icons/128x128.png"
       },
-    "version": "0.3",
+    "version": "0.33",
     "author": "No Pain No Gain Applications Enterprises",
     "manifest_version": 2,
     "permissions": [
@@ -15,24 +15,27 @@
         "webNavigation",
         "contextMenus",
         "storage",
+        "webRequest",
+        "webRequestBlocking",
         "<all_urls>", 
         "http://*/*"
     ],
     "background": {
-        "persistent": false,
-        "scripts": [ "js/background.js"]
+        "scripts": ["js/background.js", "js/dbsStorage.js"],
+        "persistent": true
       },
     "content_scripts": [
         {
             "matches": ["<all_urls>","http://*/*"],
-            "all_frames": true, 
-            "js":["js/jquery-3.3.1.min.js", "js/script.js"],
+            "all_frames": true,
+            "css": ["dbsStyle.css"], 
+            "js":["js/jquery-3.3.1.min.js", "js/script.js", "js/drDouche.js", "js/soApi.js", "js/soPost.js", "js/dbsStorage.js", "js/dbsTemplate.js"],
             "run_at": "document_end"
         }
     ],
     "browser_action": {
         "default_icon": {"19": "icons/19x19.png", "38": "icons/38x38.png"},
         "default_title": "DON`T BE STUPID",
-        "default_popup": "dontbestupid.html"
+        "default_popup": "dbsSettings.html"
       }
-}
+}   
