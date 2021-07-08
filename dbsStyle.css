@@ -1,0 +1,604 @@
+body {
+  min-height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #FFF;
+  background-image: none;
+  background-position: top left;
+  background-repeat: repeat;
+  background-size: auto;
+  background-attachment: auto;
+  min-width: 1279px;
+  padding-top: 50px;
+}
+
+body > .container {
+  max-width: 1264px;
+  width: 100%;
+  background: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 0 auto;
+}
+
+h1.dbsPushMessageTitle {
+  margin-bottom: 0 !important;
+  padding-bottom: 4px;
+}
+
+h1.dbsPushMessageTitle a {
+  margin-bottom: 0 !important;
+  font-size: 26px !important;
+  letter-spacing: -1px;
+}
+
+p.dbsPushMessage {
+  font-size: 16px;
+  line-height: 18px;
+  margin: 0 auto;
+}
+
+.dbsBody {
+  position: absolute;
+  width: 55.8%;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.96);
+  top: 0;
+  left: 208px;
+  right: 15%;
+  bottom: 0;
+  z-index: 0;
+}
+
+/* #stupiDollarVal {
+    color: red;
+} */
+#dbsNavbar {
+  position: fixed;
+  background-color: #333333;
+  -webkit-box-shadow: 0px 3px 6px #888888;
+          box-shadow: 0px 3px 6px #888888;
+  -webkit-transition: -webkit-box-shadow cubic-bezier(0.165, 0.84, 0.44, 1) 0.25s;
+  transition: -webkit-box-shadow cubic-bezier(0.165, 0.84, 0.44, 1) 0.25s;
+  transition: box-shadow cubic-bezier(0.165, 0.84, 0.44, 1) 0.25s;
+  transition: box-shadow cubic-bezier(0.165, 0.84, 0.44, 1) 0.25s, -webkit-box-shadow cubic-bezier(0.165, 0.84, 0.44, 1) 0.25s;
+  height: 51px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  opacity: 1;
+  -webkit-transition: all .4s;
+  transition: all .4s;
+  -webkit-animation: animateNavbar .2s 1 alternate;
+          animation: animateNavbar .2s 1 alternate;
+}
+
+#dbsNavbar #dbsDialog {
+  position: absolute;
+  top: 47px;
+  width: 100%;
+  left: 83%;
+}
+
+#dbsNavbar .topbar-dialog {
+  background: #FFF;
+  border: 4px solid #333333;
+  position: fixed;
+  right: 0;
+  top: 47px;
+}
+
+.iconStupidollar {
+  width: 20px;
+  height: 28px;
+  overflow: visible;
+  -webkit-transform: scale(0.25) !important;
+          transform: scale(0.25) !important;
+  margin: -11px 7px 0 -6px;
+}
+
+#dbsLogo {
+  width: 90px;
+  margin: 0 0 0 40px;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  position: relative;
+  float: left;
+  z-index: 2;
+  border: 4px solid #333333;
+  -webkit-animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+          animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  /* background: url(https://cdn.dribbble.com/users/1065420/screenshots/3933364/gary-big-eyes.gif); 
+    background-size: 136% 89%; 
+    background-position: -6px -22px; */
+}
+
+#drDoucheDialog {
+  min-height: 72.61px;
+  max-width: 784px;
+  position: relative;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  opacity: 0;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+  font-size: 14px !important;
+  -webkit-animation: showDrDoucheDialog .5s 1 ease-in .6s forwards;
+          animation: showDrDoucheDialog .5s 1 ease-in .6s forwards;
+  padding: 0 5px 4px 5px;
+  word-break: keep-all;
+  left: 14px;
+  background: white;
+  border: 4px solid #333333;
+  color: rgba(0, 0, 0, 0.8) !important;
+}
+
+#drDoucheDialog:after,
+#drDoucheDialog:before {
+  left: -19px;
+  top: 58px;
+  border: solid transparent;
+  content: ' ';
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+#drDoucheDialog:after {
+  border-right-color: #333333;
+  border-width: 15px;
+  margin-left: -11px;
+  margin-top: -22px;
+  z-index: -1;
+}
+
+#drDoucheDialog:before {
+  border-color: rgba(194, 225, 245, 0);
+  border-right-color: #FFF;
+  border-width: 10px;
+  margin-top: -17px;
+}
+
+a.dbsLink {
+  color: white !important;
+  background-color: #333333;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 10px;
+  text-decoration: none;
+  white-space: nowrap;
+  position: relative;
+  z-index: 1000;
+}
+
+a.dbsLink:hover {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.activated {
+  position: relative;
+  z-index: 1;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+
+.activated:after {
+  top: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.activated:after {
+  border-color: transparent;
+  border-bottom-color: white;
+  border-width: 8px;
+  margin-left: -8px;
+  margin-top: -16px;
+}
+
+.dbsLinkTitle {
+  margin: 2px 0 0 3px;
+  font-size: 16px;
+  line-height: 50px;
+}
+
+#acceptButton, #hintButton {
+  min-width: 57px !important;
+  background: #333333;
+  border: 1px solid #999;
+  padding: 0 15px;
+  margin-top: 4px;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+  letter-spacing: -1px;
+  font-size: 23px;
+  -webkit-box-shadow: unset;
+          box-shadow: unset;
+}
+
+#acceptButton:hover, #acceptButton:focus, #hintButton:hover, #hintButton:focus {
+  background: white;
+  color: black;
+}
+
+#acceptButton:disabled, #hintButton:disabled {
+  color: #FFF !important;
+  opacity: .4;
+}
+
+#dbsWalletValue {
+  width: auto;
+  padding: 0 12px;
+  line-height: 50px;
+  -webkit-transform: all .6s;
+          transform: all .6s;
+}
+
+.animateValue {
+  -webkit-animation: animationWalletValue .3s 1 linear;
+          animation: animationWalletValue .3s 1 linear;
+}
+
+#textBetweenButtons {
+  text-align: center;
+  line-height: 60px;
+  min-width: 57px !important;
+  letter-spacing: -1px;
+  font-size: 23px;
+}
+
+.innerDialog {
+  line-height: 30px;
+}
+
+.innerDialog .innerDonateDialog {
+  background: transparent;
+}
+
+.innerDialog .innerDonateDialog .flexDialogElement {
+  width: 50%;
+  padding: 6px;
+}
+
+.dbsHeadOver {
+  width: 100%;
+  margin-top: 39px;
+}
+
+.dbsContainer {
+  top: 50px;
+  bottom: 53px;
+  right: 0;
+  left: 0;
+  position: absolute;
+  display: none;
+  -webkit-animation: animateOverlay .5s 1 linear;
+          animation: animateOverlay .5s 1 linear;
+}
+
+#dbsOverlay {
+  position: relative;
+  left: 0px;
+  width: 87%;
+  top: 21px;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+  padding: 0 16px 0 24px;
+}
+
+.dbsMainbar {
+  padding-top: 12px !important;
+  position: relative;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(50%, white), color-stop(75%, rgba(255, 255, 255, 0.66)), color-stop(95%, rgba(255, 255, 255, 0.55)), color-stop(101%, rgba(255, 255, 255, 0.44)));
+  background: linear-gradient(to bottom, white 50%, rgba(255, 255, 255, 0.66) 75%, rgba(255, 255, 255, 0.55) 95%, rgba(255, 255, 255, 0.44) 101%);
+  z-index: 1000;
+  top: -13px;
+  left: 1px;
+}
+
+#rollingEyes {
+  width: 60px;
+  background: #f8c8b0;
+  height: 20px;
+  display: none;
+  position: absolute;
+  left: 55px;
+  top: 19px;
+  z-index: 1;
+}
+
+.ball {
+  height: 20px;
+  width: 20px;
+  margin: 0 5px;
+  border-radius: 50%;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  line-height: 2px;
+  color: #000 !important;
+  background: #FFF !important;
+  font-size: 38px !important;
+}
+
+.rotateEyeLeft {
+  -webkit-transform: rotate(-11deg);
+          transform: rotate(-11deg);
+  -webkit-animation: rotateLeft 3s 13 alternate;
+          animation: rotateLeft 3s 13 alternate;
+}
+
+.rotateEyeRight {
+  -webkit-transform: rotate(172deg);
+          transform: rotate(172deg);
+  -webkit-animation: rotateRight 3s 13 linear;
+          animation: rotateRight 3s 13 linear;
+}
+
+@-webkit-keyframes animateOverlay {
+  to {
+    -webkit-filter: blur(0);
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+  from {
+    -webkit-filter: blur(7px);
+    opacity: 0;
+    -webkit-transform: translateY(100%);
+            transform: translateY(100%);
+  }
+}
+
+@keyframes animateOverlay {
+  to {
+    -webkit-filter: blur(0);
+    opacity: 1;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+  from {
+    -webkit-filter: blur(7px);
+    opacity: 0;
+    -webkit-transform: translateY(100%);
+            transform: translateY(100%);
+  }
+}
+
+@-webkit-keyframes animateNavbar {
+  0% {
+    -webkit-transform: translateY(-51px);
+            transform: translateY(-51px);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+@keyframes animateNavbar {
+  0% {
+    -webkit-transform: translateY(-51px);
+            transform: translateY(-51px);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+@-webkit-keyframes shake {
+  10%, 90% {
+    -webkit-transform: translate3d(-1px, 0, 0);
+            transform: translate3d(-1px, 0, 0);
+  }
+  20%, 80% {
+    -webkit-transform: translate3d(2px, 0, 0);
+            transform: translate3d(2px, 0, 0);
+  }
+  30%, 50%, 70% {
+    -webkit-transform: translate3d(-4px, 0, 0);
+            transform: translate3d(-4px, 0, 0);
+  }
+  40%, 60% {
+    -webkit-transform: translate3d(4px, 0, 0);
+            transform: translate3d(4px, 0, 0);
+  }
+}
+
+@keyframes shake {
+  10%, 90% {
+    -webkit-transform: translate3d(-1px, 0, 0);
+            transform: translate3d(-1px, 0, 0);
+  }
+  20%, 80% {
+    -webkit-transform: translate3d(2px, 0, 0);
+            transform: translate3d(2px, 0, 0);
+  }
+  30%, 50%, 70% {
+    -webkit-transform: translate3d(-4px, 0, 0);
+            transform: translate3d(-4px, 0, 0);
+  }
+  40%, 60% {
+    -webkit-transform: translate3d(4px, 0, 0);
+            transform: translate3d(4px, 0, 0);
+  }
+}
+
+@-webkit-keyframes showDrDoucheDialog {
+  0% {
+    -webkit-transform: translateY(-100px);
+            transform: translateY(-100px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes showDrDoucheDialog {
+  0% {
+    -webkit-transform: translateY(-100px);
+            transform: translateY(-100px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes rotateLeft {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+  }
+}
+
+@keyframes rotateLeft {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+  }
+}
+
+@-webkit-keyframes rotateRight {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(-359deg);
+            transform: rotate(-359deg);
+  }
+}
+
+@keyframes rotateRight {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(-359deg);
+            transform: rotate(-359deg);
+  }
+}
+
+@-webkit-keyframes changeDoucheDialogContent {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes changeDoucheDialogContent {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes animationWalletValue {
+  0% {
+    -webkit-transform: scale(3);
+            transform: scale(3);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes animationWalletValue {
+  0% {
+    -webkit-transform: scale(3);
+            transform: scale(3);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-device-width: 480px) {
+  #dbsLogo {
+    top: 0;
+    position: fixed;
+  }
+  #drDoucheDialog, #drDoucheDonateDialog {
+    top: 18px;
+    z-index: 2;
+    position: relative;
+  }
+  #drDoucheDialog:after,
+  #drDoucheDialog:before {
+    left: 50%;
+    top: 20px;
+    border: solid transparent;
+    content: ' ';
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  #drDoucheDialog:after {
+    border-top-color: #333333;
+    border-width: 15px;
+    margin-left: -11px;
+    margin-top: -22px;
+    z-index: 1;
+  }
+  #drDoucheDialog:before {
+    border-color: rgba(194, 225, 245, 0);
+    border-top-color: #FFF;
+    border-width: 10px;
+    margin-top: -16px;
+  }
+  #dbsNavbar .topbar-dialog {
+    -webkit-transform: translateX(-66%);
+            transform: translateX(-66%);
+    width: 200px;
+  }
+}
+/*# sourceMappingURL=dbsStyle.css.map */

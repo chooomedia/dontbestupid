@@ -1,283 +1,143 @@
-function getOverlayHtml(message, answer) {
-    let html =
-    "<header id='dbsNavbar' class='top-bar js-top-bar _fixed top-bar__network'>" +
-        "<div class='-container'>" +
-        "<div class='dbsHead'>" + 
-            "<h1 title='stay tuned - don`t waste your time'>" +
-                "DON`T <span style='color:red;'>BE</span><br>" +
-                "<span style='letter-spacing:2.4px;'>STUPID</span>!" +
-            "</h1>" +
-        "</div>" +
-        "</div>" +
-    "</header>" +
-       
-    "<div class='container dbsContainer'>" +
-        "<div id='left-sidebar' data-is-here-when='md lg' class='left-sidebar js-pinned-left-sidebar'>" +
-            "<div class='left-sidebar--sticky-container js-sticky-leftnav'>left</div>" +
-        "</div>" +
-            "<div id='content' style='background: transparent;' class='snippet-hidden'>" +
-                "<div id='dbsOverlay'>" +
-                    "<div class='inner-content clearfix'>" +
-                        "<div id='question-header' class='grid'>" + 
-                            message +
-                        "</div>" +
-                        "<div id='mainbar' role='main'>" +
-                            "<div class='question' id='question'>" +
-                                "<div class='post-layout'>" + 
-                                    /* "<div class='votecell post-layout--left'>" +
-                                        "<div class='vote'>" +
-                                            "<a class='vote-up-off'>up vote</a>" +
-                                            "<span class='vote-count-post'></span>" +
-                                        "</div>" +
-                                    "</div>" + */
-                                    "<div class='postcell post-layout--right'>" +
-                                        "<div class='post-text'>" +
-                                            answer +
-                                        "</div>" +
-                                        "<div class='post-taglist grid gs4 gsy fd-column'>" +
-                                            "<div class='grid ps-relative d-block'>" +
-                                                "<a href='/questions/tagged/html' class='post-tag js-gps-track' rel='tag'></a>" +
-                                            "</div>" +
-                                        "</div>" +
-                                    "</div>" +
-                                    "<div class='post-layout--right'>" +
-                                    "</div>" +
-                                "</div>" +
-                            "</div>" +
-                        "</div>" +
-                        "<div id='sidebar' class='show-votes' role='complementary'>" +
-                            "Right" +
-                        "</div>" +
-                    "</div>" +
-                "</div>" +
-            "</div>" + 
-        "</div>"  
-    return html;
-}
+let wallet = new DbsAccount();
+let template = new DbsTemplate(wallet);
+let soApi = new SoApi(document.body);
+let dbsStorage = new DbsStorage();
 
-// Loops trough all anwers on the page and extracts the one with the highest votes.
-function getHighestVotedAnswer() {
-    let allAnswers = document.querySelectorAll(".answer");
-    if (allAnswers.length == 0) {
-        return null;
-    }
+soApi.blurSidebars();
 
-    let result = {
-        voteCount: 0,
-        innerHTML: ''
+// Gets the local storaged objects
+dbsStorage.getDbsStorage(window.location.href, (pageMetadata) => {
+    let propName = Object.keys(pageMetadata)[0];
+    let obj = pageMetadata[propName];
+    obj.acceptedAnswer = soApi.getAcceptedAnswer();
+    obj.highestPointAnswer = soApi.getHighestVotedAnswer();
+    obj.question = soApi.getQuestion();
+    // Writes the so answers as a object inside local storage
+    chrome.storage.sync.set(pageMetadata);
+});
+
+wallet.loaded = function() {
+    // CALL ME CONSTRUCTOR :-P
+    // Pushes the fired objects frome the functions into the mixed frontend body
+    let overlayHtml = template.getOverlayHtml(
+                          soApi.getDisplayAnswer(true)
+                        , soApi.getQuestion()
+                        );
+
+    // Adds the overlay-content to the DOM
+    document.body.innerHTML += overlayHtml;
+    // Adds the animated Logo
+    template.insertLogoWrapper();
+    
+    wallet.lowBalance = function() {
+        
+        /*
+        "<h1 class='dbsPushMessageTitle' style='text-align:center;font-size:26px;padding:12px 0;'>" +
+        "<span>Your wallet is empty you have the following options:</span>" +
+        "</h1>" +
+        */
+    
+        let donateDialogCardStack = new CardStack({
+            itemHeight: "460px"
+        });    
+
+        let drDoucheDialogElement = document.getElementById("drDoucheDialog");
+        drDoucheDialogElement.innerHTML = "";
+        drDoucheDialogElement.appendChild(donateDialogCardStack.innerDialogElement);
+    
+        let card1Front = "<div class='inner'>" +
+                            "<img src='https://diekommune.de.cool/no-jail.png' style='width:100%;' alt='Logo dontbestupid sad because in jail...' />" + 
+                            "<h2 style='margin: 6px 0;font-size:22px;'>Preserve the Developer`s<br> freedom by donating</h2>" + 
+                            "<span>The developer of this extension likes to spend a lot of time with the fine tuning. " +
+                                "But he doesn't handle money that well.  The state demands 1500 Euro from him otherwise" + 
+                                "this extension will not be able to be further developed soon..." + 
+                            "</span>" +
+                        "</div>";
+        let card1Back = "<div class='inner' style='transform:rotateY(180deg);text-align:center;font-size:42px;line-height:446px;background:#333;color:#FFF;'>" +
+                            "+500" +
+                            "<svg style='position:relative;top:10px;margin-left:8px;' aria-hidden='true' width='48' height='48'>" +
+                                "<path style='transform:scale(0.7);opacity:1;fill:#FFFFFF;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:259.50698853;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1' d='M 31.1875 0 C 13.904525 0.43835438 3.7379722e-013 14.612004 0 32 C 2.3684758e-015 49.663996 14.336004 64 32 64 C 49.663996 64 64 49.663996 64 32 C 64 14.336004 49.663996 1.3812956e-013 32 0 C 31.724 3.7007434e-017 31.461833 -0.0069580061 31.1875 0 z M 31.15625 5.5 C 31.439783 5.4910103 31.714297 5.5 32 5.5 C 46.628003 5.4999998 58.5 17.371998 58.5 32 C 58.499998 46.628001 46.628002 58.5 32 58.5 C 17.371999 58.499999 5.5 46.628002 5.5 32 C 5.4999999 17.657701 16.922915 5.9512829 31.15625 5.5 z '/>" +
+                                "<path style='transform:scale(0.7);font-size:53.81440353px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;opacity:1;fill:#FFFFFF;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial Narrow' d='M 25.645354,38.743144 C 27.706139,41.625309 33.995692,41.833441 36.155115,40.6114 C 36.947727,40.162852 37.145708,38.864507 37.145725,37.98432 C 37.145708,37.380283 36.986739,36.905677 36.668816,36.560499 C 36.333199,36.215341 35.479466,35.339232 34.490338,35.080346 C 29.473962,33.785975 25.998702,32.169274 24.638637,30.995688 C 22.942961,29.528736 22.669211,28.570622 22.669213,26.016357 C 22.669211,23.462132 23.403703,21.32133 25.064052,19.785304 C 26.724393,18.24933 29.135426,17.481331 32.297159,17.481304 C 35.317562,17.481331 39.565451,18.278588 41.636566,20.737131 L 38.183516,24.493331 C 36.236051,22.858359 34.787665,22.710631 32.403139,22.710609 C 30.901751,22.710631 30.120168,22.926362 29.484299,23.3578 C 28.848414,23.772024 28.530476,24.315664 28.530483,24.988721 C 28.530476,25.592786 28.821918,26.09328 29.404815,26.490205 C 29.987693,26.904426 31.511133,27.525729 34.549225,28.354116 C 37.958218,29.286087 40.272103,30.416513 41.490888,31.745396 C 42.691968,33.074309 43.292518,34.843296 43.292541,37.052364 C 43.292518,39.710168 42.356366,41.901988 40.484082,43.627827 C 38.629421,45.353671 36.346462,46.694998 33.061111,46.694997 C 28.832157,46.694996 23.187374,45.201054 21.630014,42.439699' sodipodi:nodetypes='cssscssssccscscscscsc'/>" +
+                                "<path style='transform:scale(0.7);opacity:1;fill:#FFFFFF;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:259.50698853;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1' d='M 30.375,12.875 L 30.375,19.71875 L 33.625,19.71875 L 33.625,12.875 L 30.375,12.875 z M 30.375,44.96875 L 30.375,51.125 L 33.625,51.125 L 33.625,44.96875 L 30.375,44.96875 z '/>" +
+                            "</svg>" +
+                        "</div>";
+        let card1 = new Card(card1Front, card1Back);
+        donateDialogCardStack.addCard(card1);
+    
+        let card2Front = "<div class='inner'>" +    
+                            "<img src='https://diekommune.de.cool/share-new.gif' style='width:100%;' alt='placeholderimg' />" +
+                            "<h2 style='margin: 6px 0;font-size:22px;'>Share your opinion<br> about this extension</h2>" + 
+                            "<span>The developer of this extension likes to spend a lot of time with the fine tuning. " +
+                                "But he doesn't handle money that well.  The state demands 1500 Euro from him otherwise" + 
+                                "this extension will not be able to be further developed soon..." +
+                            "</span>" + 
+                        "</div>";
+        let card2Back = "<div class='inner' style='transform:rotateY(180deg);text-align:center;font-size:42px;line-height:446px;background:#333;color:#FFF;'>" +
+                            "+100" +
+                            "<svg style='position:relative;top:10px;margin-left:8px;' aria-hidden='true' width='48' height='48'>" +
+                                "<path style='transform:scale(0.7);opacity:1;fill:#FFFFFF;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:259.50698853;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1' d='M 31.1875 0 C 13.904525 0.43835438 3.7379722e-013 14.612004 0 32 C 2.3684758e-015 49.663996 14.336004 64 32 64 C 49.663996 64 64 49.663996 64 32 C 64 14.336004 49.663996 1.3812956e-013 32 0 C 31.724 3.7007434e-017 31.461833 -0.0069580061 31.1875 0 z M 31.15625 5.5 C 31.439783 5.4910103 31.714297 5.5 32 5.5 C 46.628003 5.4999998 58.5 17.371998 58.5 32 C 58.499998 46.628001 46.628002 58.5 32 58.5 C 17.371999 58.499999 5.5 46.628002 5.5 32 C 5.4999999 17.657701 16.922915 5.9512829 31.15625 5.5 z '/>" +
+                                "<path style='transform:scale(0.7);font-size:53.81440353px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;opacity:1;fill:#FFFFFF;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial Narrow' d='M 25.645354,38.743144 C 27.706139,41.625309 33.995692,41.833441 36.155115,40.6114 C 36.947727,40.162852 37.145708,38.864507 37.145725,37.98432 C 37.145708,37.380283 36.986739,36.905677 36.668816,36.560499 C 36.333199,36.215341 35.479466,35.339232 34.490338,35.080346 C 29.473962,33.785975 25.998702,32.169274 24.638637,30.995688 C 22.942961,29.528736 22.669211,28.570622 22.669213,26.016357 C 22.669211,23.462132 23.403703,21.32133 25.064052,19.785304 C 26.724393,18.24933 29.135426,17.481331 32.297159,17.481304 C 35.317562,17.481331 39.565451,18.278588 41.636566,20.737131 L 38.183516,24.493331 C 36.236051,22.858359 34.787665,22.710631 32.403139,22.710609 C 30.901751,22.710631 30.120168,22.926362 29.484299,23.3578 C 28.848414,23.772024 28.530476,24.315664 28.530483,24.988721 C 28.530476,25.592786 28.821918,26.09328 29.404815,26.490205 C 29.987693,26.904426 31.511133,27.525729 34.549225,28.354116 C 37.958218,29.286087 40.272103,30.416513 41.490888,31.745396 C 42.691968,33.074309 43.292518,34.843296 43.292541,37.052364 C 43.292518,39.710168 42.356366,41.901988 40.484082,43.627827 C 38.629421,45.353671 36.346462,46.694998 33.061111,46.694997 C 28.832157,46.694996 23.187374,45.201054 21.630014,42.439699' sodipodi:nodetypes='cssscssssccscscscscsc'/>" +
+                                "<path style='transform:scale(0.7);opacity:1;fill:#FFFFFF;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:259.50698853;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1' d='M 30.375,12.875 L 30.375,19.71875 L 33.625,19.71875 L 33.625,12.875 L 30.375,12.875 z M 30.375,44.96875 L 30.375,51.125 L 33.625,51.125 L 33.625,44.96875 L 30.375,44.96875 z '/>" +
+                            "</svg>" +
+                        "</div>";
+        let card2 = new Card(card2Front, card2Back);
+        donateDialogCardStack.addCard(card2);
+        
+        card3Front = "<div class='inner'>" +    
+                            "<img src='https://diekommune.de.cool/1.svg' style='width:100%;' alt='placeholderimg' />" +
+                            "<h2 style='margin: 6px 0;font-size:22px;'>Share your opinion<br> about this extension</h2>" + 
+                            "<span>The developer of this extension likes to spend a lot of time with the fine tuning. " +
+                                "But he doesn't handle money that well.  The state demands 1500 Euro from him otherwise" + 
+                                "this extension will not be able to be further developed soon..." +
+                            "</span>" + 
+                        "</div>";
+        let card3Back = "<div class='inner' style='transform:rotateY(180deg);text-align:center;font-size:42px;line-height:446px;background:#333;color:#FFF;'>" +
+                            "+300" +
+                            "<svg style='position:relative;top:10px;margin-left:8px;' aria-hidden='true' width='48' height='48'>" +
+                                "<path style='transform:scale(0.7);opacity:1;fill:#FFFFFF;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:259.50698853;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1' d='M 31.1875 0 C 13.904525 0.43835438 3.7379722e-013 14.612004 0 32 C 2.3684758e-015 49.663996 14.336004 64 32 64 C 49.663996 64 64 49.663996 64 32 C 64 14.336004 49.663996 1.3812956e-013 32 0 C 31.724 3.7007434e-017 31.461833 -0.0069580061 31.1875 0 z M 31.15625 5.5 C 31.439783 5.4910103 31.714297 5.5 32 5.5 C 46.628003 5.4999998 58.5 17.371998 58.5 32 C 58.499998 46.628001 46.628002 58.5 32 58.5 C 17.371999 58.499999 5.5 46.628002 5.5 32 C 5.4999999 17.657701 16.922915 5.9512829 31.15625 5.5 z '/>" +
+                                "<path style='transform:scale(0.7);font-size:53.81440353px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;opacity:1;fill:#FFFFFF;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial Narrow' d='M 25.645354,38.743144 C 27.706139,41.625309 33.995692,41.833441 36.155115,40.6114 C 36.947727,40.162852 37.145708,38.864507 37.145725,37.98432 C 37.145708,37.380283 36.986739,36.905677 36.668816,36.560499 C 36.333199,36.215341 35.479466,35.339232 34.490338,35.080346 C 29.473962,33.785975 25.998702,32.169274 24.638637,30.995688 C 22.942961,29.528736 22.669211,28.570622 22.669213,26.016357 C 22.669211,23.462132 23.403703,21.32133 25.064052,19.785304 C 26.724393,18.24933 29.135426,17.481331 32.297159,17.481304 C 35.317562,17.481331 39.565451,18.278588 41.636566,20.737131 L 38.183516,24.493331 C 36.236051,22.858359 34.787665,22.710631 32.403139,22.710609 C 30.901751,22.710631 30.120168,22.926362 29.484299,23.3578 C 28.848414,23.772024 28.530476,24.315664 28.530483,24.988721 C 28.530476,25.592786 28.821918,26.09328 29.404815,26.490205 C 29.987693,26.904426 31.511133,27.525729 34.549225,28.354116 C 37.958218,29.286087 40.272103,30.416513 41.490888,31.745396 C 42.691968,33.074309 43.292518,34.843296 43.292541,37.052364 C 43.292518,39.710168 42.356366,41.901988 40.484082,43.627827 C 38.629421,45.353671 36.346462,46.694998 33.061111,46.694997 C 28.832157,46.694996 23.187374,45.201054 21.630014,42.439699' sodipodi:nodetypes='cssscssssccscscscscsc'/>" +
+                                "<path style='transform:scale(0.7);opacity:1;fill:#FFFFFF;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:259.50698853;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1' d='M 30.375,12.875 L 30.375,19.71875 L 33.625,19.71875 L 33.625,12.875 L 30.375,12.875 z M 30.375,44.96875 L 30.375,51.125 L 33.625,51.125 L 33.625,44.96875 L 30.375,44.96875 z '/>" +
+                            "</svg>" +
+                        "</div>";
+        let card3 = new Card(card3Front, card3Back);
+        donateDialogCardStack.addCard(card3);
     };
 
-    allAnswers.forEach(o => {
-        let currentAnswer = o; 
 
-        let firstLevelDiv = currentAnswer.getElementsByTagName("div")[0];
-        let voteBarLeft = firstLevelDiv.getElementsByTagName("div")[1];
-        let contentDiv = firstLevelDiv.getElementsByTagName("div")[2];
-
-        let votes = voteBarLeft.getElementsByTagName("span")[0];
-        let voteNumber = parseInt(votes.innerText.trim());
-
-        if (result.voteCount < voteNumber) {
-            result.voteCount = voteNumber;
-            result.innerHTML = contentDiv.children[0].innerHTML;
-        }
-    }); 
-    return result;
-}
-
-function getAcceptedAnswer() {
-    let accepetedDomElement = document.querySelectorAll(".accepted-answer");
-    if (accepetedDomElement.length == 0) {
-        return null;
-    } else {
-        return accepetedDomElement[0];
+    // Adds dr Douche`s Dialog
+    if (wallet.balance > 0) {
+        template.drDoucheDialogMode();
     }
-}
 
-function getQuestion() {
-    let getQuestionValue = document.getElementsByClassName("question-hyperlink");
-    if (getQuestionValue) {
-        return getQuestionValue[0].innerHTML;
-    }
-}
+    // Took values from parent-page push it into child-page(overlayelement)
+    template.getValuesFromParrentPage();
 
-// Fires randomly one of these text areas
-let dbsAlertMessages = [
-    "<h1 class='dbsPushMessageTitle grid--cell fs-headline1 fl1'>" +
-        "<a href='#' class='question-hyperlink'>Read focused!</a>" +
-    "</h1>" +
-        "<p class='dbsPushMessage'>Don`t waste your time looking up with stuff in the internet." +
-        "<br>" +
-        "Instead use your brain and spend your time with more meanfull things :-)</p>",
+    template.closeButtonClick = function() {
+        soApi.unBlurSidebars();
 
-    "<h1 class='dbsPushMessageTitle grid--cell fs-headline1 fl1'>" +
-        "<a href='#' class='question-hyperlink'>R T F M !</a>" +
-    "</h1>" +
-    "<p class='dbsPushMessage'>Don`t be stupid fellow." +
-    "<br>" +
-    "Sometimes its helpfull to <b>R</b>ead <b>T</b>he <b>F</b>*king <b>M</b>anual :-)</p>",
+        // Selects the navigation header
+        let dbsNavbar = document.getElementById("dbsNavbar");
+            dbsNavbar.className = dbsNavbar.className !== "top-bar show" ? "top-bar show" : "top-bar hide";
+        let dbsNavStyle = dbsNavbar.style;
+        let dbsContainer = document.getElementsByClassName('dbsContainer')[0];
+            dbsContainer.style.display = "none";
 
-    "<h1 class='dbsPushMessageTitle grid--cell fs-headline1 fl1'>" +
-        "<a href='#' class='question-hyperlink'>Muhahahaha!</a>" +
-    "</h1>" +
-    "<p class='dbsPushMessage'>Ouw! Its better waste my time on Social Media" +
-    "<br></p>"
-]
-
-let style =
-    "body {" + 
-        "position: absolute;" + 
-        "flex-direction: column;" + 
-        "background-color: #FFF;" + 
-        "background-image: none;" + 
-        "background-position: top left;" + 
-        "background-repeat: repeat;" + 
-        "background-size: auto;" + 
-        "background-attachment: auto;" + 
-        "min-width: 1279px;" + 
-        "padding-top:50px;" + 
-    "}" +
-    "body > .container {" + 
-        "max-width: 1264px;" +
-        "width: 100%;" +
-        "background: none;" +
-        "display: flex;" +
-        "justify-content: space-between;" +
-        "margin: 0 auto;" +
-    "}" +
-    "h1.dbsPushMessageTitle {" +
-        "margin-bottom: 0 !important;" +
-    "}" +
-    "h1.dbsPushMessageTitle a {" +
-        "margin-bottom: 0 !important;" +
-        "font-size: 46px !important;" +
-        "line-height: 1;" +
-        "display: inline-table;" +
-        "margin-top: -9px;" +
-    "}" +
-    "p.dbsPushMessage {" +
-        "font-size: 1.4em;" +
-        "line-height: 22px;" +
-        "margin: 0 auto;" +
-        "width: 56%;" +
-        "text-align: right;" +
-        "background: white !important;" +
-        "color: #666;" +
-    "}" +
-    "body .top-bar~.container {" + 
-        "margin: 0 43.5px; !important;" + 
-    "}" +
-    ".blurBody {" +
-        "position: absolute;" +
-        "width: 55.8%;" +
-        "height: 100vh;" +
-        "background: rgba(255,255,255,0.98);" +
-        "animation: pulseBackground 12s 0 alternate;" +
-        "top: 0;" +
-        "left: 208px;" +
-        "right: 15%;" +
-        "bottom: 0;" +
-        "z-index: 1051;" +
-    "}" +
-    "#dbsNavbar {" +
-        "position: fixed;" +
-        "top: 0;" +
-        "left: 0;" +
-        "width: 100%;" +
-        "z-index: 1053;" +
-        "background-color: #333333;" +
-        "transition: box-shadow cubic-bezier(.165, .84, .44, 1) .25s;" +
-        "height: 51px;" +
-        "box-sizing: border-box;" +
-        "animation: animateNavbar .1s 1 ease-out;" +
-    "}" +
-    ".dbsHead {" +
-        "text-align:center;font-family: Courier New;" +
-    "}" +
-    ".dbsContainer {" +
-        "display: flex;" +
-        "margin: 0 43.5px !important;" +
-        "position: absolute;" +
-        "top: 50px;" +
-        "left: 0;" +
-        "right: 0;" +
-        "bottom: 0;" +
-        "z-index: 1052;" +
-    "}" +
-    "#dbsOverlay {" +
-        "animation: animateOverlay .5s 1 alternate;" +
-    "}" +
-    "#left-sidebar, #sidebar {" + 
-        "filter: blur(5px);" +
-        "height: 84vh;" +
-        "animation: blurSidebars .5s 1 alternate;" +
-    "}" +
-    "@-webkit-keyframes blurSidebars {" +
-        "0% { filter: blur(0); }" +
-        "100% { filter: blur(5px); }" +
-    "}" +
-    "@-webkit-keyframes animateOverlay {" +
-        "0% { -webkit-filter: blur(5px); transform: translateY(-100%); }" +
-        "100% { -webkit-filter: blur(0); transform: translateY(0); }" +
-    "}" +
-    "@-webkit-keyframes animateNavbar {" +
-        "0% { transform: translateY(-51px); }" +
-        "100% { transform: translateY(0); }" +
-    "}" +
-    "@-webkit-keyframes pulseBackground {" +
-        "0% { background: rgba(122,122,122,0.9); }" +
-        "100% { background: rgba(255,255,255,0.9); }" +
-    "}"
-
-let mainBody = document.body; // Add overlayed template before body
-let span = document.createElement("span");
-    span.innerHTML = "";
-    span.className = "blurBody";
-    mainBody.parentNode.insertBefore(span, mainBody); // Pushs the focusing Element before Overlay
-
-let styleElement = document.createElement("style"); // Add a head style onto the overlayed body
-    styleElement.type = "text/css";
-    styleElement.appendChild(document.createTextNode(style));
-    document.getElementsByTagName("head")[0].appendChild(styleElement);
-
-let randomIndex = Math.floor(Math.random() * Math.floor(dbsAlertMessages.length)); // Generates a random number
-let randomMessage = dbsAlertMessages[randomIndex]; // Choose randomly one of the thre text areas
-
-// Fires the highest voted answer if no accepted answer avaiable
-let highestVotedAnswer = getHighestVotedAnswer();
-
-// Fires the accepted answer if avaiable
-let accepetedDomElement = getAcceptedAnswer();
-
-let displayAnswer = accepetedDomElement;
-if (!accepetedDomElement) {
-    displayAnswer = highestVotedAnswer;
-}
-
-let overlayHtml = getOverlayHtml(randomMessage, displayAnswer.innerHTML);
-    document.body.innerHTML += overlayHtml;
-
-// Delete original question-header 
-    //*[@id="question-header"]
-
-    /* // Deactivates the button and counts to 0
-    let counter = 5;
-    let interval = setInterval(o => {
-        dbsButton.innerHTML = counter;
-        counter--;
-        if (counter == 0) {
-            clearInterval(timer);
-            dbsButton.innerHTML = "okay, got it!";
+        if (dbsNavbar.className == "top-bar show") {
+            dbsNavStyle.display = "block";
+            dbsNavStyle.transform = "translateY(0)";
+            // window.setTimeout(function(){
+            dbsNavStyle.opacity = 1;
+            dbsContainer.style.opacity = 1;
+            dbsContainer.style.display = "block";
+            //},0); 
         }
-    }, 1000);
-
-    // Deactivates the button for 5 seconds
-    setTimeout(function () {
-        document.getElementById("acceptButton").disabled = false;
-    }, 5000);
-
-    // Close the overlay box over the open tab
-    dbsButton.onclick = (e) => {
-        overlayElement.remove();
-        span.remove();
-    }; */
+        if (dbsNavbar.className == "top-bar hide") {
+            dbsNavStyle.transform = "translateY(-90px)";
+            dbsNavStyle.opacity = 0;
+            dbsContainer.style.opacity = 0;
+            window.setTimeout(function () {
+                dbsNavStyle.display = "none";
+            }, 5000); // timed to match animation-duration
+        }
+    };
+};
