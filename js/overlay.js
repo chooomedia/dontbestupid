@@ -1,283 +1,137 @@
-function getOverlayHtml(message, answer) {
-    let html =
-    "<header id='dbsNavbar' class='top-bar js-top-bar _fixed top-bar__network'>" +
-        "<div class='-container'>" +
-        "<div class='dbsHead'>" + 
-            "<h1 title='stay tuned - don`t waste your time'>" +
-                "DON`T <span style='color:red;'>BE</span><br>" +
-                "<span style='letter-spacing:2.4px;'>STUPID</span>!" +
-            "</h1>" +
-        "</div>" +
-        "</div>" +
-    "</header>" +
-       
-    "<div class='container dbsContainer'>" +
-        "<div id='left-sidebar' data-is-here-when='md lg' class='left-sidebar js-pinned-left-sidebar'>" +
-            "<div class='left-sidebar--sticky-container js-sticky-leftnav'>left</div>" +
-        "</div>" +
-            "<div id='content' style='background: transparent;' class='snippet-hidden'>" +
-                "<div id='dbsOverlay'>" +
-                    "<div class='inner-content clearfix'>" +
-                        "<div id='question-header' class='grid'>" + 
-                            message +
-                        "</div>" +
-                        "<div id='mainbar' role='main'>" +
-                            "<div class='question' id='question'>" +
-                                "<div class='post-layout'>" + 
-                                    /* "<div class='votecell post-layout--left'>" +
-                                        "<div class='vote'>" +
-                                            "<a class='vote-up-off'>up vote</a>" +
-                                            "<span class='vote-count-post'></span>" +
-                                        "</div>" +
-                                    "</div>" + */
-                                    "<div class='postcell post-layout--right'>" +
-                                        "<div class='post-text'>" +
-                                            answer +
-                                        "</div>" +
-                                        "<div class='post-taglist grid gs4 gsy fd-column'>" +
-                                            "<div class='grid ps-relative d-block'>" +
-                                                "<a href='/questions/tagged/html' class='post-tag js-gps-track' rel='tag'></a>" +
-                                            "</div>" +
-                                        "</div>" +
-                                    "</div>" +
-                                    "<div class='post-layout--right'>" +
-                                    "</div>" +
-                                "</div>" +
+let wallet = new DbsAccount();
+let template = new DbsTemplate(wallet);
+let soApi = new SoApi(document.body);
+let dbsStorage = new DbsStorage();
+
+soApi.blurSidebars();
+
+// Gets the local storaged objects
+dbsStorage.getDbsStorage(window.location.href, (pageMetadata) => {
+    let propName = Object.keys(pageMetadata)[0];
+    let obj = pageMetadata[propName];
+    obj.acceptedAnswer = soApi.getAcceptedAnswer();
+    obj.highestPointAnswer = soApi.getHighestVotedAnswer();
+    obj.question = soApi.getQuestion();
+    // Writes the so answers as a object inside local storage
+    chrome.storage.sync.set(pageMetadata);
+});
+
+wallet.loaded = function() {
+    // CALL ME CONSTRUCTOR :-P
+    // Pushes the fired objects frome the functions into the mixed frontend body
+    let overlayHtml = template.getOverlayHtml(
+                          soApi.getDisplayAnswer(true)
+                        , soApi.getQuestion()
+                        );
+
+    // Adds the overlay-content to the DOM
+    document.body.innerHTML += overlayHtml;
+    // Adds the animated Logo
+    template.insertLogoWrapper();
+    
+    wallet.lowBalance = function() {
+        
+        let donateDialogCardStack = new CardStack({
+            itemHeight: "332px"
+        }); 
+
+        let drDoucheDialogElement = document.getElementById("drDoucheDialog");
+        drDoucheDialogElement.innerHTML = "";
+
+        drDoucheDialogElement.appendChild(donateDialogCardStack.innerDialogElement);
+        template.createIntroDonateInnerDailog();
+
+        let card1Front = "<div class='inner'>" +
+                            "<div style='text-align:center;max-width:100%;'>" +
+                                "<h2 style='margin: 0 0 4px 0;font-size: 26px;line-height: 54px;background: rgba(43,43,43,.9);color: #fff;'>Preserve the Dev's freedom</h2>" + 
+                                "<img src='https://diekommune.de.cool/no-jail.png' style='width:inherit;max-height:160px;' alt='Logo dontbestupid sad because in jail...' />" + 
                             "</div>" +
-                        "</div>" +
-                        "<div id='sidebar' class='show-votes' role='complementary'>" +
-                            "Right" +
-                        "</div>" +
-                    "</div>" +
-                "</div>" +
-            "</div>" + 
-        "</div>"  
-    return html;
-}
+                            "<div style='height28px;padding:4px;margin: 0 0 4px 0;border:1px solid rgba(43,43,43,.3);'>" +
+                                template.setDonateDialogMeta() + 
+                            "</div>" +
+                            "<div style='padding:4px;box-sizing:padding-box;border:1px solid rgba(43,43,43,.3);'>" +
+                                "So that this extension can be used in the near future also for e.g. Facebook or Youporn, I have to reinholen hobby development time." +
+                            "</div>" +
+                        "</div>";
 
-// Loops trough all anwers on the page and extracts the one with the highest votes.
-function getHighestVotedAnswer() {
-    let allAnswers = document.querySelectorAll(".answer");
-    if (allAnswers.length == 0) {
-        return null;
-    }
+        let card1Back = "<div class='inner' style='display:inline-block;transform:rotateY(180deg);text-align:center;font-size:16px;line-height:22px;'>" +
+                            "<div style='text-align:center;max-width:387px;'>" +
+                                "<h2 style='margin: 0 0 4px 0;font-size: 26px;line-height: 54px;background: rgba(43,43,43,.9);color: #fff;'>" +
+                                    "Donate some Bucks" + 
+                                "</h2>" +
+                                "<input required style='line-height:54px;color:#555;width:220px;border:unset;border-bottom:1px solid grey;background:transparent;'" +
+                                    "id='donateDev' type ='text' placeholder='1' pattern='.*' />" +
+                                "<br>" +
+                                template.setDonateDialogButton() + 
+                            "</div>" +
+                        "</div>";
+        let card1 = new Card(card1Front, card1Back);
+        donateDialogCardStack.addCard(card1);
+    
+        let card2Front = "<div class='inner'>" +
+                            "<div style='text-align:center;max-width:100%;'>" +   
+                                "<h2 style='margin: 0 0 4px 0;font-size: 26px;line-height: 54px;background: rgba(43,43,43,.9);color: #fff;'>Share your opinion</h2>" + 
+                                "<img src='https://diekommune.de.cool/share-new.gif' style='width:inherit%;max-height:160px;' alt='placeholderimg' />" +
+                            "</div>" +
+                            "<div style='height28px;padding:4px;margin: 0 0 4px 0;border:1px solid rgba(43,43,43,.3);'>" +
+                                template.setDonateDialogMeta() + 
+                            "</div>" +
+                            "<div style='padding:4px;box-sizing:padding-box;border:1px solid rgba(43,43,43,.3);'>" +
+                                "So that this extension can be used in the near future also for e.g. Facebook or Youporn, I have to reinholen hobby development time." +
+                            "</div>" +
+                        "</div>";
 
-    let result = {
-        voteCount: 0,
-        innerHTML: ''
+        let card2Back = "<div class='inner' style='display:inline-block;transform:rotateY(180deg);text-align:center;font-size:16px;line-height:22px;'>" +
+                            "<div style='text-align:center;max-width:387px;'>" +
+                                "<h2 style='margin: 0 0 4px 0;font-size: 26px;line-height: 54px;background: rgba(43,43,43,.9);color: #fff;'>" +
+                                    "Share your opinion " + 
+                                "</h2>" +
+                                "<textarea required style='min-height:54px;max-height:162px;line-height:22px;color:#555;width:220px;border:unset;border-bottom:1px solid grey;background:transparent;' " + 
+                                    "id='commentExtension' type ='text' placeholder='write something about this browser extension' pattern='.*'></textarea>" +
+                                "<br>" +
+                                template.setDonateDialogButton() + 
+                            "</div>" +
+                        "</div>";
+        let card2 = new Card(card2Front, card2Back);
+        donateDialogCardStack.addCard(card2);
+        template.createDonateThxDialog();
     };
 
-    allAnswers.forEach(o => {
-        let currentAnswer = o; 
 
-        let firstLevelDiv = currentAnswer.getElementsByTagName("div")[0];
-        let voteBarLeft = firstLevelDiv.getElementsByTagName("div")[1];
-        let contentDiv = firstLevelDiv.getElementsByTagName("div")[2];
-
-        let votes = voteBarLeft.getElementsByTagName("span")[0];
-        let voteNumber = parseInt(votes.innerText.trim());
-
-        if (result.voteCount < voteNumber) {
-            result.voteCount = voteNumber;
-            result.innerHTML = contentDiv.children[0].innerHTML;
-        }
-    }); 
-    return result;
-}
-
-function getAcceptedAnswer() {
-    let accepetedDomElement = document.querySelectorAll(".accepted-answer");
-    if (accepetedDomElement.length == 0) {
-        return null;
-    } else {
-        return accepetedDomElement[0];
+    // Adds dr Douche`s Dialog
+    if (wallet.balance > 0) {
+        template.drDoucheDialogMode();
     }
-}
 
-function getQuestion() {
-    let getQuestionValue = document.getElementsByClassName("question-hyperlink");
-    if (getQuestionValue) {
-        return getQuestionValue[0].innerHTML;
-    }
-}
+    // Took values from parent-page push it into child-page(overlayelement)
+    template.getValuesFromParrentPage();
 
-// Fires randomly one of these text areas
-let dbsAlertMessages = [
-    "<h1 class='dbsPushMessageTitle grid--cell fs-headline1 fl1'>" +
-        "<a href='#' class='question-hyperlink'>Read focused!</a>" +
-    "</h1>" +
-        "<p class='dbsPushMessage'>Don`t waste your time looking up with stuff in the internet." +
-        "<br>" +
-        "Instead use your brain and spend your time with more meanfull things :-)</p>",
+    template.closeButtonClick = function() {
+        soApi.unBlurSidebars();
 
-    "<h1 class='dbsPushMessageTitle grid--cell fs-headline1 fl1'>" +
-        "<a href='#' class='question-hyperlink'>R T F M !</a>" +
-    "</h1>" +
-    "<p class='dbsPushMessage'>Don`t be stupid fellow." +
-    "<br>" +
-    "Sometimes its helpfull to <b>R</b>ead <b>T</b>he <b>F</b>*king <b>M</b>anual :-)</p>",
+        // Selects the navigation header
+        let dbsNavbar = document.getElementById("dbsNavbar");
+            dbsNavbar.className = dbsNavbar.className !== "top-bar show" ? "top-bar show" : "top-bar hide";
+        let dbsNavStyle = dbsNavbar.style;
+        let dbsContainer = document.getElementsByClassName('dbsContainer')[0];
+            dbsContainer.style.display = "none";
 
-    "<h1 class='dbsPushMessageTitle grid--cell fs-headline1 fl1'>" +
-        "<a href='#' class='question-hyperlink'>Muhahahaha!</a>" +
-    "</h1>" +
-    "<p class='dbsPushMessage'>Ouw! Its better waste my time on Social Media" +
-    "<br></p>"
-]
-
-let style =
-    "body {" + 
-        "position: absolute;" + 
-        "flex-direction: column;" + 
-        "background-color: #FFF;" + 
-        "background-image: none;" + 
-        "background-position: top left;" + 
-        "background-repeat: repeat;" + 
-        "background-size: auto;" + 
-        "background-attachment: auto;" + 
-        "min-width: 1279px;" + 
-        "padding-top:50px;" + 
-    "}" +
-    "body > .container {" + 
-        "max-width: 1264px;" +
-        "width: 100%;" +
-        "background: none;" +
-        "display: flex;" +
-        "justify-content: space-between;" +
-        "margin: 0 auto;" +
-    "}" +
-    "h1.dbsPushMessageTitle {" +
-        "margin-bottom: 0 !important;" +
-    "}" +
-    "h1.dbsPushMessageTitle a {" +
-        "margin-bottom: 0 !important;" +
-        "font-size: 46px !important;" +
-        "line-height: 1;" +
-        "display: inline-table;" +
-        "margin-top: -9px;" +
-    "}" +
-    "p.dbsPushMessage {" +
-        "font-size: 1.4em;" +
-        "line-height: 22px;" +
-        "margin: 0 auto;" +
-        "width: 56%;" +
-        "text-align: right;" +
-        "background: white !important;" +
-        "color: #666;" +
-    "}" +
-    "body .top-bar~.container {" + 
-        "margin: 0 43.5px; !important;" + 
-    "}" +
-    ".blurBody {" +
-        "position: absolute;" +
-        "width: 55.8%;" +
-        "height: 100vh;" +
-        "background: rgba(255,255,255,0.98);" +
-        "animation: pulseBackground 12s 0 alternate;" +
-        "top: 0;" +
-        "left: 208px;" +
-        "right: 15%;" +
-        "bottom: 0;" +
-        "z-index: 1051;" +
-    "}" +
-    "#dbsNavbar {" +
-        "position: fixed;" +
-        "top: 0;" +
-        "left: 0;" +
-        "width: 100%;" +
-        "z-index: 1053;" +
-        "background-color: #333333;" +
-        "transition: box-shadow cubic-bezier(.165, .84, .44, 1) .25s;" +
-        "height: 51px;" +
-        "box-sizing: border-box;" +
-        "animation: animateNavbar .1s 1 ease-out;" +
-    "}" +
-    ".dbsHead {" +
-        "text-align:center;font-family: Courier New;" +
-    "}" +
-    ".dbsContainer {" +
-        "display: flex;" +
-        "margin: 0 43.5px !important;" +
-        "position: absolute;" +
-        "top: 50px;" +
-        "left: 0;" +
-        "right: 0;" +
-        "bottom: 0;" +
-        "z-index: 1052;" +
-    "}" +
-    "#dbsOverlay {" +
-        "animation: animateOverlay .5s 1 alternate;" +
-    "}" +
-    "#left-sidebar, #sidebar {" + 
-        "filter: blur(5px);" +
-        "height: 84vh;" +
-        "animation: blurSidebars .5s 1 alternate;" +
-    "}" +
-    "@-webkit-keyframes blurSidebars {" +
-        "0% { filter: blur(0); }" +
-        "100% { filter: blur(5px); }" +
-    "}" +
-    "@-webkit-keyframes animateOverlay {" +
-        "0% { -webkit-filter: blur(5px); transform: translateY(-100%); }" +
-        "100% { -webkit-filter: blur(0); transform: translateY(0); }" +
-    "}" +
-    "@-webkit-keyframes animateNavbar {" +
-        "0% { transform: translateY(-51px); }" +
-        "100% { transform: translateY(0); }" +
-    "}" +
-    "@-webkit-keyframes pulseBackground {" +
-        "0% { background: rgba(122,122,122,0.9); }" +
-        "100% { background: rgba(255,255,255,0.9); }" +
-    "}"
-
-let mainBody = document.body; // Add overlayed template before body
-let span = document.createElement("span");
-    span.innerHTML = "";
-    span.className = "blurBody";
-    mainBody.parentNode.insertBefore(span, mainBody); // Pushs the focusing Element before Overlay
-
-let styleElement = document.createElement("style"); // Add a head style onto the overlayed body
-    styleElement.type = "text/css";
-    styleElement.appendChild(document.createTextNode(style));
-    document.getElementsByTagName("head")[0].appendChild(styleElement);
-
-let randomIndex = Math.floor(Math.random() * Math.floor(dbsAlertMessages.length)); // Generates a random number
-let randomMessage = dbsAlertMessages[randomIndex]; // Choose randomly one of the thre text areas
-
-// Fires the highest voted answer if no accepted answer avaiable
-let highestVotedAnswer = getHighestVotedAnswer();
-
-// Fires the accepted answer if avaiable
-let accepetedDomElement = getAcceptedAnswer();
-
-let displayAnswer = accepetedDomElement;
-if (!accepetedDomElement) {
-    displayAnswer = highestVotedAnswer;
-}
-
-let overlayHtml = getOverlayHtml(randomMessage, displayAnswer.innerHTML);
-    document.body.innerHTML += overlayHtml;
-
-// Delete original question-header 
-    //*[@id="question-header"]
-
-    /* // Deactivates the button and counts to 0
-    let counter = 5;
-    let interval = setInterval(o => {
-        dbsButton.innerHTML = counter;
-        counter--;
-        if (counter == 0) {
-            clearInterval(timer);
-            dbsButton.innerHTML = "okay, got it!";
+        if (dbsNavbar.className == "top-bar show") {
+            dbsNavStyle.display = "block";
+            dbsNavStyle.transform = "translateY(0)";
+            // window.setTimeout(function(){
+            dbsNavStyle.opacity = 1;
+            dbsContainer.style.opacity = 1;
+            dbsContainer.style.display = "block";
+            //},0); 
         }
-    }, 1000);
-
-    // Deactivates the button for 5 seconds
-    setTimeout(function () {
-        document.getElementById("acceptButton").disabled = false;
-    }, 5000);
-
-    // Close the overlay box over the open tab
-    dbsButton.onclick = (e) => {
-        overlayElement.remove();
-        span.remove();
-    }; */
+        if (dbsNavbar.className == "top-bar hide") {
+            dbsNavStyle.transform = "translateY(-90px)";
+            dbsNavStyle.opacity = 0;
+            dbsContainer.style.opacity = 0;
+            window.setTimeout(function () {
+                dbsNavStyle.display = "none";
+            }, 5000); // timed to match animation-duration
+        }
+    };
+};

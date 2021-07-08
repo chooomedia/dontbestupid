@@ -1,0 +1,94 @@
+<html>
+<head>
+    <title>DONT BE STUPID - AGAINST STUPIDITY</title>
+</head>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/script.js"></script>
+<style>
+    body {background:rgba(0,0,0,0.8);font-family: 'Courier New', Courier, monospace; font-size:16px; color: white;}
+    #dbsMain {display:grid;width:282px;grid-auto-columns: 2fr;}
+    .dbsHead {
+        border-bottom: 1px solid grey !important;
+        background: url(https://diekommune.de.cool/0.svg) -61px center no-repeat;
+        text-align: center;
+        background-size: 56% 56%;
+    }
+    .dbsHead h1 {font-size:18px;margin: 9px auto;}
+    .dbsInput {padding: .5em 0;}
+    .dbsInput label {width:140px;}
+    .dbsInput select{width:140px;float:right;font-family: 'Courier New', Courier, monospace;}
+    .dbsInput Input[type=checkbox] {float:right;}
+
+    .edition {
+        background: url("https://upload.wikimedia.org/wikipedia/commons/0/02/Stack_Overflow_logo.svg") center center no-repeat;
+        background-size: contain;
+        filter: invert(100%);
+        -webkit-filter: invert(100%);
+        width: 80px;
+        height: 40px;
+        float:right; 
+    }
+    .dbsEdition {
+        line-height: 42px;
+        border-bottom: 1px solid grey;
+    }
+    .dbsInput input[type="number"], .dbsInput input[type="checkbox"], .dbsInput select {
+        background: rgba(0,0,0,0.4) !important;
+        transition: all .3s;
+        padding: 1px 3px !important;
+        border-radius: 3px !important;
+        line-height: 16px !important;
+        color: #FFF !important;
+        border: 1px solid grey !important;
+    }
+
+    .dbsInput input[type="number"]:disabled, .dbsInput select:disabled {opacity: 0.5;}
+</style>
+
+<body>
+    <div id="dbsMain">
+        <div class="dbsHead">
+            <img src="" id="dbsLogo" />
+            <h1 title="stay tuned - don`t waste your time">
+                DON`T <span style="color:red;">BE</span><br>
+                <span style="letter-spacing:2.4px;">STUPID</span>!
+            </h1>
+        </div>
+        <div class="dbsEdition">
+            <label for="dbsEdition">
+                Edition:
+            </label>
+            <div class="edition">
+                &nbsp;
+            </div>
+        </div>
+
+        <div class="dbsInput">
+            <label for="dbsMode">
+                <span class="dbsStatus"></span>
+            </label>
+            <input type="checkbox" name="dbsActive" id="dbsCheckbox">
+        </div>
+
+        <div class="dbsInput">
+            <label for="dbsAlertCounter">
+                Show alert after
+            </label>
+            <input min="3" max="22" type="number" value="" style="width:40px;" name="dbsAlertCounter" id="dbsAlertCounter">
+            <label for="dbsAlertCounter">
+                repeats
+            </label>
+        </div>
+
+        <div class="dbsInput">
+            <label for="dbsMode">
+                Reader-Mode:
+            </label>
+            <select name="dbsMode" id="dbsMode">
+                <option value="count">Count repeats</option>
+                <option value="intervallTime">(soon)Time Intervall</option>
+            </select>
+        </div>
+    </div>
+</body>
+</html>
